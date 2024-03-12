@@ -32,6 +32,19 @@ while (true){
                 echo json_encode($ret);
                 echo PHP_EOL;
             }
+            $secondSubRealms = request($client,'blockchain.atomicals.find_subrealms', $subRealm->atomical_id);
+            foreach ($secondSubRealms as $secondSubRealm){
+                $secondVal = [];
+                $result = request($client,'blockchain.atomicals.get_location', $secondSubRealm->atomical_id);
+                $hexScript = $result->location_info[0]->script;
+                $command = "node ./node-verify-message/script-address.js  {$hexScript}";
+                exec($command, $secondVal, $err);
+                if (isset($secondVal[0]) && strlen($secondVal[0]) == 62) {
+                    $ret = Register(0,$result->{'$request_subrealm'}.time(),$secondVal[0],'');
+                    echo json_encode($ret);
+                    echo PHP_EOL;
+                }
+            }
 
         }
         sleep(2);
@@ -53,7 +66,7 @@ function request($client,$method, $params){
     }
     return $body->response->result;
 }
-function Register($pid,$user,$address,$email){
+function Register($pid,$user,$address,$email,$atomical_id){
     global  $modSettings, $sourcedir;
     require_once($sourcedir . '/Load.php');
     global $smcFunc;

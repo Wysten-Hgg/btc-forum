@@ -23,13 +23,13 @@ function frptransfer(){
 			FROM {db_prefix}property_transfer_log WHERE pool = {int:id} AND property = {string:property}',
         array(
             'id' => 0,
-            'property' => 'sflm',
+            'property' => 'frp',
         )
     );
     list ($context['num_members']) = $smcFunc['db_fetch_row']($request);
     $smcFunc['db_free_result']($request);
     $_REQUEST['start'] =  $_REQUEST['start']  ?? 0;
-    $context['page_index'] = constructPageIndex($scripturl . '?action=flm;sa=sflmtransfer', $_REQUEST['start'], $context['num_members'], $modSettings['defaultMaxMembers']);
+    $context['page_index'] = constructPageIndex($scripturl . '?action=frp;sa=frptransfer', $_REQUEST['start'], $context['num_members'], $modSettings['defaultMaxMembers']);
     $limit = $_REQUEST['start'];
     $context['start'] = $_REQUEST['start'];
     // member-lists
@@ -40,7 +40,7 @@ function frptransfer(){
 				LEFT JOIN {db_prefix}members AS mem2 ON (sou.to = mem2.id_member) WHERE pool = {int:id} AND property = {string:property} ORDER BY id DESC LIMIT {int:start}, {int:max}',
         array(
             'id' => 0,
-            'property' => 'sflm',
+            'property' => 'frp',
             'start' => $limit,
             'max' => $modSettings['defaultMaxMembers'],
         )

@@ -15,15 +15,15 @@ function template_frptransfer(){
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">Manage FLM</h3>
+			<h3 class="catbg">Manage FRP</h3>
 		</div>
 		<p class="information">
-The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of sFLM.				</p>
+The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of FRP.				</p>
 		<div id="report_buttons">';
 
     echo '
 		</div>';
-    template_flm_menu('frpTransfer');
+//    template_flm_menu('frpTransfer');
 
     // Go through each table!
     echo '<form  method="post"><table class="table_grid" id="member_list">
@@ -49,13 +49,17 @@ The function administrator sets to add or delete the Merit source user list as t
 			<tbody>';
     foreach ($context['users'] as $k=> $val) {
         $id = $k+$context['start'] + 1;
+        $sender = $val['a'];
+        if(empty($val['a'])){
+            $sender = "system";
+        }
         echo '
 				<tr class="windowbg" id="list_member_list_0">
 					<td class="id_member">
 						' .$id . '
 					</td>
 					<td class="user_name">
-			        ' . $val['a'] . '
+			        ' . $sender . '
 					</td>
 					<td class="user_name">
 			        ' . $val['b'] . '
