@@ -5,10 +5,10 @@
  *
  * @package SMF
  * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
+ * @copyright 2023 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.1.3
+ * @version 2.1.4
  */
 
 namespace SMF\Cache\APIs;
@@ -59,7 +59,7 @@ class FileBased extends CacheApi implements CacheApiInterface
 
 	private function readFile($file)
 	{
-		if (file_exists($file) && ($fp = fopen($file, 'rb')) !== false)
+		if (($fp = @fopen($file, 'rb')) !== false)
 		{
 			if (!flock($fp, LOCK_SH))
 			{

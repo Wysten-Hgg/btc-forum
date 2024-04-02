@@ -10,7 +10,7 @@
  * @copyright 2022 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.1.2
+ * @version 2.1.3
  */
 
 ########## Maintenance ##########
@@ -56,19 +56,19 @@ $language = 'english';
  *
  * @var string
  */
-$boardurl = 'http://forum02.firedao.online';
+$boardurl = 'http://testforum.fdao.club';
 /**
  * Email address to send emails from. (like noreply@yourdomain.com.)
  *
  * @var string
  */
-$webmaster_email = 'FireKun@admin.com';
+$webmaster_email = 'admin@admin.com';
 /**
  * Name of the cookie to set for authentication.
  *
  * @var string
  */
-$cookiename = 'SMFCookie149';
+$cookiename = 'SMFCookie472';
 /**
  * Secret key used to create and verify cookies, tokens, etc.
  * Do not change this unless absolutely necessary, and NEVER share it.
@@ -79,7 +79,7 @@ $cookiename = 'SMFCookie149';
  *
  * @var string
  */
-$auth_secret = 'ac665fcf2bcd4e6ad276a0b7c33ec092828b0adb6881cc6d7d352b4189f4ca00';
+$auth_secret = 'b3314ba9827ce0d8762bcefb7968dabc74eabf1a503e4564d5569e577a74541f';
 
 ########## Database Info ##########
 /**
@@ -107,19 +107,19 @@ $db_server = 'localhost';
  *
  * @var string
  */
-$db_name = 'smf02';
+$db_name = 'testforum';
 /**
  * Database username
  *
  * @var string
  */
-$db_user = 'smf02';
+$db_user = 'testforum';
 /**
  * Database password
  *
  * @var string
  */
-$db_passwd = 'smf02';
+$db_passwd = 'testforum';
 /**
  * Database user for when connecting with SSI
  *
@@ -186,7 +186,7 @@ $cache_memcached = '';
  *
  * @var string
  */
-$cachedir = '/data/forum/sites/forum02/www/cache';
+$cachedir = '/data/forum/sites/testforum/www/cache';
 
 ########## Image Proxy ##########
 # This is done entirely in Settings.php to avoid loading the DB while serving the images
@@ -201,7 +201,7 @@ $image_proxy_enabled = false;
  *
  * @var string
  */
-$image_proxy_secret = '896a2b8d1f45c72aa95c';
+$image_proxy_secret = 'da1c7eb4e531076263ab';
 /**
  * Maximum file size (in KB) for individual files
  *
@@ -216,25 +216,25 @@ $image_proxy_maxsize = 5192;
  *
  * @var string
  */
-$boarddir = '/data/forum/sites/forum02/www';
+$boarddir = '/data/forum/sites/testforum/www';
 /**
  * Path to the Sources directory.
  *
  * @var string
  */
-$sourcedir = '/data/forum/sites/forum02/www/Sources';
+$sourcedir = '/data/forum/sites/testforum/www/Sources';
 /**
  * Path to the Packages directory.
  *
  * @var string
  */
-$packagesdir = '/data/forum/sites/forum02/www/Packages';
+$packagesdir = '/data/forum/sites/testforum/www/Packages';
 /**
  * Path to the tasks directory.
  *
  * @var string
  */
-$tasksdir = '/data/forum/sites/forum02/www/Sources/tasks';
+$tasksdir = '/data/forum/sites/testforum/www/Sources/tasks';
 
 ########## Cache Info ##########
 /**
@@ -264,6 +264,9 @@ $db_character_set = 'utf8';
 ######### Custom Settings #########
 $targetContract = '';
 $apiKey = '';
+$zealySubdomain = '';
+$zealyUserApiKey = '';
+$zealyLeaderboardApiKey = '';
 
 ########## Error-Catching ##########
 # Note: You shouldn't touch these settings.

@@ -8,10 +8,10 @@
  *
  * @package SMF
  * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
+ * @copyright 2023 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.1.3
+ * @version 2.1.4
  */
 
 if (!defined('SMF'))
@@ -573,6 +573,11 @@ function ModifySubscription()
 		$emailComplete = strlen($_POST['emailcomplete']) > 10 ? trim($_POST['emailcomplete']) : '';
 		$_POST['prim_group'] = !empty($_POST['prim_group']) ? (int) $_POST['prim_group'] : 0;
 
+		// Cleanup text fields
+		$_POST['name'] = $smcFunc['htmlspecialchars']($_POST['name']);
+		$_POST['desc'] = $smcFunc['htmlspecialchars']($_POST['desc']);
+		$emailComplete = $smcFunc['htmlspecialchars']($emailComplete);
+
 		// Is this a fixed one?
 		if ($_POST['duration_type'] == 'fixed')
 		{
@@ -762,7 +767,7 @@ function ModifySubscription()
 				'repeatable' => $row['repeatable'],
 				'allow_partial' => $row['allow_partial'],
 				'duration' => $isFlexible ? 'flexible' : 'fixed',
-				'email_complete' => $smcFunc['htmlspecialchars']($row['email_complete']),
+				'email_complete' => $row['email_complete'],
 				'reminder' => $row['reminder'],
 			);
 		}

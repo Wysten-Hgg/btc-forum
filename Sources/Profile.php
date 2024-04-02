@@ -9,10 +9,10 @@
  *
  * @package SMF
  * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
+ * @copyright 2023 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.1.3
+ * @version 2.1.4
  */
 
 if (!defined('SMF'))
@@ -545,6 +545,10 @@ function ModifyProfile($post_errors = array())
 	);
 
 	// Let them modify profile areas easily.
+	call_integration_hook('integrate_profile_areas', array(&$profile_areas));
+
+	// Deprecated since 2.1.4 and will be removed in 3.0.0. Kept for compatibility with early versions of 2.1.
+	// @todo add runtime warnings.
 	call_integration_hook('integrate_pre_profile_areas', array(&$profile_areas));
 
 	// Do some cleaning ready for the menu function.
@@ -575,6 +579,7 @@ function ModifyProfile($post_errors = array())
 
 	// Set a few options for the menu.
 	$menuOptions = array(
+		'disable_hook_call' => true,
 		'disable_url_session_check' => true,
 		'current_area' => $current_area,
 		'extra_url_parameters' => array(

@@ -3,10 +3,10 @@
  *
  * @package SMF
  * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
+ * @copyright 2023 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.1.3
+ * @version 2.1.4
  */
 
 (function ($) {
@@ -716,7 +716,7 @@ sceditor.formats.bbcode.set(
 				return '[attach' + attribs + ']' + content + '[/attach]';
 			}
 
-			attribs += ' data-attachment="' + id + '"'
+			attribs += ' data-type="attachment" data-attachment="' + id + '"';
 			if (typeof attrs.alt !== "undefined")
 				attribs += ' alt="' + attrs.alt + '"';
 
