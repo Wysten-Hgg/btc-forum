@@ -7,10 +7,10 @@
  *
  * @package SMF
  * @author Simple Machines https://www.simplemachines.org
- * @copyright 2023 Simple Machines and individual contributors
+ * @copyright 2022 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.1.4
+ * @version 2.1.3
  */
 
 ########## Maintenance ##########
@@ -56,19 +56,19 @@ $language = 'english';
  *
  * @var string
  */
-$boardurl = 'http://forum.fdao.club';
+$boardurl = 'http://testforum.fdao.club';
 /**
  * Email address to send emails from. (like noreply@yourdomain.com.)
  *
  * @var string
  */
-$webmaster_email = 'firefangj20@gmail.com';
+$webmaster_email = 'admin@admin.com';
 /**
  * Name of the cookie to set for authentication.
  *
  * @var string
  */
-$cookiename = 'SMFCookie46';
+$cookiename = 'SMFCookie472';
 /**
  * Secret key used to create and verify cookies, tokens, etc.
  * Do not change this unless absolutely necessary, and NEVER share it.
@@ -79,7 +79,7 @@ $cookiename = 'SMFCookie46';
  *
  * @var string
  */
-$auth_secret = '4cf4f692f3797449f1f20f4bea93061103ffb4c32c87b6e7bcf516f053f6696e';
+$auth_secret = 'b3314ba9827ce0d8762bcefb7968dabc74eabf1a503e4564d5569e577a74541f';
 
 ########## Database Info ##########
 /**
@@ -107,19 +107,19 @@ $db_server = 'localhost';
  *
  * @var string
  */
-$db_name = 'forum';
+$db_name = 'testforum';
 /**
  * Database username
  *
  * @var string
  */
-$db_user = 'forum';
+$db_user = 'testforum';
 /**
  * Database password
  *
  * @var string
  */
-$db_passwd = 'forum';
+$db_passwd = 'testforum';
 /**
  * Database user for when connecting with SSI
  *
@@ -186,7 +186,7 @@ $cache_memcached = '';
  *
  * @var string
  */
-$cachedir = '/data/forum/sites/forum/www/cache';
+$cachedir = '/data/forum/sites/testforum/www/cache';
 
 ########## Image Proxy ##########
 # This is done entirely in Settings.php to avoid loading the DB while serving the images
@@ -201,7 +201,7 @@ $image_proxy_enabled = false;
  *
  * @var string
  */
-$image_proxy_secret = '49203c247fd046fa1f05';
+$image_proxy_secret = 'da1c7eb4e531076263ab';
 /**
  * Maximum file size (in KB) for individual files
  *
@@ -216,25 +216,25 @@ $image_proxy_maxsize = 5192;
  *
  * @var string
  */
-$boarddir = '/data/forum/sites/forum/www';
+$boarddir = '/data/forum/sites/testforum/www';
 /**
  * Path to the Sources directory.
  *
  * @var string
  */
-$sourcedir = '/data/forum/sites/forum/www/Sources';
+$sourcedir = '/data/forum/sites/testforum/www/Sources';
 /**
  * Path to the Packages directory.
  *
  * @var string
  */
-$packagesdir = '/data/forum/sites/forum/www/Packages';
+$packagesdir = '/data/forum/sites/testforum/www/Packages';
 /**
  * Path to the tasks directory.
  *
  * @var string
  */
-$tasksdir = '/data/forum/sites/forum/www/Sources/tasks';
+$tasksdir = '/data/forum/sites/testforum/www/Sources/tasks';
 
 ########## Cache Info ##########
 /**

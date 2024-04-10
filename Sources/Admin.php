@@ -456,7 +456,7 @@ function AdminMain()
 					'icon' => ''
 				),
 				'managefrp' => array(
-					'label' => 'FRP',
+					'label' => 'FEP',
 					'file' => 'ManageFRP.php',
 					'function' => 'ManageFRP',
 					'icon' => ''

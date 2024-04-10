@@ -24,8 +24,9 @@ if ($currentBlock > $block) {
     getFRP($diffBlock);
     file_put_contents("lastblock",$currentBlock);
 }
+global $rewardUsers;
 function getFRP($diffBlock){
-    global  $modSettings, $sourcedir;
+    global  $modSettings, $sourcedir,$rewardUsers;
     require_once($sourcedir . '/Load.php');
     require_once($sourcedir . '/Subs-Members.php');
     require_once($sourcedir . '/Subs.php');
@@ -33,6 +34,7 @@ function getFRP($diffBlock){
     require_once($sourcedir . '/Logging.php');
     require_once($sourcedir . '/Errors.php');
     $client = new GuzzleHttp(array_merge(['timeout' => 60, 'verify' => false]));
+    $userRewardAmounts = [];
     try {
         $subRealms = request($client,'blockchain.atomicals.find_subrealms', PARENT_REALM_ID);
         foreach ($subRealms as $subRealm) {
@@ -44,15 +46,15 @@ function getFRP($diffBlock){
             if (isset($val[0]) && strlen($val[0]) == 62) {
                 echo "当前一级子领域:" . $result->{'$request_subrealm'} .PHP_EOL;
                 echo "当前子领域所有者:" . $val[0] .PHP_EOL;
-                $length = strlen($result->{'$request_subrealm'});
-                $radios = getFRPRadio();
-                $radio = $radios['single'][$length] ?? 0;
+//                $length = strlen($result->{'$request_subrealm'});
+                $radio = getFRPRadio($val[0],$result->{'$request_subrealm'});
                 $FRPAmount = $diffBlock + $diffBlock * $radio;
-                echo "更新个人积分:" .$FRPAmount .PHP_EOL;
+                echo "获取个人积分:" .$FRPAmount .PHP_EOL;
+                $userRewardAmounts[$val[0]] = isset($userRewardAmounts[$val[0]]) ? $userRewardAmounts[$val[0]] + $FRPAmount : $FRPAmount;
                 //single
-                updateFRP($val[0],$FRPAmount);
+//                updateFRP($val[0],$FRPAmount);
 
-                $secondSubRealms = request($client,'blockchain.atomicals.find_subrealms', $subRealm->atomical_id);
+                /*$secondSubRealms = request($client,'blockchain.atomicals.find_subrealms', $subRealm->atomical_id);
                 foreach ($secondSubRealms as $secondSubRealm){
                     $secondVal = [];
                     $result = request($client,'blockchain.atomicals.get_location', $secondSubRealm->atomical_id);
@@ -74,17 +76,23 @@ function getFRP($diffBlock){
                         echo "更新二级团队积分:" .$parentFRPAmount .PHP_EOL;
                         updateFRP($val[0],$parentFRPAmount);
                     }
-                }
+                }*/
             }
 
+        }
+        foreach ($userRewardAmounts as $k => $userRewardAmount) {
+            $boostPower = max($rewardUsers[$k]);
+            $reward = $userRewardAmount + $userRewardAmount * $boostPower;
+            updateFRP($k,$reward);
         }
     } catch (Exception $exception) {
         echo 'error:'.$exception->getMessage().PHP_EOL;
     }
 
 }
-function getFRPRadio(){
-    global $smcFunc;
+function getFRPRadio($address,$string){
+
+    global $smcFunc,$rewardUsers;
     loadDatabase();
     reloadSettings();
     $request = $smcFunc['db_query']('', '
@@ -98,18 +106,27 @@ function getFRPRadio(){
     );
     $result = $smcFunc['db_fetch_assoc']($request);
     $smcFunc['db_free_result']($request);
-    $single = [
-        1 => $result['single_one'],
-        2 => $result['single_two'],
-        3 => $result['single_three'],
-        4 => $result['second'],
-    ];
-    $group = [
-        1 => $result['group_one'],
-        2 => $result['group_two'],
-        3 => $result['group_three'],
-    ];
-    return ['single'=>$single,'group'=>$group];
+    if(preg_match('/^[0-9]$/', $string)){
+        $rewardUsers[$address][] = $result['boost_one'];
+        return  $result['single_one'];
+    }elseif (preg_match('/^[A-Za-z]$/',$string)){
+        $rewardUsers[$address][] = $result['boost_two'];
+        return $result['single_two'];
+    }elseif (preg_match('/^\d{1,2}$/',$string)){
+        $rewardUsers[$address][] = $result['boost_three'];
+        return $result['single_three'];
+    }elseif (preg_match('/^[A-Za-z]{2}$/',$string)){
+        $rewardUsers[$address][] = $result['boost_four'];
+        return $result['single_four'];
+    }elseif (preg_match('/^\d{3}$/', $string)){
+        return $result['single_five'];
+    }elseif (preg_match('/^\d{4}$/', $string)){
+        return $result['single_six'];
+    }elseif (preg_match('/^[A-Za-z]{3}$/',$string)){
+        return $result['single_seven'];
+    }else{
+        return 0;
+    }
 }
 function request($client,$method, $params){
     $params = '?params=["' . $params . '"]';

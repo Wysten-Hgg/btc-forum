@@ -532,18 +532,31 @@ function registerMember(&$regOptions, $return_errors = false,$from_dao = false)
 			'username' => $regOptions['username'],
 		)
 	);*/
-    $request = $smcFunc['db_query']('', '
+	if(isset($regOptions['btcaddress']) && !empty($regOptions['btcaddress'])){
+		$request = $smcFunc['db_query']('', '
+		SELECT id_member
+		FROM {db_prefix}members
+		WHERE  btcaddress = {string:btcaddress}
+		LIMIT 1',
+			array(
+//            'address' => $regOptions['address'],
+				'btcaddress' => $regOptions['btcaddress'],
+//				'username' => $regOptions['username'],
+			)
+		);
+	}else{
+		$request = $smcFunc['db_query']('', '
 		SELECT id_member
 		FROM {db_prefix}members
 		WHERE member_name = {string:username}
-			OR btcaddress = {string:btcaddress}
 		LIMIT 1',
-        array(
+			array(
 //            'address' => $regOptions['address'],
-            'btcaddress' => $regOptions['btcaddress'],
-            'username' => $regOptions['username'],
-        )
-    );
+				'username' => $regOptions['username'],
+			)
+		);
+	}
+
 	// @todo Separate the sprintf?
 	if ($smcFunc['db_num_rows']($request) != 0)
 		$reg_errors[] = array('lang', 'email_in_use', false, array($smcFunc['htmlspecialchars']($regOptions['email'])));
@@ -611,9 +624,9 @@ function registerMember(&$regOptions, $return_errors = false,$from_dao = false)
 		'passwd' => hash_password($regOptions['username'], $regOptions['password']),
 		'password_salt' => bin2hex($smcFunc['random_bytes'](16)),
 		'posts' => 0,
-		'pid' => $regOptions['pid'],
-		'address' => $regOptions['address'],
-		'btcaddress' => $regOptions['btcaddress'],
+		'pid' => $regOptions['pid'] ?? 0,
+		'address' => $regOptions['address'] ?? "",
+		'btcaddress' => $regOptions['btcaddress'] ?? "",
 		'date_registered' => time(),
 		'member_ip' => $regOptions['interface'] == 'admin' ? '127.0.0.1' : '127.0.0.1',//$user_info['ip'] todo change
 		'member_ip2' => $regOptions['interface'] == 'admin' ? '127.0.0.1' : '127.0.0.1', //$_SERVER['BAN_CHECK_IP']
