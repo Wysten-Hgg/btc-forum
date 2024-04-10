@@ -17,13 +17,13 @@ function template_main()
 			<h3 class="catbg">', $context['page_title'], '</h3>
 		</div>
 		<p class="information">
-Edit your FRP function here.					</p>
+Edit your FEP function here.					</p>
 		<div id="report_buttons">';
 
     echo '
 		</div>';
     echo '<div class="cat_bar">
-			<h3 class="catbg">Set FRP Function Managers</h3>
+			<h3 class="catbg">Set FEP Function Managers</h3>
 		</div>
 		<div class="windowbg">
 
@@ -43,7 +43,7 @@ Edit your FRP function here.					</p>
 								<dl class="settings">
 								  <form method="post" action="', $context['set_url'], '" >    
 									<dt>
-										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Set FRP Function Managers</label></span>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Set FEP Function Managers</label></span>
 									</dt>
 									<dd>
 										<input type="text" name="username" id="recaptcha_site_key" value="">
@@ -75,28 +75,49 @@ Edit your FRP function here.					</p>
 										<input type="text" name="single_three" id="single_three" value="', $context['single_three'], '">
 									</dd>
 									<dt>
-										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Secondary subrealm</label></span>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Letter level four</label></span>
 									</dt>
 									<dd>
-										<input type="text" name="second" id="second" value="', $context['second'], '">
+										<input type="text" name="single_four" id="single_four" value="', $context['single_four'], '">
 									</dd>
 									<dt>
-										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Group one</label></span>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Letter level five</label></span>
 									</dt>
 									<dd>
-										<input type="text" name="group_one" id="group_one" value="', $context['group_one'], '">
+										<input type="text" name="single_five" id="single_five" value="', $context['single_five'], '">
 									</dd>
 									<dt>
-										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Group two</label></span>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Letter level six</label></span>
 									</dt>
 									<dd>
-										<input type="text" name="group_two" id="group_two" value="', $context['group_two'], '">
+										<input type="text" name="single_six" id="single_six" value="', $context['single_six'], '">
 									</dd>
 									<dt>
-										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Group three</label></span>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Letter level seven</label></span>
 									</dt>
 									<dd>
-										<input type="text" name="group_three" id="group_three" value="', $context['group_three'], '">
+										<input type="text" name="single_seven" id="single_seven" value="', $context['single_seven'], '">
+									</dd>
+									<dt>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">boost one</label></span>
+									</dt>
+									<dd>
+										<input type="text" name="boost_one" id="boost_one" value="', $context['boost_one'], '">
+									</dd><dt>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">boost two</label></span>
+									</dt>
+									<dd>
+										<input type="text" name="boost_two" id="boost_two" value="', $context['boost_two'], '">
+									</dd><dt>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">boost three</label></span>
+									</dt>
+									<dd>
+										<input type="text" name="boost_three" id="boost_three" value="', $context['boost_three'], '">
+									</dd><dt>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">boost four</label></span>
+									</dt>
+									<dd>
+										<input type="text" name="boost_four" id="boost_four" value="', $context['boost_four'], '">
 									</dd>
 				<input type="submit" value="Save" class="button">
 									<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">

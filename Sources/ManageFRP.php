@@ -82,10 +82,14 @@ function ManageFRP()
     $context['single_one'] = $result['single_one'];
     $context['single_two'] = $result['single_two'];
     $context['single_three'] = $result['single_three'];
-    $context['second'] = $result['second'];
-    $context['group_one'] = $result['group_one'];
-    $context['group_two'] = $result['group_two'];
-    $context['group_three'] = $result['group_three'];
+    $context['single_four'] = $result['single_four'];
+    $context['single_five'] = $result['single_five'];
+    $context['single_six'] = $result['single_six'];
+    $context['single_seven'] = $result['single_seven'];
+    $context['boost_one'] = $result['boost_one'];
+    $context['boost_two'] = $result['boost_two'];
+    $context['boost_three'] = $result['boost_three'];
+    $context['boost_four'] = $result['boost_four'];
     // member-lists
 
     $request = $smcFunc['db_query']('', '
@@ -190,10 +194,14 @@ function ManageFRP()
             $single_one= $_POST['single_one'];
             $single_two= $_POST['single_two'];
             $single_three= $_POST['single_three'];
-            $second= $_POST['second'];
-            $group_one= $_POST['group_one'];
-            $group_two= $_POST['group_two'];
-            $group_three= $_POST['group_three'];
+            $single_four= $_POST['single_four'];
+            $single_five= $_POST['single_five'];
+            $single_six= $_POST['single_six'];
+            $single_seven= $_POST['single_seven'];
+            $boost_one= $_POST['boost_one'];
+            $boost_two= $_POST['boost_two'];
+            $boost_three= $_POST['boost_three'];
+            $boost_four= $_POST['boost_four'];
 //            greaterThan($limit,0);
             $request = $smcFunc['db_query']('', '
 			SELECT  id
@@ -213,12 +221,16 @@ function ManageFRP()
                         'single_one' => 'string',
                         'single_two' => 'string',
                         'single_three' => 'string',
-                        'second' => 'string',
-                        'group_one' => 'string',
-                        'group_two' => 'string',
-                        'group_three' => 'string',
+                        'single_four' => 'string',
+                        'single_five' => 'string',
+                        'single_six' => 'string',
+                        'single_seven' => 'string',
+                        'boost_one' => 'string',
+                        'boost_two' => 'string',
+                        'boost_three' => 'string',
+                        'boost_four' => 'string',
                     ),
-                    [1,$single_one,$single_two,$single_three,$second,$group_one,$group_two,$group_three],
+                    [1,$single_one,$single_two,$single_three,$single_four,$single_five,$single_six,$single_seven,$boost_one,$boost_two,$boost_three,$boost_four],
                     array()
                 );
             }else{
@@ -227,19 +239,28 @@ function ManageFRP()
 					SET single_one = {string:single_one},
 					single_two = {string:single_two},
 					single_three = {string:single_three},
-					second = {string:second},
-					group_one = {string:group_one},
-					group_two = {string:group_two},
-					group_three = {string:group_three}
+					single_four = {string:single_four},
+					single_five = {string:single_five},
+					single_six = {string:single_six},
+					single_seven = {string:single_seven},
+					boost_one = {string:single_seven},
+					boost_two = {string:single_seven},
+					boost_three = {string:single_seven},
+					boost_four = {string:single_seven}
 					WHERE id = {int:id}',
                     array(
                         'single_one' => $single_one,
                         'single_two' => $single_two,
                         'single_three' => $single_three,
-                        'second' => $second,
-                        'group_one' => $group_one,
-                        'group_two' => $group_two,
-                        'group_three' => $group_three,
+                        'single_four' => $single_four,
+                        'single_five' => $single_five,
+                        'single_six' => $single_six,
+                        'single_seven' => $single_seven,
+                        'boost_one' => $boost_one,
+                        'boost_two' => $boost_two,
+                        'boost_three' => $boost_three,
+                        'boost_four' => $boost_four,
+
                         'id' => 1
                     )
                 );

@@ -837,8 +837,8 @@ function template_flm_menu($page){
 function template_frp_menu($page){
 	global $txt, $context, $scripturl;
 	echo '<div class="buttonlist">
-				<a class="button button_strip_mlist_search ', $page == 'frp' ? 'active' : '', '" href="', $scripturl.'?action=frp', '">FRP manage issue Records</a>
-				<a class="button button_strip_mlist_search ', $page == 'frpTransfer' ? 'active' : '', '" href="', $scripturl.'?action=frp;sa=frptransfer', '">FRP Transfer Records</a>
+				<a class="button button_strip_mlist_search ', $page == 'frp' ? 'active' : '', '" href="', $scripturl.'?action=frp', '">FEP manage issue Records</a>
+				<a class="button button_strip_mlist_search ', $page == 'frpTransfer' ? 'active' : '', '" href="', $scripturl.'?action=frp;sa=frptransfer', '">FEP Transfer Records</a>
 		</div><br/>';
 }
 function template_apply_menu($page){

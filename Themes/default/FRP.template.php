@@ -15,10 +15,10 @@ function template_frptransfer(){
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">Manage FRP</h3>
+			<h3 class="catbg">Manage FEP</h3>
 		</div>
 		<p class="information">
-The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of FRP.				</p>
+The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of FEP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -98,10 +98,10 @@ function template_frp()
 					<div class="errorbox">', $txt['exceeded_maximum'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">Manage FRP</h3>
+			<h3 class="catbg">Manage FEP</h3>
 		</div>
 		<p class="information">
-The function administrator sets to add or delete the FRP source user list as the internal distributiongroup of FRP.				</p>
+The function administrator sets to add or delete the FEP source user list as the internal distributiongroup of FEP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -111,22 +111,22 @@ The function administrator sets to add or delete the FRP source user list as the
 		<div class="cat_bar">
 			<h3 class="catbg">
 				
-				<a href="" id="group_requests_link">FRP Detail</a>
+				<a href="" id="group_requests_link">FEP Detail</a>
 			</h3>
 		</div>
 		<div class="windowbg" id="group_requests_panel">
 			<ul>
 				<li>
-					<p><strong class="smalltext">Current Official Pool FRP:', $context['pool_amount'], '</strong></p>
-			        <p><strong class="smalltext">User holder FRP:', $context['user_holder'], '</strong></p>
-					<p><strong class="smalltext">Total issue FRP:', $context['total_issue'], '</strong></p>
+					<p><strong class="smalltext">Current Official Pool FEP:', $context['pool_amount'], '</strong></p>
+			        <p><strong class="smalltext">User holder FEP:', $context['user_holder'], '</strong></p>
+					<p><strong class="smalltext">Total issue FEP:', $context['total_issue'], '</strong></p>
 				</li>
 			</ul>
 		</div><!-- #group_requests_panel -->
 </div><div class="half_content">
 		<div class="cat_bar">
 			<h3 class="catbg">
-				issue FRP
+				issue FEP
 			</h3>
 		</div>
 		<div class="windowbg" id="group_requests_panel">
