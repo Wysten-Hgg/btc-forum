@@ -5547,7 +5547,7 @@ function setupMenuContext()
 				'is_last' => !$context['right_to_left'] && empty($settings['login_main_menu']),
 			),
 			'flm' => array(
-				'title' => 'FLM',
+				'title' => 'FCP',
 				'href' => $scripturl . '?action=flm',
 				'show' => $context['allow_flm'],
 				'is_last' => !$context['right_to_left'] && empty($settings['login_main_menu']),

@@ -17,19 +17,19 @@ function template_main()
 			<h3 class="catbg">', $context['page_title'], '</h3>
 		</div>
 		<p class="information">
-Edit your FLM function here.					</p>
+Edit your FCP function here.					</p>
 		<div id="report_buttons">';
 
     echo '
 		</div>';
     echo '<div class="cat_bar">
-			<h3 class="catbg">Set FLM Function Managers</h3>
+			<h3 class="catbg">Set FCP Function Managers</h3>
 		</div>
 		<div class="windowbg">
 		<dl class="settings">
                             <form method="post" action="', $context['pause_url'], '" >                                  
 									<dt>
-										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Enable FLM Function</label></span>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Enable FCP Function</label></span>
 									</dt>
 									<dd>
 									Pause
@@ -56,7 +56,7 @@ Edit your FLM function here.					</p>
 								<dl class="settings">
 								  <form method="post" action="', $context['set_url'], '" >    
 									<dt>
-										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Set FLM Function Managers</label></span>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Set FCP Function Managers</label></span>
 									</dt>
 									<dd>
 										<input type="text" name="username" id="recaptcha_site_key" value="">

@@ -90,6 +90,7 @@ function ManageFRP()
     $context['boost_two'] = $result['boost_two'];
     $context['boost_three'] = $result['boost_three'];
     $context['boost_four'] = $result['boost_four'];
+    $context['boost_five'] = $result['boost_five'];
     // member-lists
 
     $request = $smcFunc['db_query']('', '
@@ -202,6 +203,7 @@ function ManageFRP()
             $boost_two= $_POST['boost_two'];
             $boost_three= $_POST['boost_three'];
             $boost_four= $_POST['boost_four'];
+            $boost_five= $_POST['boost_five'];
 //            greaterThan($limit,0);
             $request = $smcFunc['db_query']('', '
 			SELECT  id
@@ -229,8 +231,9 @@ function ManageFRP()
                         'boost_two' => 'string',
                         'boost_three' => 'string',
                         'boost_four' => 'string',
+                        'boost_five' => 'string',
                     ),
-                    [1,$single_one,$single_two,$single_three,$single_four,$single_five,$single_six,$single_seven,$boost_one,$boost_two,$boost_three,$boost_four],
+                    [1,$single_one,$single_two,$single_three,$single_four,$single_five,$single_six,$single_seven,$boost_one,$boost_two,$boost_three,$boost_four,$boost_five],
                     array()
                 );
             }else{
@@ -243,10 +246,11 @@ function ManageFRP()
 					single_five = {string:single_five},
 					single_six = {string:single_six},
 					single_seven = {string:single_seven},
-					boost_one = {string:single_seven},
-					boost_two = {string:single_seven},
-					boost_three = {string:single_seven},
-					boost_four = {string:single_seven}
+					boost_one = {string:boost_one},
+					boost_two = {string:boost_two},
+					boost_three = {string:boost_three},
+					boost_five = {string:boost_five},
+					boost_four = {string:boost_four}
 					WHERE id = {int:id}',
                     array(
                         'single_one' => $single_one,
@@ -260,6 +264,7 @@ function ManageFRP()
                         'boost_two' => $boost_two,
                         'boost_three' => $boost_three,
                         'boost_four' => $boost_four,
+                        'boost_five' => $boost_five,
 
                         'id' => 1
                     )

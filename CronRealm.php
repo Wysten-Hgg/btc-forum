@@ -17,6 +17,7 @@ define('PARENT_REALM_ID','7189eceba798711469728fcd197f651f9d04ef3bb445894446ed70
 set_time_limit(0);
 $block = file_get_contents("lastblock");
 $block = str_replace(array(" ", "\n", "\r"), "", $block);
+global $rewardUsers,$currentBlock;
 $currentBlock = file_get_contents("https://mempool.space/testnet/api/blocks/tip/height");
 $diffBlock = $currentBlock - $block;
 $smcFunc = array();
@@ -24,7 +25,7 @@ if ($currentBlock > $block) {
     getFRP($diffBlock);
     file_put_contents("lastblock",$currentBlock);
 }
-global $rewardUsers;
+
 function getFRP($diffBlock){
     global  $modSettings, $sourcedir,$rewardUsers;
     require_once($sourcedir . '/Load.php');
@@ -91,7 +92,6 @@ function getFRP($diffBlock){
 
 }
 function getFRPRadio($address,$string){
-
     global $smcFunc,$rewardUsers;
     loadDatabase();
     reloadSettings();
@@ -104,29 +104,73 @@ function getFRPRadio($address,$string){
             'id' => 1
         )
     );
+    $luckNumber = getLuckyNumber();
+    $luckArrs = getLuckyMultiple();
+    $luckyRadio= getLuckyRadio();
     $result = $smcFunc['db_fetch_assoc']($request);
     $smcFunc['db_free_result']($request);
+    $boostRadio =  0;
+    $level = 0;
     if(preg_match('/^[0-9]$/', $string)){
         $rewardUsers[$address][] = $result['boost_one'];
-        return  $result['single_one'];
+        $boostRadio = $result['single_one'] ;
+        $level = 1;
     }elseif (preg_match('/^[A-Za-z]$/',$string)){
         $rewardUsers[$address][] = $result['boost_two'];
-        return $result['single_two'];
+        $boostRadio = $result['single_two'];
+        $level = 2;
     }elseif (preg_match('/^\d{1,2}$/',$string)){
         $rewardUsers[$address][] = $result['boost_three'];
-        return $result['single_three'];
+        $boostRadio = $result['single_three'];
+        $level = 3;
     }elseif (preg_match('/^[A-Za-z]{2}$/',$string)){
         $rewardUsers[$address][] = $result['boost_four'];
-        return $result['single_four'];
+        $boostRadio = $result['single_four'];
+        $level = 4;
     }elseif (preg_match('/^\d{3}$/', $string)){
-        return $result['single_five'];
+        $rewardUsers[$address][] = $result['boost_five'];
+        $boostRadio =  $result['single_five'];
+        $level = 5;
     }elseif (preg_match('/^\d{4}$/', $string)){
-        return $result['single_six'];
+        $boostRadio = $result['single_six'];
+        $level = 6;
     }elseif (preg_match('/^[A-Za-z]{3}$/',$string)){
-        return $result['single_seven'];
-    }else{
-        return 0;
+        $boostRadio = $result['single_seven'];
+        $level = 7;
     }
+    $addLuckyRadio =  isset($luckArrs[$level]) ? (in_array($luckNumber,$luckArrs[$level]) ? $luckyRadio[$level] : 0) : 0;
+    return $boostRadio + $addLuckyRadio;
+}
+function getLuckyMultiple(){
+    return [
+        1 => [1,2,3,4,5,6] ,
+        2 => [7,8,9,10] ,
+        3 => [11,12,13],
+        4 => [14,15],
+        5 => [16,17],
+        6 => [18,19],
+        7 => [20],
+    ];
+}
+function getLuckyRadio(){
+    return [
+        1=>1  ,
+        2=>1  ,
+        3=>1 ,
+        4=>2 ,
+        5=>3 ,
+        6=>5 ,
+        7=>10 ,
+    ];
+}
+function getLuckyNumber() {
+    global $currentBlock;
+    $blockHash = file_get_contents("https://mempool.space/api/block-height/".$currentBlock);
+    $blockFourL = substr($blockHash, -4);
+    $decNumber = hexdec($blockFourL);
+    $rounding = intval($decNumber / 21);
+    $lastNumber = $rounding * 21 ;
+    return intval($decNumber - $lastNumber);
 }
 function request($client,$method, $params){
     $params = '?params=["' . $params . '"]';

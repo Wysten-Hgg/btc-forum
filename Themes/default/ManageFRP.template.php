@@ -118,6 +118,11 @@ Edit your FEP function here.					</p>
 									</dt>
 									<dd>
 										<input type="text" name="boost_four" id="boost_four" value="', $context['boost_four'], '">
+									</dd><dt>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">boost five</label></span>
+									</dt>
+									<dd>
+										<input type="text" name="boost_five" id="boost_five" value="', $context['boost_five'], '">
 									</dd>
 				<input type="submit" value="Save" class="button">
 									<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
