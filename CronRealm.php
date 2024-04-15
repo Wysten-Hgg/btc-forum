@@ -84,12 +84,65 @@ function getFRP($diffBlock){
         foreach ($userRewardAmounts as $k => $userRewardAmount) {
             $boostPower = max($rewardUsers[$k]);
             $reward = $userRewardAmount + $userRewardAmount * $boostPower;
+            $reward = $reward + $reward * getEarlyBirdReward();
+            $reward = $reward + $reward * getHolderReward();
             updateFRP($k,$reward);
         }
     } catch (Exception $exception) {
         echo 'error:'.$exception->getMessage().PHP_EOL;
     }
 
+}
+function getEarlyBirdReward() {
+    global $currentBlock;
+    $startBlock = 840000;
+    $intervalBlock = 144;
+    $rewardDatas = [
+        0 => 7 ,
+        1 => 6 ,
+        2 => 5,
+        3 => 4,
+        4 => 3,
+        5 => 2
+    ];
+    if ($currentBlock >= $startBlock) {
+        $diffBlock = $currentBlock - $startBlock;
+        $cycle = intval($diffBlock / $intervalBlock);
+        return $rewardDatas[$cycle];
+    }else{
+        return  0;
+    }
+}
+function getHolderReward(){
+    global $currentBlock;
+    $rewardDatas = [
+        0 => 7 ,
+        1 => 6.5 ,
+        2 => 6,
+        3 => 5.5,
+        4 => 5,
+        5 => 4.5,
+        6 => 4,
+        7 => 3.5,
+        8 => 3,
+        9 => 2.5,
+        10 => 2,
+        11 => 1.5,
+        12 => 1,
+        13 => 0.5
+    ];
+    $startBlock = 840000;
+    $durationBlock = 10000;
+    $rewardDuration = 14;
+    $intervalBlock = 144;
+    $rewardLastBlock = $startBlock + $durationBlock;
+    if($currentBlock + $rewardDuration * $intervalBlock >= $rewardLastBlock && $currentBlock <= $rewardLastBlock) {
+        $diffBlock = $rewardLastBlock - $currentBlock;
+        $cycle = intval($diffBlock / $intervalBlock);
+        return $rewardDatas[$cycle];
+    }else{
+        return  0;
+    }
 }
 function getFRPRadio($address,$string){
     global $smcFunc,$rewardUsers;
