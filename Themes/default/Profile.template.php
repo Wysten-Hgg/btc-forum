@@ -297,9 +297,9 @@ function template_summary()
 		echo '
 				<dt>', $txt['username'], ': </dt>
 				<dd>', $context['member']['username'], '</dd>';
-	echo '
+	/*echo '
 				<dt><a href="https://app.firedao.co/MyPassport">PID</a>:</dt>
-				<dd><a href="https://app.firedao.co/MyPassport">', $context['member']['pid'], '</a></dd>';
+				<dd><a href="https://app.firedao.co/MyPassport">', $context['member']['pid'], '</a></dd>';*/
 	echo '
 				<dt>Merit:</dt>
 				<dd>', $context['merit'], '</dd>';
@@ -307,11 +307,11 @@ function template_summary()
 				<dt>eMerit:</dt>
 				<dd>', $context['emerit'], '</dd>';
 	echo '
-				<dt>FLM:</dt>
+				<dt>FCP:</dt>
 				<dd>', $context['flm'], '</dd>';
-	echo '
+	/*echo '
 				<dt>ZealyXP:</dt>
-				<dd>', $context['xp_amount'], '</dd>';
+				<dd>', $context['xp_amount'], '</dd>';*/
 
 	if (!isset($context['disabled_fields']['posts']))
 		echo '
