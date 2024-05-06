@@ -450,7 +450,7 @@ function AdminMain()
 					'icon' => ''
 				),
 				'manageflm' => array(
-					'label' => 'FLM',
+					'label' => 'FCP',
 					'file' => 'ManageFLM.php',
 					'function' => 'ManageFLM',
 					'icon' => ''
