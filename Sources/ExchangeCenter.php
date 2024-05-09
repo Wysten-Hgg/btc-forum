@@ -15,17 +15,13 @@ function flmExChangeCenter(){
     $flmAmount = $userProperty['flm'];
     $context['flm']=$flmAmount;
     $request = $smcFunc['db_query']('', '
-                    SELECT  min,max
-                    FROM {db_prefix}exchange_limit
-                    WHERE property = {string:property}
-                    LIMIT 1',
-        array(
-            'property' => 'flm',
-        )
+                    SELECT *
+                    FROM {db_prefix}fcp_config
+                 ',
     );
-    $pool = $smcFunc['db_fetch_assoc']($request);
-    $context['min'] = $pool['min'] ?? 0;
-    $context['max'] = $pool['max']  ?? 0;
+    while ($row = $smcFunc['db_fetch_assoc']($request)) {
+        $context['tokens'][] = $row;
+    }
     if (isset($_SESSION['adm-save']))
     {
         if ($_SESSION['adm-save'] === true)
@@ -39,9 +35,10 @@ function flmExChangeCenter(){
     {
 //        checkSession();
         $amount = $_POST['amount'];
+        $select = $_POST['select'];
         greaterThan($amount,0);
         if ($flmAmount < $amount) {
-            fatal_error('Insufficient FLM quantity');
+            fatal_error('Insufficient FCP quantity');
         }
         if ($amount < $context['min'] || $amount > $context['max']) {
             fatal_error("The number of applications does not meet the requirements.Min:{$context['min']},Max:{$context['max']}");

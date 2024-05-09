@@ -496,17 +496,13 @@ function flmexchange(){
     $context['post_url'] = $scripturl . '?action=flm;sa=flmexchange;save';
     $context['modify_url'] = $scripturl . '?action=flm;sa=flmexchange;modify';
     $request = $smcFunc['db_query']('', '
-                    SELECT  min,max
-                    FROM {db_prefix}exchange_limit
-                    WHERE property = {string:property}
-                    LIMIT 1',
-        array(
-            'property' => 'flm',
-        )
+                    SELECT *
+                    FROM {db_prefix}fcp_config
+                 ',
     );
-    $pool = $smcFunc['db_fetch_assoc']($request);
-    $context['min'] = $pool['min'] ?? 0;
-    $context['max'] = $pool['max']  ?? 0;
+    while ($row = $smcFunc['db_fetch_assoc']($request)) {
+        $context['tokens'][] = $row;
+    }
     if (isset($_SESSION['adm-save']))
     {
         if ($_SESSION['adm-save'] === true)
@@ -520,40 +516,46 @@ function flmexchange(){
     {
         checkSession();
         if (isset($_POST['do_state'])){
-            $pass = $_POST['pass'];
-            $reject = $_POST['reject'];
-        }
+            $id = $_POST['id'];
+            $radio= $_POST['radio'];
+            $pause= $_POST['pause'];
+            if (!empty($id)){
+                foreach ($id as $k => $value) {
+                    $paused = in_array($value,$pause) ? 1 : 0;
+                    $smcFunc['db_query']('', '
+					UPDATE {db_prefix}fcp_config
+					SET radio = {int:radio},
+					pause = ({int:pause})
+					WHERE id = ({int:id})',
+                        array(
+                            'radio' => $radio[$k],
+                            'pause' => $paused,
+                            'id' => $value
+                        )
+                    );
+                }
 
+            }
+        }
+        $_SESSION['adm-save'] = true;
+        redirectexit('action=flm;sa=flmexchange');
     }
     if (isset($_GET['save']))
     {
         checkSession();
-        $min = $_POST['min'];
-        $max = $_POST['max'];
-        if (empty($pool)){
+        $token= $_POST['token'];
+        $radio = $_POST['radio'];
+
             $smcFunc['db_insert']('',
-                '{db_prefix}exchange_limit',
+                '{db_prefix}fcp_config',
                 array(
-                    'min' => 'int',
-                    'max' => 'int',
-                    'property' => 'string',
+                    'token' => 'string',
+                    'radio' => 'int',
                 ),
-                [$min,$max,'flm'],
+                [$token,$radio],
                 array()
             );
-        }else{
-            $smcFunc['db_query']('', '
-                UPDATE {db_prefix}exchange_limit
-                SET min = {int:min},
-                max = {int:max}
-                WHERE property = {string:property}',
-                array(
-                    'min' => $min,
-                    'max' => $max,
-                    'property' => 'flm'
-                )
-            );
-        }
+
         $_SESSION['adm-save'] = true;
         redirectexit('action=flm;sa=flmexchange');
 

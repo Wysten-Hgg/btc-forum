@@ -444,16 +444,73 @@ The function administrator sets to add or delete the Merit source user list as t
 		<div class="windowbg">
 								<dl class="settings">
 								  <form method="post" action="', $context['post_url'], '" >    
-									<h1>Single Min: <input type="number" name="min" id="recaptcha_site_key" value="', $context['min'], '"></h1>
+									<h1>token <input type="text" name="token" id="recaptcha_site_key"></h1>
 									<br>
-									<h1>Single Max: <input type="number" name="max" id="recaptcha_site_key" value="', $context['max'], '"></h1>
+									<h1>radio: <input type="number" name="radio" id="recaptcha_site_key"></h1>
 									<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
-				<input type="submit" value="Modify" class="button">
+				<input type="submit" value="Add" class="button">
 				</form> 
 								</dl>	
 								</div>';
 
     template_apply_menu('all');
+    // Go through each table!
+    echo '<div class="cat_bar">
+			<h3 class="catbg">Exchange List(The radio is FCP:Token is ?)</h3>
+		</div><form  method="post" action="', $context['modify_url'], '"><table class="table_grid" id="member_list">
+			<thead>
+				<tr class="title_bar">
+					<th scope="col" id="header_member_list_id_member" class="id_member">
+						 ID
+					</th>
+						<th scope="col" id="header_member_list_id_member" class="id_member">
+						 token
+					</th>
+					<th scope="col" id="header_member_list_user_name" class="user_name">
+					radio 
+					</th>		
+					<th scope="col" id="header_member_list_user_name" class="user_name">
+					is pause? 
+					</th>		
+				</tr>
+			</thead>
+			<tbody>';
+    foreach ($context['tokens'] as $k=> $val) {
+
+//        $id = $k+$context['start'] + 1;
+
+        echo '
+				<tr class="windowbg" id="list_member_list_0">
+					<td class="id_member">
+						' . $val['id'] .  '
+					<input type="hidden" name="id[]" value="	' . $val['id'] .  '">
+					<td class="user_name">
+			        ' . $val['token'] . '
+					</td>
+						<td class="user_name"><input type="text" name="radio[]"  value=" ' . $val['radio'] . '">
+					</td>
+					
+					<td class="display_name">';
+
+            echo 'Paused<input type="checkbox" name="pause[]" ',$val['pause'] == 0  ? '' : ' checked', ' value="	' . $val['id'] .  '">';
+        echo '
+					
+				</tr>';
+    }
+    echo '
+			</tbody>
+			
+		</table>
+		<div class="additional_row">
+				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
+				<input type="submit" name="do_state" value="Modify State" style="float: right" class="button">
+			</div>
+            </form>';
+
+
+
+
+
     // Go through each table!
     echo '<div class="cat_bar">
 			<h3 class="catbg">All List</h3>

@@ -758,9 +758,12 @@ function template_flmExChangeCenter()
 			<p class="information">', $context['page_desc'], '</p>';
 		echo '<div class="roundframe"> 
 		<form method="post" action="', $context['post_url'], '" >
-				<dl class="settings">
-				<h1>Single exchange limit ', $context['min'], '~', $context['max'], '</h1>
-				<h3>Your FLM amount:', $context['flm'], '</h3>
+				<dl class="settings">';
+		foreach($context['tokens'] as $k=> $val){
+			echo  $val['token'] . '<input name="select" value="', $val['id'], '" type="radio"  ',$val['pause'] == 0  ? '' : ' disabled', ' > radio 1:', $val['radio'], '<br/>';
+		}
+			echo '
+				<h3>Your FCP amount:', $context['flm'], '</h3>
 				<h3> please enter the amount you want to exchange: <input type="number" name="amount" width="80px"></h3>
 				</dl>
 					<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
