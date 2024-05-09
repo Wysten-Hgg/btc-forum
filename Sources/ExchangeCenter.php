@@ -2,6 +2,7 @@
 function flmExChangeCenter(){
     global $scripturl, $context,$smcFunc,$user_info,$modSettings;
     $context['post_url'] = $scripturl . '?action=profile;area=flmchange;save';
+    $context['address_url'] = $scripturl . '?action=profile;area=flmchange;address';
     $request = $smcFunc['db_query']('', '
                     SELECT  flm
                     FROM {db_prefix}property
@@ -14,6 +15,7 @@ function flmExChangeCenter(){
     $userProperty = $smcFunc['db_fetch_assoc']($request);
     $flmAmount = $userProperty['flm'];
     $context['flm']=$flmAmount;
+    $context['address']=$user_info['address'];
     $request = $smcFunc['db_query']('', '
                     SELECT *
                     FROM {db_prefix}fcp_config
@@ -31,17 +33,43 @@ function flmExChangeCenter(){
 
         unset($_SESSION['adm-save']);
     }
+    if(isset($_GET['address'])){
+        $address = $_POST['address'];
+        if (!empty($address)){
+            $smcFunc['db_query']('', '
+					UPDATE {db_prefix}members
+					SET address = {string:address}
+					WHERE id_member = {int:id}',
+                array(
+                    'address' =>$address,
+                    'id' => $user_info['id']
+                )
+            );
+        }
+        $_SESSION['adm-save'] = true;
+        redirectexit('action=profile;area=flmchange;u='.$user_info['id']);
+    }
     if (isset($_GET['save']))
     {
 //        checkSession();
         $amount = $_POST['amount'];
         $select = $_POST['select'];
+        $request = $smcFunc['db_query']('', '
+                    SELECT  *
+                    FROM {db_prefix}fcp_config
+                    WHERE id = {int:id}
+                    LIMIT 1',
+            array(
+                'id' => $select,
+            )
+        );
+        $config = $smcFunc['db_fetch_assoc']($request);
+        if (empty($select) || empty($config)){
+            fatal_error('Please select the token that needs to be redeemed');
+        }
         greaterThan($amount,0);
         if ($flmAmount < $amount) {
             fatal_error('Insufficient FCP quantity');
-        }
-        if ($amount < $context['min'] || $amount > $context['max']) {
-            fatal_error("The number of applications does not meet the requirements.Min:{$context['min']},Max:{$context['max']}");
         }
         $request = $smcFunc['db_query']('', '
 			SELECT COUNT(*)
@@ -51,6 +79,7 @@ function flmExChangeCenter(){
             )
         );
         list ($count) = $smcFunc['db_fetch_row']($request);
+        $realmAmount = round($amount * $config['radio'] ?? 1,2);
         $smcFunc['db_insert']('',
             '{db_prefix}apply_withdraw',
             array(
@@ -58,9 +87,12 @@ function flmExChangeCenter(){
                 'amount' => 'int',
                 'type' => 'string',
                 'create_at' => 'int',
-                'order_id' => 'int'
+                'order_id' => 'int',
+                'token_id' => 'int',
+                'address' => 'string',
+                'real_amount'=>'int'
             ),
-            [$user_info['id'],$amount,'flm',time(),$count + 1],
+            [$user_info['id'],$amount,'flm',time(),$count + 1,$select,$user_info['address'],$realmAmount],
             array()
         );
         $smcFunc['db_query']('', '
@@ -92,8 +124,8 @@ function flmExChangeCenter(){
     $context['start'] = $_REQUEST['start'];
     // member-lists
     $request = $smcFunc['db_query']('', '
-				SELECT   a.*,mem.address
-			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}members AS mem ON (a.id_member = mem.id_member)  WHERE type = {string:type} AND a.id_member = {int:id} ORDER BY id DESC LIMIT {int:start}, {int:max}',
+				SELECT   a.*,mem.token
+			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}fcp_config AS mem ON (a.token_id = mem.id)  WHERE type = {string:type} AND a.id_member = {int:id} ORDER BY id DESC LIMIT {int:start}, {int:max}',
         array(
             'id' => $user_info['id'],
             'type' => 'flm',

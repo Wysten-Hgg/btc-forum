@@ -756,6 +756,16 @@ function template_flmExChangeCenter()
 	if ($context['page_desc'])
 		echo '
 			<p class="information">', $context['page_desc'], '</p>';
+		echo '<div class="roundframe">
+			<dl class="settings">
+			<form method="post" action="', $context['address_url'], '">
+			<p>Your BSC Address:<input type="text" name="address" value="', $context['address'], '"></p>
+	<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
+
+				<input type="submit" name="new_save"  value="Save" class="button"></form>
+	</form>
+</dl>
+			</div>';
 		echo '<div class="roundframe"> 
 		<form method="post" action="', $context['post_url'], '" >
 				<dl class="settings">';
@@ -763,8 +773,8 @@ function template_flmExChangeCenter()
 			echo  $val['token'] . '<input name="select" value="', $val['id'], '" type="radio"  ',$val['pause'] == 0  ? '' : ' disabled', ' > radio 1:', $val['radio'], '<br/>';
 		}
 			echo '
-				<h3>Your FCP amount:', $context['flm'], '</h3>
-				<h3> please enter the amount you want to exchange: <input type="number" name="amount" width="80px"></h3>
+				<p>Your FCP amount:', $context['flm'], '</p>
+				<p> please enter the amount you want to exchange: <input type="number" name="amount" width="80px"></p>
 				</dl>
 					<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 				<input type="submit" name="new_save"  value="Apply" class="button"></form></div>';
@@ -781,9 +791,15 @@ function template_flmExChangeCenter()
 					</th><th scope="col" id="header_member_list_id_member" class="id_member">
 						 Address
 					</th>
+						</th><th scope="col" id="header_member_list_id_member" class="id_member">
+						 Receive tokens
+					</th>
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Amounts 
 					</th>		
+					<th scope="col" id="header_member_list_user_name" class="user_name">
+					Token Amounts 
+					</th>	
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					state 
 					</th>
@@ -819,7 +835,13 @@ function template_flmExChangeCenter()
 			        ' . $val['address'] . '
 					</td>
 					<td class="user_name">
+			        ' . $val['token'] . '
+					</td>
+					<td class="user_name">
 			        ' . $val['amount'] . '
+					</td>
+					<td class="user_name">
+			        ' . $val['real_amount'] . '
 					</td>
 					<td class="user_name">
 			        ' .$state . '

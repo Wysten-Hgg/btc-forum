@@ -5552,12 +5552,12 @@ function setupMenuContext()
 				'show' => $context['allow_flm'],
 				'is_last' => !$context['right_to_left'] && empty($settings['login_main_menu']),
 			),
-			'zealy' => array(
-				'title' => 'Zealy XP',
-				'href' => $scripturl . '?action=zealy',
-				'show' => $context['allow_xp'],
-				'is_last' => !$context['right_to_left'] && empty($settings['login_main_menu']),
-			),
+//			'zealy' => array(
+//				'title' => 'Zealy XP',
+//				'href' => $scripturl . '?action=zealy',
+//				'show' => $context['allow_xp'],
+//				'is_last' => !$context['right_to_left'] && empty($settings['login_main_menu']),
+//			),
 			'frp' => array(
 				'title' => 'FEP',
 				'href' => $scripturl . '?action=frp',

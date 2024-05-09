@@ -453,7 +453,7 @@ The function administrator sets to add or delete the Merit source user list as t
 								</dl>	
 								</div>';
 
-    template_apply_menu('all');
+
     // Go through each table!
     echo '<div class="cat_bar">
 			<h3 class="catbg">Exchange List(The radio is FCP:Token is ?)</h3>
@@ -508,7 +508,7 @@ The function administrator sets to add or delete the Merit source user list as t
             </form>';
 
 
-
+    template_apply_menu('all');
 
 
     // Go through each table!
@@ -520,18 +520,21 @@ The function administrator sets to add or delete the Merit source user list as t
 					<th scope="col" id="header_member_list_id_member" class="id_member">
 						 ID
 					</th>
-						<th scope="col" id="header_member_list_id_member" class="id_member">
-						 PID
-					</th>
+						
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Username 
 					</th>		
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Address 
 					</th>		
-					
+					<th scope="col" id="header_member_list_user_name" class="user_name">
+					Token 
+					</th>
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Amount 
+					</th>	
+					<th scope="col" id="header_member_list_user_name" class="user_name">
+					Token Amount 
 					</th>	
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					state 
@@ -563,18 +566,22 @@ The function administrator sets to add or delete the Merit source user list as t
 				<tr class="windowbg" id="list_member_list_0">
 					<td class="id_member">
 						' . $val['order_id'] .  '
-					</td>
-						<td class="id_member">
-						' . $val['pid'] . '
-					</td>
+					
 					<td class="user_name">
 			        ' . $val['member_name'] . '
 					</td>
 						<td class="user_name">
 			        ' . $val['address'] . '
 					</td>
+					</td>
+						<td class="user_name">
+			        ' . $val['token'] . '
+					</td>
 					<td class="display_name">
 						' . $val['amount'] . '
+					</td>
+					<td class="display_name">
+						' . $val['real_amount'] . '
 					</td>
 					<td class="display_name">
                      ' . $state . '
@@ -632,9 +639,6 @@ The function administrator sets to add or delete the Merit source user list as t
 					<th scope="col" id="header_member_list_id_member" class="id_member">
 						 ID
 					</th>
-					<th scope="col" id="header_member_list_id_member" class="id_member">
-						 PID
-					</th>
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Username 
 					</th>		
@@ -642,7 +646,13 @@ The function administrator sets to add or delete the Merit source user list as t
 					Address 
 					</th>		
 					<th scope="col" id="header_member_list_user_name" class="user_name">
+					Token 
+					</th>		
+					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Amount 
+					</th>	
+					<th scope="col" id="header_member_list_user_name" class="user_name">
+					Token Amount 
 					</th>	
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					state 
@@ -675,17 +685,21 @@ The function administrator sets to add or delete the Merit source user list as t
 					<td class="id_member">
 						' . $id . '
 					</td>
-					<td class="user_name">
-			        ' . $val['pid'] . '
-					</td>
+					
 					<td class="user_name">
 			        ' . $val['member_name'] . '
 					</td>
 						<td class="user_name">
 			        ' . $val['address'] . '
 					</td>
+					<td class="user_name">
+			        ' . $val['token'] . '
+					</td>
 					<td class="display_name">
 						' . $val['amount'] . '
+					</td>
+					<td class="display_name">
+						' . $val['real_amount'] . '
 					</td>
 					<td class="display_name">';
         if ($val['state'] == 0){
@@ -760,9 +774,6 @@ The function administrator sets to add or delete the Merit source user list as t
 					<th scope="col" id="header_member_list_id_member" class="id_member">
 						 ID
 					</th>
-					<th scope="col" id="header_member_list_id_member" class="id_member">
-						 PID
-					</th>
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Username 
 					</th>		
@@ -770,7 +781,13 @@ The function administrator sets to add or delete the Merit source user list as t
 					Address 
 					</th>		
 					<th scope="col" id="header_member_list_user_name" class="user_name">
+					Token 
+					</th>		
+					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Amount 
+					</th>	
+						<th scope="col" id="header_member_list_user_name" class="user_name">
+					Token Amount 
 					</th>	
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					state 
@@ -803,17 +820,21 @@ The function administrator sets to add or delete the Merit source user list as t
 					<td class="id_member">
 						' . $id . '
 					</td>
-					<td class="user_name">
-			        ' . $val['pid'] . '
-					</td>
+				
 					<td class="user_name">
 			        ' . $val['member_name'] . '
 					</td>
 						<td class="user_name">
 			        ' . $val['address'] . '
 					</td>
+					<td class="user_name">
+			        ' . $val['token'] . '
+					</td>
 					<td class="display_name">
 						' . $val['amount'] . '
+					</td>
+						<td class="display_name">
+						' . $val['real_amount'] . '
 					</td>
 					<td class="display_name">
                         ' . $state. '
@@ -881,17 +902,20 @@ The function administrator sets to add or delete the Merit source user list as t
 					<th scope="col" id="header_member_list_id_member" class="id_member">
 						 ID
 					</th>
-					<th scope="col" id="header_member_list_id_member" class="id_member">
-						 PID
-					</th>
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Username 
 					</th>		
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Address 
-					</th>		
+					</th>	
+					<th scope="col" id="header_member_list_user_name" class="user_name">
+					Token 
+					</th>			
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Amount 
+					</th>	
+					<th scope="col" id="header_member_list_user_name" class="user_name">
+					Token Amount 
 					</th>	
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Time 
@@ -906,17 +930,21 @@ The function administrator sets to add or delete the Merit source user list as t
 					<td class="id_member">
 						' . $id . '
 					</td>
-					<td class="user_name">
-			        ' . $val['pid'] . '
-					</td>
+			
 					<td class="user_name">
 			        ' . $val['member_name'] . '
 					</td>
 						<td class="user_name">
 			        ' . $val['address'] . '
 					</td>
+					<td class="user_name">
+			        ' . $val['token'] . '
+					</td>
 					<td class="display_name">
 						' . $val['amount'] . '
+					</td>
+						<td class="display_name">
+						' . $val['real_amount'] . '
 					</td>
 					<td class="check centercol">
 					' . date('Y-m-d H:i:s',$val['create_at']) . '

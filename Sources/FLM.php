@@ -576,8 +576,8 @@ function flmexchange(){
     $context['start'] = $_REQUEST['start'];
     // member-lists
     $request = $smcFunc['db_query']('', '
-				SELECT   a.*,mem.member_name,mem.pid,mem.address
-			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}members AS mem ON (a.id_member = mem.id_member)  WHERE type = {string:type} ORDER BY id DESC LIMIT {int:start}, {int:max}',
+				SELECT   a.*,mem.member_name,fcp.token
+			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}members AS mem ON (a.id_member = mem.id_member) LEFT JOIN {db_prefix}fcp_config AS fcp ON (a.token_id = fcp.id) WHERE type = {string:type} ORDER BY id DESC LIMIT {int:start}, {int:max}',
         array(
             'type' => 'flm',
             'start' => $limit,
@@ -686,8 +686,8 @@ function notReview(){
     $context['start'] = $_REQUEST['start'];
     // member-lists
     $request = $smcFunc['db_query']('', '
-				SELECT   a.*,mem.member_name,mem.pid,mem.address
-			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}members AS mem ON (a.id_member = mem.id_member)  WHERE type = {string:type} AND state = {int:state} ORDER BY id DESC LIMIT {int:start}, {int:max}',
+				SELECT   a.*,mem.member_name,fcp.token
+			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}members AS mem ON (a.id_member = mem.id_member) LEFT JOIN {db_prefix}fcp_config AS fcp ON (a.token_id = fcp.id)  WHERE type = {string:type} AND state = {int:state} ORDER BY id DESC LIMIT {int:start}, {int:max}',
         array(
             'type' => 'flm',
             'state'=>0,
@@ -723,8 +723,8 @@ function reviewed(){
         $exportData = [];
         require_once($boarddir . '/Export.php');
         $request = $smcFunc['db_query']('', '
-				SELECT   a.*,mem.member_name,mem.pid,mem.address
-			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}members AS mem ON (a.id_member = mem.id_member)  WHERE type = {string:type} AND state = {int:state} AND complete = {int:complete} ORDER BY id DESC',
+				SELECT   a.*,mem.member_name,fcp.token
+			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}members AS mem ON (a.id_member = mem.id_member) LEFT JOIN {db_prefix}fcp_config AS fcp ON (a.token_id = fcp.id)  WHERE type = {string:type} AND state = {int:state} AND complete = {int:complete} ORDER BY id DESC',
             array(
                 'type' => 'flm',
                 'state'=>1,
@@ -791,8 +791,8 @@ function reviewed(){
     $context['start'] = $_REQUEST['start'];
     // member-lists
     $request = $smcFunc['db_query']('', '
-				SELECT   a.*,mem.member_name,mem.pid,mem.address
-			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}members AS mem ON (a.id_member = mem.id_member)  WHERE type = {string:type} AND state = {int:state} AND complete = {int:complete} ORDER BY id DESC LIMIT {int:start}, {int:max}',
+				SELECT   a.*,mem.member_name,fcp.token
+			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}members AS mem ON (a.id_member = mem.id_member) LEFT JOIN {db_prefix}fcp_config AS fcp ON (a.token_id = fcp.id) WHERE type = {string:type} AND state = {int:state} AND complete = {int:complete} ORDER BY id DESC LIMIT {int:start}, {int:max}',
         array(
             'type' => 'flm',
             'state'=>1,
@@ -861,8 +861,8 @@ function complete(){
     $context['start'] = $_REQUEST['start'];
     // member-lists
     $request = $smcFunc['db_query']('', '
-				SELECT   a.*,mem.member_name,mem.pid,mem.address
-			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}members AS mem ON (a.id_member = mem.id_member)  WHERE type = {string:type} AND complete = {int:complete} ORDER BY id DESC LIMIT {int:start}, {int:max}',
+				SELECT   a.*,mem.member_name,fcp.token
+			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}members AS mem ON (a.id_member = mem.id_member) LEFT JOIN {db_prefix}fcp_config AS fcp ON (a.token_id = fcp.id)  WHERE type = {string:type} AND complete = {int:complete} ORDER BY id DESC LIMIT {int:start}, {int:max}',
         array(
             'type' => 'flm',
             'complete'=>1,
