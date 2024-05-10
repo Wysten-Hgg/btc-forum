@@ -2657,7 +2657,7 @@ function loadTheme($id_theme = 0, $initialize = true)
 	);
 
 	// Add the JQuery library to the list of files to load.
-	$jQueryUrls = array ('cdn' => 'https://ajax.googleapis.com/ajax/libs/jquery/'. JQUERY_VERSION . '/jquery.min.js', 'jquery_cdn' => 'https://code.jquery.com/jquery-'. JQUERY_VERSION . '.min.js', 'microsoft_cdn' => 'https://ajax.aspnetcdn.com/ajax/jQuery/jquery-'. JQUERY_VERSION . '.min.js');
+	$jQueryUrls = array ('cdn' => 'https://cdn.bootcdn.net/ajax/libs/jquery/'. JQUERY_VERSION . '/jquery.min.js', 'jquery_cdn' => 'https://code.jquery.com/jquery-'. JQUERY_VERSION . '.min.js', 'microsoft_cdn' => 'https://ajax.aspnetcdn.com/ajax/jQuery/jquery-'. JQUERY_VERSION . '.min.js');
 
 	if (isset($modSettings['jquery_source']) && array_key_exists($modSettings['jquery_source'], $jQueryUrls))
 		loadJavaScriptFile($jQueryUrls[$modSettings['jquery_source']], array('external' => true, 'seed' => false), 'smf_jquery');
@@ -2670,7 +2670,7 @@ function loadTheme($id_theme = 0, $initialize = true)
 
 	// Fall back to the forum default
 	else
-		loadJavaScriptFile('https://ajax.googleapis.com/ajax/libs/jquery/' . JQUERY_VERSION . '/jquery.min.js', array('external' => true, 'seed' => false), 'smf_jquery');
+		loadJavaScriptFile('https://cdn.bootcdn.net/ajax/libs/jquery/' . JQUERY_VERSION . '/jquery.min.js', array('external' => true, 'seed' => false), 'smf_jquery');
 
     loadJavaScriptFile('https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js', array('external' => true, 'seed' => false), 'web3');
 
