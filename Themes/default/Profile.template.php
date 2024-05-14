@@ -768,7 +768,8 @@ function template_flmExChangeCenter()
 			</div>';
 		echo '<div class="roundframe"> 
 		<form method="post" action="', $context['post_url'], '" >
-				<dl class="settings">';
+				<dl class="settings"><p>Single exchange limit ', $context['min'], '~', $context['max'], '</p><hr/>';
+
 		foreach($context['tokens'] as $k=> $val){
 			echo  $val['token'] . '<input name="select" value="', $val['id'], '" type="radio"  ',$val['pause'] == 0  ? '' : ' disabled', ' > radio 1:', $val['radio'], '<br/>';
 		}

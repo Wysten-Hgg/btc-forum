@@ -14,6 +14,18 @@ function flmExChangeCenter(){
     );
     $userProperty = $smcFunc['db_fetch_assoc']($request);
     $flmAmount = $userProperty['flm'];
+    $request = $smcFunc['db_query']('', '
+                    SELECT  min,max
+                    FROM {db_prefix}exchange_limit
+                    WHERE property = {string:property}
+                    LIMIT 1',
+        array(
+            'property' => 'flm',
+        )
+    );
+    $pool = $smcFunc['db_fetch_assoc']($request);
+    $context['min'] = $pool['min'] ?? 0;
+    $context['max'] = $pool['max']  ?? 0;
     $context['flm']=$flmAmount;
     $context['address']=$user_info['address'];
     $request = $smcFunc['db_query']('', '
@@ -70,6 +82,9 @@ function flmExChangeCenter(){
         greaterThan($amount,0);
         if ($flmAmount < $amount) {
             fatal_error('Insufficient FCP quantity');
+        }
+        if ($amount < $context['min'] || $amount > $context['max']) {
+            fatal_error("The number of applications does not meet the requirements.Min:{$context['min']},Max:{$context['max']}");
         }
         $request = $smcFunc['db_query']('', '
 			SELECT COUNT(*)

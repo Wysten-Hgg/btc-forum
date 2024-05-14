@@ -443,6 +443,20 @@ The function administrator sets to add or delete the Merit source user list as t
 		</div>
 		<div class="windowbg">
 								<dl class="settings">
+								  <form method="post" action="', $context['limit_url'], '" >    
+									<h1>Single Min: <input type="number" name="min" id="recaptcha_site_key" value="', $context['min'], '"></h1>
+									<br>
+									<h1>Single Max: <input type="number" name="max" id="recaptcha_site_key" value="', $context['max'], '"></h1>
+									<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
+				<input type="submit" value="Modify" class="button">
+				</form> 
+								</dl>	
+								</div>';
+    echo '<div class="cat_bar">
+			<h3 class="catbg">Set FCP Exchange Tokens</h3>
+		</div>
+		<div class="windowbg">
+								<dl class="settings">
 								  <form method="post" action="', $context['post_url'], '" >    
 									<h1>token <input type="text" name="token" id="recaptcha_site_key"></h1>
 									<br>

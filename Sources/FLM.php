@@ -494,6 +494,7 @@ function flmexchange(){
     loadTemplate('FLM');
     $context['sub_template'] = 'flmexchange';
     $context['post_url'] = $scripturl . '?action=flm;sa=flmexchange;save';
+    $context['limit_url'] = $scripturl . '?action=flm;sa=flmexchange;limit';
     $context['modify_url'] = $scripturl . '?action=flm;sa=flmexchange;modify';
     $request = $smcFunc['db_query']('', '
                     SELECT *
@@ -503,6 +504,21 @@ function flmexchange(){
     while ($row = $smcFunc['db_fetch_assoc']($request)) {
         $context['tokens'][] = $row;
     }
+
+    $request = $smcFunc['db_query']('', '
+                    SELECT  min,max
+                    FROM {db_prefix}exchange_limit
+                    WHERE property = {string:property}
+                    LIMIT 1',
+        array(
+            'property' => 'flm',
+        )
+    );
+    $pool = $smcFunc['db_fetch_assoc']($request);
+    $context['min'] = $pool['min'] ?? 0;
+    $context['max'] = $pool['max']  ?? 0;
+
+
     if (isset($_SESSION['adm-save']))
     {
         if ($_SESSION['adm-save'] === true)
@@ -556,6 +572,39 @@ function flmexchange(){
                 array()
             );
 
+        $_SESSION['adm-save'] = true;
+        redirectexit('action=flm;sa=flmexchange');
+
+    }
+    if (isset($_GET['limit']))
+    {
+        checkSession();
+        $min = $_POST['min'];
+        $max = $_POST['max'];
+        if (empty($pool)){
+            $smcFunc['db_insert']('',
+                '{db_prefix}exchange_limit',
+                array(
+                    'min' => 'int',
+                    'max' => 'int',
+                    'property' => 'string',
+                ),
+                [$min,$max,'flm'],
+                array()
+            );
+        }else{
+            $smcFunc['db_query']('', '
+                UPDATE {db_prefix}exchange_limit
+                SET min = {int:min},
+                max = {int:max}
+                WHERE property = {string:property}',
+                array(
+                    'min' => $min,
+                    'max' => $max,
+                    'property' => 'flm'
+                )
+            );
+        }
         $_SESSION['adm-save'] = true;
         redirectexit('action=flm;sa=flmexchange');
 
