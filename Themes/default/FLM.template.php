@@ -506,7 +506,7 @@ Function to add or remove users from the Merit Source list as distributors of sF
 					
 					<td class="display_name">';
 
-            echo 'Enabled<input type="checkbox" name="pause[]" ',$val['pause'] == 0  ? '' : ' checked', ' value="	' . $val['id'] .  '">';
+            echo 'Disabled<input type="checkbox" name="pause[]" ',$val['pause'] == 0  ? '' : ' checked', ' value="	' . $val['id'] .  '">';
         echo '
 					
 				</tr>';

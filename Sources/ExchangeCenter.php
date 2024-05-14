@@ -105,7 +105,7 @@ function flmExChangeCenter(){
                 'order_id' => 'int',
                 'token_id' => 'int',
                 'address' => 'string',
-                'real_amount'=>'int'
+                'real_amount'=>'string'
             ),
             [$user_info['id'],$amount,'flm',time(),$count + 1,$select,$user_info['address'],$realmAmount],
             array()

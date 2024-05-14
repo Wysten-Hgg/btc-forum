@@ -802,19 +802,19 @@ function template_flmExChangeCenter()
 						</th><th scope="col" id="header_member_list_id_member" class="id_member">
 						 Receive tokens
 					</th>
-					<th scope="col" id="header_member_list_user_name" class="user_name">
-					Amounts 
+					<th scope="col" id="header_member_list_id_member" class="id_member">
+					Apply Amounts 
 					</th>		
-					<th scope="col" id="header_member_list_user_name" class="user_name">
-					Token Amounts 
+					<th scope="col" id="header_member_list_id_member" class="id_member">
+					Receive Amounts 
 					</th>	
-					<th scope="col" id="header_member_list_user_name" class="user_name">
+					<th scope="col" id="header_member_list_id_member" class="id_member">
 					status 
 					</th>
-					<th scope="col" id="header_member_list_user_name" class="user_name">
+					<th scope="col" id="header_member_list_id_member" class="id_member">
 					complete 
 					</th>
-					<th scope="col" id="header_member_list_user_name" class="user_name">
+					<th scope="col" id="header_member_list_id_member" class="id_member">
 					Time 
 					</th>
 				</tr>
@@ -839,22 +839,22 @@ function template_flmExChangeCenter()
 					<td class="id_member">
 						' . $id . '
 					</td>
-					<td class="user_name">
+					<td class="id_member">
 			        ' . $val['address'] . '
 					</td>
-					<td class="user_name">
+					<td class="id_member">
 			        ' . $val['token'] . '
 					</td>
-					<td class="user_name">
+					<td class="id_member">
 			        ' . $val['amount'] . '
 					</td>
-					<td class="user_name">
+					<td class="id_member">
 			        ' . $val['real_amount'] . '
 					</td>
-					<td class="user_name">
+					<td class="id_member">
 			        ' .$state . '
 					</td>
-					<td class="display_name">
+					<td class="id_member">
 						' . $comp . '
 					</td>
 					<td class="check centercol">
