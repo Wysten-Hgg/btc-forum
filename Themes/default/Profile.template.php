@@ -753,29 +753,30 @@ function template_flmExChangeCenter()
 			</div>';
 
 	// Have we some description?
+
 	if ($context['page_desc'])
 		echo '
 			<p class="information">', $context['page_desc'], '</p>';
 		echo '<div class="roundframe">
 			<dl class="settings">
 			<form method="post" action="', $context['address_url'], '">
-			<p>Your BSC Address:<input type="text" name="address" value="', $context['address'], '"></p>
+			<p>Your BSC Address:<input type="text" size="60" name="address" value="', $context['address'], '"></p>
 	<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 
-				<input type="submit" name="new_save"  value="Save" class="button"></form>
+				<input type="submit" name="new_save"  value="', $context['button'], '" class="button"></form>
 	</form>
 </dl>
 			</div>';
 		echo '<div class="roundframe"> 
 		<form method="post" action="', $context['post_url'], '" >
-				<dl class="settings"><p>Single exchange limit ', $context['min'], '~', $context['max'], '</p><hr/>';
+				<dl class="settings">';
 
 		foreach($context['tokens'] as $k=> $val){
-			echo  $val['token'] . '<input name="select" value="', $val['id'], '" type="radio"  ',$val['pause'] == 0  ? '' : ' disabled', ' > radio 1:', $val['radio'], '<br/>';
+			echo  $val['token'] . '<input name="select" value="', $val['id'], '" type="radio"  ',$val['pause'] == 0  ? '' : ' disabled', ' > ratio 1:', $val['radio'], '<br/>';
 		}
 			echo '
 				<p>Your FCP amount:', $context['flm'], '</p>
-				<p> please enter the amount you want to exchange: <input type="number" name="amount" width="80px"></p>
+				<p> please enter the amount you want to swap: <input type="number" name="amount" width="80px"> (Limit not lower than ', $context['min'], ' , Max limit not more than ', $context['max'], ')</p>
 				</dl>
 					<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 				<input type="submit" name="new_save"  value="Apply" class="button"></form></div>';
@@ -802,7 +803,7 @@ function template_flmExChangeCenter()
 					Token Amounts 
 					</th>	
 					<th scope="col" id="header_member_list_user_name" class="user_name">
-					state 
+					status 
 					</th>
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					complete 

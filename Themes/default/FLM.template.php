@@ -22,7 +22,7 @@ function template_main()
 			<h3 class="catbg">Manage FCP</h3>
 		</div>
 		<p class="information">
-The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -53,7 +53,7 @@ The function administrator sets to add or delete the Merit source user list as t
 		</div>';
 
     // Go through each table!
-    echo '	<strong class="">Current Official Pool sFCP Total	 ' . $context['pool_amount'] . '</strong><form  action="' . $context['delete_url'] . '" method="post"><table class="table_grid" id="member_list">
+    echo '	<strong class="">Total Amount of sFCP in Current Pool:	 ' . $context['pool_amount'] . '</strong><form  action="' . $context['delete_url'] . '" method="post"><table class="table_grid" id="member_list">
 			<thead>
 				<tr class="title_bar">
 					<th scope="col" id="header_member_list_id_member" class="id_member">
@@ -105,7 +105,7 @@ The function administrator sets to add or delete the Merit source user list as t
 			<div class="additional_row">
 				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 				<input type="hidden" name="work" value="delete">
-				<input type="submit" name="delete_members" value="Delete Selected Members" style="float: right" data-confirm="Are you sure you want to delete the selected members?" class="button you_sure">
+				<input type="submit" name="delete_members" value="Remove Selected Members" style="float: right" data-confirm="Are you sure you want to delete the selected members?" class="button you_sure">
 			    <input type="submit" name="transfer" value="Transfer sFCP" style="float: right" class="button">
 			</div>
 		</div>
@@ -128,7 +128,7 @@ function template_usersFLMTransfer(){
 			<h3 class="catbg">Manage FCP</h3>
 		</div>
 		<p class="information">
-The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -203,7 +203,7 @@ function template_sFLMTransfer(){
 			<h3 class="catbg">Manage FCP</h3>
 		</div>
 		<p class="information">
-The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -282,7 +282,7 @@ function template_sFLM()
 			<h3 class="catbg">Manage FCP</h3>
 		</div>
 		<p class="information">
-The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -298,10 +298,10 @@ The function administrator sets to add or delete the Merit source user list as t
 		<div class="windowbg" id="group_requests_panel">
 			<ul>
 				<li>
-					<p><strong class="smalltext">Current Official Pool sFCP:', $context['pool_amount'], '</strong></p>
-					<p><strong class="smalltext">Destroyed  sFCP:', $context['total_issue'] -  $context['user_holder'] - $context['pool_amount'], '</strong></p>
-					<p><strong class="smalltext">User holder sFCP:', $context['user_holder'], '</strong></p>
-					<p><strong class="smalltext">Total issue sFCP:', $context['total_issue'], '</strong></p>
+					<p><strong class="smalltext">Total Amount of Current sFCP Pool:', $context['pool_amount'], '</strong></p>
+					<p><strong class="smalltext">Total Burnt:', $context['total_issue'] -  $context['user_holder'] - $context['pool_amount'], '</strong></p>
+					<p><strong class="smalltext">Total sFCP of Current sFCP Holders:', $context['user_holder'], '</strong></p>
+					<p><strong class="smalltext">Total issued:', $context['total_issue'], '</strong></p>
 				</li>
 			</ul>
 		</div><!-- #group_requests_panel -->
@@ -429,10 +429,10 @@ function template_flmexchange()
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">FCP Change Center</h3>
+			<h3 class="catbg">FCP Swap Center</h3>
 		</div>
 		<p class="information">
-The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -481,10 +481,10 @@ The function administrator sets to add or delete the Merit source user list as t
 						 token
 					</th>
 					<th scope="col" id="header_member_list_user_name" class="user_name">
-					radio 
+					ratio 
 					</th>		
 					<th scope="col" id="header_member_list_user_name" class="user_name">
-					is pause? 
+					status 
 					</th>		
 				</tr>
 			</thead>
@@ -501,12 +501,12 @@ The function administrator sets to add or delete the Merit source user list as t
 					<td class="user_name">
 			        ' . $val['token'] . '
 					</td>
-						<td class="user_name"><input type="text" name="radio[]"  value=" ' . $val['radio'] . '">
+						<td class="user_name"><input type="text" name="radio[]"  value="'.$val['radio'].'">
 					</td>
 					
 					<td class="display_name">';
 
-            echo 'Paused<input type="checkbox" name="pause[]" ',$val['pause'] == 0  ? '' : ' checked', ' value="	' . $val['id'] .  '">';
+            echo 'Enabled<input type="checkbox" name="pause[]" ',$val['pause'] == 0  ? '' : ' checked', ' value="	' . $val['id'] .  '">';
         echo '
 					
 				</tr>';
@@ -634,10 +634,10 @@ function template_notReview()
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">FCP Change Center</h3>
+			<h3 class="catbg">FCP Swap Center</h3>
 		</div>
 		<p class="information">
-The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -768,10 +768,10 @@ function template_reviewed()
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">FCP Change Center</h3>
+			<h3 class="catbg">FCP Swap Center</h3>
 		</div>
 		<p class="information">
-The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -896,10 +896,10 @@ function template_complete()
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">FCP Change Center</h3>
+			<h3 class="catbg">FCP Swap Center</h3>
 		</div>
 		<p class="information">
-The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -995,7 +995,7 @@ function template_emerit()
 			<h3 class="catbg">Manage FCP</h3>
 		</div>
 		<p class="information">
-The function administrator sets to add or delete the Merit source user list as the internal distributiongroup of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
 		<div id="report_buttons">';
 
     echo '

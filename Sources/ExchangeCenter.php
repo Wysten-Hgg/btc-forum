@@ -28,6 +28,11 @@ function flmExChangeCenter(){
     $context['max'] = $pool['max']  ?? 0;
     $context['flm']=$flmAmount;
     $context['address']=$user_info['address'];
+    if (empty($context['address'])){
+        $context['button'] = 'SAVE';
+    }else{
+        $context['button'] = 'EDIt';
+    }
     $request = $smcFunc['db_query']('', '
                     SELECT *
                     FROM {db_prefix}fcp_config

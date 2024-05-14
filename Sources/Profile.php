@@ -489,10 +489,10 @@ function ModifyProfile($post_errors = array())
 			),
 		),
 		'exchange_center' => array(
-			'title' => 'Exchange Center',
+			'title' => 'Swap Center',
 			'areas' => array(
 				'flmchange' => array(
-					'label' => 'FCP Exchange Center',
+					'label' => 'FCP Swap Center',
 					'file' => 'ExchangeCenter.php',
 					'function' => 'flmExChangeCenter',
 					'icon' => 'packages',
