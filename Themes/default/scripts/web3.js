@@ -18,6 +18,11 @@
             }
         });
     }
+    function editAddress(){
+        $("#save_address").css("display","block");
+        $("#edit_address").css("display","none");
+        $("#address_val").prop('disabled', false);
+    }
     function copyText(ele){
         // console.log(ele)
         // ele.select();

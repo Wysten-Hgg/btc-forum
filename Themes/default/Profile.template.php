@@ -735,7 +735,9 @@ function template_flmExChangeCenter()
 	// because some browsers ignore autocomplete=off and fill username in display name and/ or email field, fake them out.
 	$url = !empty($context['profile_custom_submit_url']) ? $context['profile_custom_submit_url'] : $scripturl . '?action=profile;area=' . $context['menu_item_selected'] . ';u=' . $context['id_member'];
 	$url = $context['require_password'] && !empty($modSettings['force_ssl']) ? strtr($url, array('http://' => 'https://')) : $url;
-
+	if (!empty($context['saved_successful']))
+		echo '
+					<div class="infobox">', $txt['save'], '</div>';
 	echo '
 			<div class="cat_bar">
 				<h3 class="catbg profile_hd">';
@@ -753,17 +755,21 @@ function template_flmExChangeCenter()
 			</div>';
 
 	// Have we some description?
-
+	if (!empty($context['address'])){
+		$exists = true;
+	}else{
+		$exists = false;
+	}
 	if ($context['page_desc'])
 		echo '
 			<p class="information">', $context['page_desc'], '</p>';
 		echo '<div class="roundframe">
 			<dl class="settings">
 			<form method="post" action="', $context['address_url'], '">
-			<p>Your BSC Address:<input type="text" size="60" name="address" value="', $context['address'], '"></p>
-	<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
-
-				<input type="submit" name="new_save"  value="', $context['button'], '" class="button"></form>
+			<p>Your BSC Address:<input type="text" size="60" id="address_val" ',$exists == false  ? '' : 'disabled', '   name="address" value="', $context['address'], '"></p>
+				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
+				<input type="button"  id="edit_address" ',$exists == false  ? 'style="display:none"' : '', '   value="edit" onclick="editAddress()" class="button">
+				<input type="submit" ',$exists == true  ? 'style="display:none"' : '', ' name="new_save" id="save_address"  value="save" class="button">
 	</form>
 </dl>
 			</div>';
