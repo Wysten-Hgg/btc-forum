@@ -524,7 +524,7 @@ function flmexchange(){
                     $paused = in_array($value,$pause) ? 1 : 0;
                     $smcFunc['db_query']('', '
 					UPDATE {db_prefix}fcp_config
-					SET radio = {int:radio},
+					SET radio = {string:radio},
 					pause = ({int:pause})
 					WHERE id = ({int:id})',
                         array(
@@ -550,7 +550,7 @@ function flmexchange(){
                 '{db_prefix}fcp_config',
                 array(
                     'token' => 'string',
-                    'radio' => 'int',
+                    'radio' => 'string',
                 ),
                 [$token,$radio],
                 array()
