@@ -45,7 +45,7 @@ $editortxt['insert_link'] = '插入链接';
 $editortxt['description'] = '描述 (可选)';
 $editortxt['unlink'] = '删除超链接';
 $editortxt['more'] = '更多';
-$editortxt['close'] = 'Clo关闭se';
+$editortxt['close'] = '关闭';
 $editortxt['insert_smiley'] = '插入表情';
 $editortxt['video_url'] = '视频 URL：';
 $editortxt['insert'] = '插入';
@@ -60,6 +60,6 @@ $editortxt['flash'] = '插入 Flash';
 $editortxt['float_left'] = '浮动在左侧';
 $editortxt['float_right'] = '浮动在右侧';
 $editortxt['maximize'] = '全屏编辑';
-$editortxt['dateformat'] = 'month/day/year';
+$editortxt['dateformat'] = '月/日/年';
 
 ?>
