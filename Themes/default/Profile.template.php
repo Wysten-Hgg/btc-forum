@@ -4129,11 +4129,6 @@ function template_invitation()
 			</div>';
 
 	// Have we some description?
-	if (!empty($context['address'])){
-		$exists = true;
-	}else{
-		$exists = false;
-	}
 	if ($context['page_desc'])
 		echo '
 			<p class="information">', $context['page_desc'], '</p>';
@@ -4141,7 +4136,7 @@ function template_invitation()
 			<dl class="settings">
 			<p>Current generated quantity:', $context['num_members'], '</p>
 			<p>Quantity that can be generated:', $context['invitation_amount'] - $context['num_members'], '</p>
-			<form method="post" action="', $context['address_url'], '">
+			<form method="post" action="', $context['post_url'], '">
 				<input type="number" name="amount">
 				<input type="submit" name="delete" value="create" class="button you_sure">
 			</form>
@@ -4150,7 +4145,7 @@ function template_invitation()
 
 	echo '<div class="cat_bar">
 			<h3 class="catbg">
-				Apply Records
+				My invitation code
 			</h3>
 		</div>';
 	echo '<form  method="post"><table class="table_grid" id="member_list">
@@ -4159,26 +4154,15 @@ function template_invitation()
 					<th scope="col" id="header_member_list_id_member" class="id_member">
 						 ID
 					</th><th scope="col" id="header_member_list_id_member" class="id_member">
-						 Address
+						 code
 					</th>
 						</th><th scope="col" id="header_member_list_id_member" class="id_member">
-						 Receive tokens
+						 Used
 					</th>
 					<th scope="col" id="header_member_list_id_member" class="id_member">
-					Apply Amounts 
+					Used Time
 					</th>		
-					<th scope="col" id="header_member_list_id_member" class="id_member">
-					Receive Amounts 
-					</th>	
-					<th scope="col" id="header_member_list_id_member" class="id_member">
-					status 
-					</th>
-					<th scope="col" id="header_member_list_id_member" class="id_member">
-					complete 
-					</th>
-					<th scope="col" id="header_member_list_id_member" class="id_member">
-					Time 
-					</th>
+			
 				</tr>
 			</thead>
 			<tbody>';
@@ -4195,32 +4179,21 @@ function template_invitation()
 				$state = 'Unaudited';
 				break;
 		}
-		$comp = $val['complete'] == 0 ? 'No' : 'Yes';
+		$user = $val['used_user'] == 0 ? 'not used' : $val['name2'];
+		$usedTime = $val['used_user'] == 0 ? 'not used' :  date('Y-m-d H:i:s',$val['used_time']);
 		echo '
 				<tr class="windowbg" id="list_member_list_0">
 					<td class="id_member">
 						' . $id . '
 					</td>
 					<td class="id_member">
-			        ' . $val['address'] . '
+			        ' . $val['code'] . '
 					</td>
 					<td class="id_member">
-			        ' . $val['token'] . '
-					</td>
-					<td class="id_member">
-			        ' . $val['amount'] . '
-					</td>
-					<td class="id_member">
-			        ' . $val['real_amount'] . '
-					</td>
-					<td class="id_member">
-			        ' .$state . '
-					</td>
-					<td class="id_member">
-						' . $comp . '
+			        ' . $user . '
 					</td>
 					<td class="check centercol">
-					' . date('Y-m-d H:i:s',$val['create_at']) . '
+					' .$usedTime. '
 					</td>
 				</tr>';
 	}

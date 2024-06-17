@@ -2,7 +2,7 @@
 function invitation(){
     global $scripturl, $context,$smcFunc,$user_info,$modSettings;
     $context['post_url'] = $scripturl . '?action=profile;area=invitation;save';
-    $context['address_url'] = $scripturl . '?action=profile;area=invitation;address';
+//    $context['address_url'] = $scripturl . '?action=profile;area=invitation;address';
     $request = $smcFunc['db_query']('', '
 			SELECT  *
 			FROM {db_prefix}settings
@@ -53,14 +53,22 @@ function invitation(){
     {
 //        checkSession();
         $amount = $_POST['amount'];
-
-
         greaterThan($amount,0);
-        if ( $context['invitation_amount'] - $context['num_members'] >= $amount) {
+        if ( $context['invitation_amount'] - $context['num_members'] < $amount) {
             fatal_error('Insufficient invitation code quantity');
         }
-
-
+        for ($i = 0 ; $i < $amount; $i++){
+            $code = createInvitationCode();
+            $smcFunc['db_insert']('',
+                '{db_prefix}invitation_code',
+                array(
+                    'created_user' => 'int',
+                    'code' => 'string',
+                ),
+                [$user_info['id'],$code],
+                array()
+            );
+        }
         $_SESSION['adm-save'] = true;
         redirectexit('action=profile;area=invitation;u='.$user_info['id']);
     }

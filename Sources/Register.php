@@ -295,7 +295,27 @@ function Register2()
 		loadLanguage('Errors');
 		$reg_errors[] = $txt['error_too_quickly'];
 	}
+	$invitation = $_POST['invitation'];
+	$request = $smcFunc['db_query']('', '
+				SELECT *
+				FROM {db_prefix}invitation_code  WHERE code = {string:code} LIMIT 1',
+		array(
+			'code' => $invitation,
+		)
+	);
 
+	$result = $smcFunc['db_fetch_assoc']($request);
+	$codeUserId = $result['created_user'];
+	$codeId = $result['id'];
+		$smcFunc['db_free_result']($request);
+	if (empty($invitation) || empty($result)){
+		loadLanguage('Errors');
+		$reg_errors[] = 'Enter the correct invitation code';
+	}
+	if ($result['used_user'] != 0) {
+		loadLanguage('Errors');
+		$reg_errors[] = 'The invitation code has been used';
+	}
 	// Check whether the visual verification code was entered correctly.
 	if (!empty($modSettings['reg_verification']))
 	{
@@ -420,9 +440,11 @@ function Register2()
 		unset($_POST['lngfile']);
 
 	// Set the options needed for registration.
+
 	$regOptions = array(
 		'interface' => 'guest',
 		'username' => !empty($_POST['user']) ? $_POST['user'] : '',
+		'parent_id' => $codeUserId,
 		'email' => !empty($_POST['email']) ? $_POST['email'] : '',
 		'password' => !empty($_POST['passwrd1']) ? $_POST['passwrd1'] : '',
 		'password_check' => !empty($_POST['passwrd2']) ? $_POST['passwrd2'] : '',
@@ -529,6 +551,17 @@ function Register2()
 	}
 
 	$memberID = registerMember($regOptions, true);
+	$smcFunc['db_query']('', '
+					UPDATE {db_prefix}invitation_code
+					SET used_user = {int:user},
+					used_time = {int:time}
+					WHERE id = {int:id}',
+		array(
+			'user' =>$memberID,
+			'id' => $codeId,
+			'time'=>time()
+		)
+	);
 
 	// What there actually an error of some kind dear boy?
 	if (is_array($memberID))

@@ -625,6 +625,7 @@ function registerMember(&$regOptions, $return_errors = false,$from_dao = false)
 		'password_salt' => bin2hex($smcFunc['random_bytes'](16)),
 		'posts' => 0,
 		'pid' => $regOptions['pid'] ?? 0,
+		'parent_id' => $regOptions['parent_id'] ?? 0,
 		'address' => $regOptions['address'] ?? "",
 		'btcaddress' => $regOptions['btcaddress'] ?? "",
 		'date_registered' => time(),
