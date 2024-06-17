@@ -542,6 +542,22 @@ function ModifyProfile($post_errors = array())
 //				),
 			),
 		),
+		'invitation' => array(
+			'title' => 'invitation',
+			'areas' => array(
+				'invitation' => array(
+					'label' => 'invitation',
+					'file' => 'invitation.php',
+					'function' => 'invitation',
+					'icon' => 'packages',
+					// 'token' => 'profile-ex%u', // This is not checked here. We do it in the function itself - but if it was checked, this is what it'd be.
+					'permission' => array(
+						'own' => array('profile_view_own'),
+						'any' => array('moderate_forum'),
+					),
+				)
+			),
+		),
 	);
 
 	// Let them modify profile areas easily.

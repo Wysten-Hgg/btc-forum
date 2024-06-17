@@ -4101,5 +4101,137 @@ function template_export_profile_data()
 			</form>
 		</div><!-- .windowbg -->';
 }
+function template_invitation()
+{
+	global $context, $scripturl, $txt, $modSettings;
+
+	// The main header!
+	// because some browsers ignore autocomplete=off and fill username in display name and/ or email field, fake them out.
+	$url = !empty($context['profile_custom_submit_url']) ? $context['profile_custom_submit_url'] : $scripturl . '?action=profile;area=' . $context['menu_item_selected'] . ';u=' . $context['id_member'];
+	$url = $context['require_password'] && !empty($modSettings['force_ssl']) ? strtr($url, array('http://' => 'https://')) : $url;
+	if (!empty($context['saved_successful']))
+		echo '
+					<div class="infobox">', $txt['save'], '</div>';
+	echo '
+			<div class="cat_bar">
+				<h3 class="catbg profile_hd">';
+
+	// Don't say "Profile" if this isn't the profile...
+	if (!empty($context['profile_header_text']))
+		echo '
+					', $context['profile_header_text'];
+	else
+		echo '
+					', $txt['profile'];
+
+	echo '
+				</h3>
+			</div>';
+
+	// Have we some description?
+	if (!empty($context['address'])){
+		$exists = true;
+	}else{
+		$exists = false;
+	}
+	if ($context['page_desc'])
+		echo '
+			<p class="information">', $context['page_desc'], '</p>';
+	echo '<div class="roundframe">
+			<dl class="settings">
+			<p>Current generated quantity:', $context['num_members'], '</p>
+			<p>Quantity that can be generated:', $context['invitation_amount'] - $context['num_members'], '</p>
+			<form method="post" action="', $context['address_url'], '">
+				<input type="number" name="amount">
+				<input type="submit" name="delete" value="create" class="button you_sure">
+			</form>
+</dl>
+			</div>';
+
+	echo '<div class="cat_bar">
+			<h3 class="catbg">
+				Apply Records
+			</h3>
+		</div>';
+	echo '<form  method="post"><table class="table_grid" id="member_list">
+			<thead>
+				<tr class="title_bar">
+					<th scope="col" id="header_member_list_id_member" class="id_member">
+						 ID
+					</th><th scope="col" id="header_member_list_id_member" class="id_member">
+						 Address
+					</th>
+						</th><th scope="col" id="header_member_list_id_member" class="id_member">
+						 Receive tokens
+					</th>
+					<th scope="col" id="header_member_list_id_member" class="id_member">
+					Apply Amounts 
+					</th>		
+					<th scope="col" id="header_member_list_id_member" class="id_member">
+					Receive Amounts 
+					</th>	
+					<th scope="col" id="header_member_list_id_member" class="id_member">
+					status 
+					</th>
+					<th scope="col" id="header_member_list_id_member" class="id_member">
+					complete 
+					</th>
+					<th scope="col" id="header_member_list_id_member" class="id_member">
+					Time 
+					</th>
+				</tr>
+			</thead>
+			<tbody>';
+	foreach ($context['users'] as $k=> $val) {
+		$id = $k+$context['start'] + 1;
+		switch ($val['state']) {
+			case '1':
+				$state = 'Pass';
+				break;
+			case '2':
+				$state = 'Reject';
+				break;
+			default:
+				$state = 'Unaudited';
+				break;
+		}
+		$comp = $val['complete'] == 0 ? 'No' : 'Yes';
+		echo '
+				<tr class="windowbg" id="list_member_list_0">
+					<td class="id_member">
+						' . $id . '
+					</td>
+					<td class="id_member">
+			        ' . $val['address'] . '
+					</td>
+					<td class="id_member">
+			        ' . $val['token'] . '
+					</td>
+					<td class="id_member">
+			        ' . $val['amount'] . '
+					</td>
+					<td class="id_member">
+			        ' . $val['real_amount'] . '
+					</td>
+					<td class="id_member">
+			        ' .$state . '
+					</td>
+					<td class="id_member">
+						' . $comp . '
+					</td>
+					<td class="check centercol">
+					' . date('Y-m-d H:i:s',$val['create_at']) . '
+					</td>
+				</tr>';
+	}
+	echo '
+			</tbody>
+		</table>
+       	<div class="pagesection">
+			<div class="pagelinks floatleft">', $context['page_index'], '</div>
+        </div>
+            </form>';
+
+}
 
 ?>

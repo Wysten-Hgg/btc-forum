@@ -8467,6 +8467,45 @@ function greaterThan($number,$limit){
 		fatal_error("Quantity must be greater than ". $limit);
 	}
 }
+function random($length, $numeric = 0) {
+	$seed = base_convert(md5(microtime().$_SERVER['DOCUMENT_ROOT']), 16, $numeric ? 10 : 35);
+	$seed = $numeric ? (str_replace('0', '', $seed).'012340567890') : ($seed.'zZ'.strtoupper($seed));
+	if($numeric) {
+		$hash = '';
+	} else {
+		$hash = chr(rand(1, 26) + rand(0, 1) * 32 + 64);
+		$length--;
+	}
+	$max = strlen($seed) - 1;
+	for($i = 0; $i < $length; $i++) {
+		$hash .= $seed{mt_rand(0, $max)};
+	}
+	return $hash;
+}
+// 创建邀请码
+function createInvitationCode() {
+	global $smcFunc;
+
+	// 生成随机邀请码，可以根据需要调整长度和字符
+	$code = substr(md5(random(32)), 0, 8);
+	$request = $smcFunc['db_query']('', '
+			SELECT COUNT(*)
+			FROM {db_prefix}invitation_code WHERE code = {string:code}',
+		array(
+			'code' => $code,
+		)
+	);
+	list ($count) = $smcFunc['db_fetch_row']($request);
+	$smcFunc['db_free_result']($request);
+	if($count > 0) {
+		// 如果存在，则递归调用自身生成新的邀请码
+		return createInvitationCode();
+	} else {
+		// 如果不存在，则返回生成的邀请码
+		return $code;
+	}
+}
+
 function curlGet($url,$params,$header){
 	$ch = curl_init();
 	$url .=  http_build_query($params);

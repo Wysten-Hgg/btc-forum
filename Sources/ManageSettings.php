@@ -66,6 +66,7 @@ function ModifyFeatureSettings()
 		'likes' => 'ModifyLikesSettings',
 		'mentions' => 'ModifyMentionsSettings',
 		'alerts' => 'ModifyAlertsSettings',
+        'invitation'=>'ModifyInvitationSettings'
 	);
 
 	// Load up all the tabs...
@@ -2481,6 +2482,46 @@ function ModifyAlertsSettings()
 	// Override the description
 	$context['description'] = $txt['notifications_desc'];
 	$context['sub_template'] = 'alert_configuration';
+}
+function ModifyInvitationSettings()
+{
+    global $context, $modSettings, $sourcedir, $txt,$scripturl,$smcFunc;
+
+    isAllowedTo('admin_forum');
+
+//    loadTemplate('ManageInvitation');
+	$context['sub_template'] = 'invitation';
+	$context['post_url'] = $scripturl . '?action=admin;area=featuresettings;save;sa=invitation';
+	$request = $smcFunc['db_query']('', '
+			SELECT  *
+			FROM {db_prefix}settings
+			WHERE variable = {string:variable}
+			LIMIT 1',
+		array(
+			'variable' => 'invitation_amount'
+		)
+	);
+	$result = $smcFunc['db_fetch_assoc']($request);
+	$smcFunc['db_free_result']($request);
+	$context['invitation_amount'] = $result['value'] ?? 0;
+	if (isset($_GET['save']))
+	{
+		$limit = $_POST['limit'];
+		$smcFunc['db_query']('', '
+					UPDATE {db_prefix}settings
+					SET value = {string:limit}
+					WHERE variable = {string:variable}',
+			array(
+				'limit' => $limit,
+				'variable' => 'invitation_amount'
+			)
+		);
+		$_SESSION['adm-save'] = true;
+
+		// This line is to help mod authors do a search/add after if you want to add something here. Keyword: I LOVE TEA!
+		redirectexit('action=admin;area=featuresettings;sa=invitation');
+	}
+
 }
 
 ?>

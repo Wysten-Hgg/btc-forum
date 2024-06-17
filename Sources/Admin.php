@@ -114,6 +114,7 @@ function AdminMain()
 						'likes' => array($txt['likes']),
 						'mentions' => array($txt['mentions']),
 						'alerts' => array($txt['notifications']),
+						'invitation'=>array('Invitation code')
 					),
 				),
 				'antispam' => array(

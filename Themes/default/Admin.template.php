@@ -1668,5 +1668,46 @@ function template_admin_quick_search()
 									<input type="submit" name="search_go" id="search_go" value="', $txt['admin_search_go'], '" class="button">
 								</form>';
 }
+function template_invitation(){
+    global $context, $txt;
+
+    if (!empty($context['saved_successful']))
+        echo '
+					<div class="infobox">', $txt['settings_saved'], '</div>';
+    if (!empty($context['not_found_user']))
+        echo '
+					<div class="errorbox">', $txt['hooks_missing'], '</div>';
+    if (!empty($context['exists']))
+        echo '
+					<div class="errorbox">', $txt['hooks_active'], '</div>';
+    echo '
+	
+
+		<div id="report_buttons">';
+
+    echo '
+		</div>';
+    echo '<div class="cat_bar">
+			<h3 class="catbg">Set invitation numbers</h3>
+		</div>
+		<div class="windowbg">
+	
+<dl class="settings">
+                            <form method="post" action="', $context['post_url'], '" >                                  
+									<dt>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">Invitation Max Limit</label></span>
+									</dt>
+									<dd>
+										<input type="number" name="limit" id="limit" value="', $context['invitation_amount'], '">
+									</dd>
+				<input type="submit" value="Save" class="button">
+									<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
+				</form> 
+								</dl>	
+								<hr>
+								
+								</div>';
+
+}
 
 ?>
