@@ -551,6 +551,15 @@ function Register2()
 	}
 
 	$memberID = registerMember($regOptions, true);
+
+
+	// What there actually an error of some kind dear boy?
+	if (is_array($memberID))
+	{
+		$reg_errors = array_merge($reg_errors, $memberID);
+		$_REQUEST['step'] = 2;
+		return Register($reg_errors);
+	}
 	$smcFunc['db_query']('', '
 					UPDATE {db_prefix}invitation_code
 					SET used_user = {int:user},
@@ -562,14 +571,6 @@ function Register2()
 			'time'=>time()
 		)
 	);
-
-	// What there actually an error of some kind dear boy?
-	if (is_array($memberID))
-	{
-		$reg_errors = array_merge($reg_errors, $memberID);
-		$_REQUEST['step'] = 2;
-		return Register($reg_errors);
-	}
 
 	// Do our spam protection now.
 	spamProtection('register');
