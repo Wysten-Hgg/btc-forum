@@ -42,6 +42,9 @@ function imRegister(){
     if ($result['used_user'] != 0) {
         echo json_encode(['status'=>1,'msg'=>'邀请码已经被使用','account'=>$user]) ;die;
     }
+    if ($result['expire_time'] < time()) {
+        echo json_encode(['status'=>1,'msg'=>'邀请码已过期','account'=>$user]) ;die;
+    }
     $regOptions = array(
         'interface' => 'guest',
         'username' => $user,

@@ -16,6 +16,18 @@ function invitation(){
     $smcFunc['db_free_result']($request);
     $context['invitation_amount'] = $result['value'] ?? 0;
     $request = $smcFunc['db_query']('', '
+			SELECT  *
+			FROM {db_prefix}settings
+			WHERE variable = {string:variable}
+			LIMIT 1',
+        array(
+            'variable' => 'invitation_period'
+        )
+    );
+    $result = $smcFunc['db_fetch_assoc']($request);
+    $smcFunc['db_free_result']($request);
+    $context['period'] = $result['value'] ?? 0;
+    $request = $smcFunc['db_query']('', '
 			SELECT COUNT(*)
 			FROM {db_prefix}invitation_code WHERE created_user = {int:id}',
         array(
@@ -51,12 +63,14 @@ function invitation(){
     }
     if (isset($_GET['save']))
     {
+
 //        checkSession();
         $amount = $_POST['amount'];
         greaterThan($amount,0);
         if ( $context['invitation_amount'] - $context['num_members'] < $amount) {
             fatal_error('Insufficient invitation code quantity');
         }
+        $expireTime = time() + 86400 * $context['period'];
         for ($i = 0 ; $i < $amount; $i++){
             $code = createInvitationCode();
             $smcFunc['db_insert']('',
@@ -64,8 +78,9 @@ function invitation(){
                 array(
                     'created_user' => 'int',
                     'code' => 'string',
+                    'expire_time'=>'int'
                 ),
-                [$user_info['id'],$code],
+                [$user_info['id'],$code,$expireTime],
                 array()
             );
         }

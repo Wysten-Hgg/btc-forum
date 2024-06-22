@@ -1700,6 +1700,12 @@ function template_invitation(){
 									<dd>
 										<input type="number" name="limit" id="limit" value="', $context['invitation_amount'], '">
 									</dd>
+									<dt>
+										<a id="setting_reg_verification"></a> <span><label for="reg_verification">period of validity(day)</label></span>
+									</dt>
+									<dd>
+										<input type="number" name="period" id="period" value="', $context['period'], '">
+									</dd>
 				<input type="submit" value="Save" class="button">
 									<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 				</form> 

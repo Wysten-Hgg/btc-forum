@@ -4162,6 +4162,9 @@ function template_invitation()
 					<th scope="col" id="header_member_list_id_member" class="id_member">
 					Used Time
 					</th>		
+						<th scope="col" id="header_member_list_id_member" class="id_member">
+					Expire Time
+					</th>		
 			
 				</tr>
 			</thead>
@@ -4194,6 +4197,9 @@ function template_invitation()
 					</td>
 					<td class="check centercol">
 					' .$usedTime. '
+					</td>
+					<td class="check centercol">
+					' .date('Y-m-d H:i:s',$val['expire_time']). '
 					</td>
 				</tr>';
 	}

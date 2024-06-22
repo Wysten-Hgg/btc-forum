@@ -2504,9 +2504,22 @@ function ModifyInvitationSettings()
 	$result = $smcFunc['db_fetch_assoc']($request);
 	$smcFunc['db_free_result']($request);
 	$context['invitation_amount'] = $result['value'] ?? 0;
+	$request = $smcFunc['db_query']('', '
+			SELECT  *
+			FROM {db_prefix}settings
+			WHERE variable = {string:variable}
+			LIMIT 1',
+		array(
+			'variable' => 'invitation_period'
+		)
+	);
+	$result = $smcFunc['db_fetch_assoc']($request);
+	$smcFunc['db_free_result']($request);
+	$context['period'] = $result['value'] ?? 0;
 	if (isset($_GET['save']))
 	{
 		$limit = $_POST['limit'];
+		$period = $_POST['period'];
 		$smcFunc['db_query']('', '
 					UPDATE {db_prefix}settings
 					SET value = {string:limit}
@@ -2514,6 +2527,15 @@ function ModifyInvitationSettings()
 			array(
 				'limit' => $limit,
 				'variable' => 'invitation_amount'
+			)
+		);
+		$smcFunc['db_query']('', '
+					UPDATE {db_prefix}settings
+					SET value = {string:period}
+					WHERE variable = {string:variable}',
+			array(
+				'period' => $period,
+				'variable' => 'invitation_period'
 			)
 		);
 		$_SESSION['adm-save'] = true;

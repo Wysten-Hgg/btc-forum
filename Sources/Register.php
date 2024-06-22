@@ -316,6 +316,11 @@ function Register2()
 		loadLanguage('Errors');
 		$reg_errors[] = 'The invitation code has been used';
 	}
+	if ($result['expire_time'] < time()) {
+		loadLanguage('Errors');
+		$reg_errors[] = 'The invitation code has expired';
+	}
+
 	// Check whether the visual verification code was entered correctly.
 	if (!empty($modSettings['reg_verification']))
 	{
