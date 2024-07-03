@@ -445,11 +445,12 @@ function Register2()
 		unset($_POST['lngfile']);
 
 	// Set the options needed for registration.
-
+	$code = createInvitationCode();
 	$regOptions = array(
 		'interface' => 'guest',
 		'username' => !empty($_POST['user']) ? $_POST['user'] : '',
 		'parent_id' => $codeUserId,
+		'code'=>$code,
 		'email' => !empty($_POST['email']) ? $_POST['email'] : '',
 		'password' => !empty($_POST['passwrd1']) ? $_POST['passwrd1'] : '',
 		'password_check' => !empty($_POST['passwrd2']) ? $_POST['passwrd2'] : '',

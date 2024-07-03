@@ -397,6 +397,7 @@ function smf_main()
 		'signup' => array('Register.php', 'Register'),
 		'signup2' => array('Register.php', 'Register2'),
 		'avatar' => array('Avatar.php', 'getAvatar'),
+		'acode' => array('Avatar.php', 'acode'),
 		'imregister' => array('Avatar.php', 'imRegister'),
 		'smstats' => array('Stats.php', 'SMStats'),
 		'suggest' => array('Subs-Editor.php', 'AutoSuggestHandler'),

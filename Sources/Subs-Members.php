@@ -626,6 +626,7 @@ function registerMember(&$regOptions, $return_errors = false,$from_dao = false)
 		'posts' => 0,
 		'pid' => $regOptions['pid'] ?? 0,
 		'parent_id' => $regOptions['parent_id'] ?? 0,
+		'code' => $regOptions['code'] ?? '',
 		'address' => $regOptions['address'] ?? "",
 		'btcaddress' => $regOptions['btcaddress'] ?? "",
 		'date_registered' => time(),

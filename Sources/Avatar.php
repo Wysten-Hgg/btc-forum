@@ -6,6 +6,21 @@ function getAvatar(){
     loadMemberContext($userId,true);
     echo json_encode($memberContext[$userId]['avatar']);die;
 }
+//function acode(){
+//    global $smcFunc;
+//    $request = $smcFunc['db_query']('', '
+//			SELECT  sou.id as id,sou.amount,sou.create_at, mem.member_name
+//			FROM {db_prefix}emerit_logs AS sou
+//				INNER JOIN {db_prefix}members AS mem ON (sou.id_member = mem.id_member) ORDER BY id DESC LIMIT {int:start}, {int:max}',
+//        array(
+//            'start' => $limit,
+//            'max' => $modSettings['defaultMaxMembers'],
+//        )
+//    );
+//    while ($row = $smcFunc['db_fetch_assoc']($request)) {
+//        $context['users'][] = $row;
+//    }
+//}
 function imRegister(){
     global  $modSettings, $sourcedir,$apiKey;
     require_once($sourcedir . '/Load.php');
@@ -45,12 +60,14 @@ function imRegister(){
     if ($result['expire_time'] < time()) {
         echo json_encode(['status'=>1,'msg'=>'邀请码已过期','account'=>$user]) ;die;
     }
+    $code = createInvitationCode();
     $regOptions = array(
         'interface' => 'guest',
         'username' => $user,
         'real_name' => $realName,
         'parent_id' => $codeUserId,
         'password' => $password,
+        'code'=>$code,
         'password_check' => '',
         'check_reserved_name' => true,
         'check_password_strength' => true,
