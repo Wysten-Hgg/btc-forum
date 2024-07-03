@@ -298,27 +298,54 @@ function Register2()
 	$invitation = $_POST['invitation'];
 	$request = $smcFunc['db_query']('', '
 				SELECT *
-				FROM {db_prefix}invitation_code  WHERE code = {string:code} LIMIT 1',
+				FROM {db_prefix}members  WHERE code = {string:code} LIMIT 1',
 		array(
 			'code' => $invitation,
 		)
 	);
 
 	$result = $smcFunc['db_fetch_assoc']($request);
-	$codeUserId = $result['created_user'];
-	$codeId = $result['id'];
+//	$codeUserId = $result['created_user'];
+//	$codeId = $result['id'];
 		$smcFunc['db_free_result']($request);
 	if (empty($invitation) || empty($result)){
 		loadLanguage('Errors');
 		$reg_errors[] = 'Enter the correct invitation code';
 	}
-	if ($result['used_user'] != 0) {
+	$time = time();
+	$startTimestamp = strtotime("monday this week", $time);
+
+	// 获取周日的结束时间戳
+	$endTimestamp = strtotime("sunday this week", $time) + 86399; // 加上86399秒得到23:59:59
+
+	$userGroupCodePower = [
+		9 => 999999,
+		10 =>500,
+		11=>300,
+		12=>200,
+		13=>100,
+		14=>80,
+		15=>50,
+		16=>30
+	];
+	$idGroup = intval($result['id_group']);
+	$codeUserId = $result['id_member'];
+	$allCount = isset($userGroupCodePower[$idGroup]) ? $userGroupCodePower[$idGroup] : 10;
+	$request = $smcFunc['db_query']('', '
+				SELECT count(*)
+				FROM {db_prefix}members  WHERE date_registered >= {int:min} and date_registered <= {int:max} and parent_id = {int:id}',
+		array(
+			'min' => $startTimestamp,
+			'max'=>$endTimestamp,
+			'id'=>$codeUserId
+		)
+	);
+
+	list($usedCount) =$smcFunc['db_fetch_row']($request);
+	$smcFunc['db_free_result']($request);
+	if ($usedCount >= $allCount){
 		loadLanguage('Errors');
-		$reg_errors[] = 'The invitation code has been used';
-	}
-	if ($result['expire_time'] < time()) {
-		loadLanguage('Errors');
-		$reg_errors[] = 'The invitation code has expired';
+		$reg_errors[] = 'The number of invitation codes for this week has been used up';
 	}
 
 	// Check whether the visual verification code was entered correctly.
@@ -566,17 +593,7 @@ function Register2()
 		$_REQUEST['step'] = 2;
 		return Register($reg_errors);
 	}
-	$smcFunc['db_query']('', '
-					UPDATE {db_prefix}invitation_code
-					SET used_user = {int:user},
-					used_time = {int:time}
-					WHERE id = {int:id}',
-		array(
-			'user' =>$memberID,
-			'id' => $codeId,
-			'time'=>time()
-		)
-	);
+
 
 	// Do our spam protection now.
 	spamProtection('register');
