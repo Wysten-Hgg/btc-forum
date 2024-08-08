@@ -62,39 +62,39 @@ function imRegister(){
     if (empty($invitation) || empty($result)){
         echo json_encode(['status'=>1,'msg'=>'邀请码错误','account'=>$user]) ;die;
     }
-    $time = time();
-    $startTimestamp = strtotime("monday this week", $time);
+  //  $time = time();
+//    $startTimestamp = strtotime("monday this week", $time);
+//
+//    // 获取周日的结束时间戳
+//    $endTimestamp = strtotime("sunday this week", $time) + 86399; // 加上86399秒得到23:59:59
+//
+//    $userGroupCodePower = [
+//        9 => 999999,
+//        10 =>500,
+//        11=>300,
+//        12=>200,
+//        13=>100,
+//        14=>80,
+//        15=>50,
+//        16=>30
+//    ];
+//    $idGroup = intval($result['id_group']);
+//    $allCount = isset($userGroupCodePower[$idGroup]) ? $userGroupCodePower[$idGroup] : 10;
+//    $request = $smcFunc['db_query']('', '
+//				SELECT count(*)
+//				FROM {db_prefix}members  WHERE date_registered >= {int:min} and date_registered <= {int:max} and parent_id = {int:id}',
+//        array(
+//            'min' => $startTimestamp,
+//            'max'=>$endTimestamp,
+//            'id'=>$result['id_member']
+//        )
+//    );
 
-    // 获取周日的结束时间戳
-    $endTimestamp = strtotime("sunday this week", $time) + 86399; // 加上86399秒得到23:59:59
-
-    $userGroupCodePower = [
-        9 => 999999,
-        10 =>500,
-        11=>300,
-        12=>200,
-        13=>100,
-        14=>80,
-        15=>50,
-        16=>30
-    ];
-    $idGroup = intval($result['id_group']);
-    $allCount = isset($userGroupCodePower[$idGroup]) ? $userGroupCodePower[$idGroup] : 10;
-    $request = $smcFunc['db_query']('', '
-				SELECT count(*)
-				FROM {db_prefix}members  WHERE date_registered >= {int:min} and date_registered <= {int:max} and parent_id = {int:id}',
-        array(
-            'min' => $startTimestamp,
-            'max'=>$endTimestamp,
-            'id'=>$result['id_member']
-        )
-    );
-
-    list($usedCount) =$smcFunc['db_fetch_row']($request);
-    $smcFunc['db_free_result']($request);
-    if ($usedCount == $allCount){
-        echo json_encode(['status'=>1,'msg'=>'本周邀请码次数已被用完','account'=>$user]) ;die;
-    }
+//    list($usedCount) =$smcFunc['db_fetch_row']($request);
+//    $smcFunc['db_free_result']($request);
+//    if ($usedCount == $allCount){
+//        echo json_encode(['status'=>1,'msg'=>'本周邀请码次数已被用完','account'=>$user]) ;die;
+//    }
 
     $code = createInvitationCode();
     $regOptions = array(

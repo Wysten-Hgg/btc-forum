@@ -1540,6 +1540,27 @@ function prepareDisplayContext($reset = false)
         $sflmRecord.="<a href='{$link}'>{$row['member_name']}</a><span style='color:#884d00;'>({$row['amount']})</span>,";
         $s++;
     }
+	$request = $smcFunc['db_query']('', '
+			SELECT mem.member_name,sm.amount AS amount,mem.id_member
+			FROM {db_prefix}sender_property AS sm
+				INNER JOIN {db_prefix}members AS mem ON (sm.id_member = mem.id_member)
+			WHERE sm.id_msg = {int:msg} AND property IN ({array_string:property})',
+		array(
+			'msg' => $message['id_msg'],
+			'property' =>['sLuckA','sLuckB','sLuckC']
+		)
+	);
+	$luckRecord = '';
+	$l = 0;
+
+	while ($row = $smcFunc['db_fetch_assoc']($request)) {
+		if ($l == 0) {
+			$luckRecord = '<span style="color: #884d00;float: left">Lucked by &nbsp</span>';
+		}
+		$link  = $scripturl . '?action=profile;u=' . $row['id_member'];
+		$luckRecord.="<a href='{$link}'>{$row['member_name']}</a><span style='color:#884d00;'>({$row['amount']})</span>,";
+		$l++;
+	}
 
     $request = $smcFunc['db_query']('', '
 			SELECT  merit,flm
@@ -1587,6 +1608,7 @@ function prepareDisplayContext($reset = false)
         'merit' => $merit,
         'flm' => $flm,
         'sflmRecord' => $sflmRecord,
+        'luckRecord' => $luckRecord,
 	);
 
 	// Does the file contains any attachments? if so, change the icon.

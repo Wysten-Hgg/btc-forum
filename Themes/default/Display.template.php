@@ -718,10 +718,12 @@ echo '<a class="mobile_avatar" style="position:absolute;left:0;top:0" href="', $
 	echo '
 									</span>
 									<a style="color: #687bff" target="_blank" href="', $scripturl.'?action=send&message_id='.$message['id'], '&topic_id='.$context['current_topic'], '&title='.$message['subject'], '">+Merit</a><a style="color: #884d00;margin-left: 3px" target="_blank" href="', $scripturl.'?action=send&sa=flm&message_id='.$message['id'], '&topic_id='.$context['current_topic'], '&title='.$message['subject'], '">+FCP</a>
+<a style="color: #884d00;margin-left: 3px" target="_blank" href="', $scripturl.'?action=send&sa=luck&message_id='.$message['id'], '&topic_id='.$context['current_topic'], '&title='.$message['subject'], '">+Luck</a>
 	
 								</div>
 								<div class="record">', $message['sender_record'], '</div>
 								<div class="record">', $message['sflmRecord'], '</div>
+								<div class="record">', $message['luckRecord'], '</div>
 								<div id="msg_', $message['id'], '_quick_mod"', $ignoring ? ' style="display:none;"' : '', '></div>
 							</div><!-- .keyinfo -->';
 
