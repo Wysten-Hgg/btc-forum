@@ -1534,7 +1534,7 @@ function prepareDisplayContext($reset = false)
     $s = 0;
     while ($row = $smcFunc['db_fetch_assoc']($request)) {
         if ($s == 0) {
-            $sflmRecord = '<span style="color: #884d00;float: left">FCPed by &nbsp</span>';
+            $sflmRecord = '<span style="color: #884d00;float: left">RCPed by &nbsp</span>';
         }
         $link  = $scripturl . '?action=profile;u=' . $row['id_member'];
         $sflmRecord.="<a href='{$link}'>{$row['member_name']}</a><span style='color:#884d00;'>({$row['amount']})</span>,";
