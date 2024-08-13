@@ -434,6 +434,7 @@ function MembergroupMembers()
 			'ip' => '<a href="' . $scripturl . '?action=trackip;searchip=' . $row['member_ip'] . '">' . $row['member_ip'] . '</a>',
 			'registered' => timeformat($row['date_registered']),
 			'last_online' => $last_online,
+			'member_name'=>$row['member_name'],
 			'posts' => comma_format($row['posts']),
 			'is_activated' => $row['is_activated'] % 10 == 1,
 		);

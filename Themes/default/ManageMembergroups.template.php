@@ -599,6 +599,7 @@ function template_group_members()
 			<table class="table_grid" id="group_members">
 				<thead>
 					<tr class="title_bar">
+					<th class="user_name">用户名</th>
 						<th class="user_name"><a href="', $scripturl, '?action=', $context['current_action'], (isset($context['admin_area']) ? ';area=' . $context['admin_area'] : ''), ';sa=members;start=', $context['start'], ';sort=name', $context['sort_by'] == 'name' && $context['sort_direction'] == 'up' ? ';desc' : '', ';group=', $context['group']['id'], '">', $txt['name'], $context['sort_by'] == 'name' ? ' <span class="main_icons sort_' . $context['sort_direction'] . '"></span>' : '', '</a></th>';
 
 	if ($context['can_send_email'])
@@ -631,6 +632,7 @@ function template_group_members()
 	{
 		echo '
 					<tr class="windowbg">
+					<td class="user_name">', $member['member_name'], '</td>
 						<td class="user_name">', $member['name'], '</td>';
 
 		if ($context['can_send_email'])
