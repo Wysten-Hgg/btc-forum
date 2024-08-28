@@ -546,7 +546,7 @@ echo '<a class="mobile_avatar" style="position:absolute;left:0;top:0" href="', $
 
 	echo '<br/><li class="user_post">Posts:', $message['member']['posts'], '</li>';
 	echo '<li class="merit">Merit:', $message['merit'], '</li>';
-	echo '<li class="flm">FCP:', $message['flm'], '</li>';
+	echo '<li class="flm">RCP:', $message['flm'], '</li>';
 
 	// Show the user's avatar.
 	if (!empty($modSettings['show_user_images']) && empty($options['show_no_avatars']) && !empty($message['member']['avatar']['image']))
@@ -579,7 +579,7 @@ echo '<a class="mobile_avatar" style="position:absolute;left:0;top:0" href="', $
 			echo '
 								<li class="postcount">', $txt['member_postcount'], ': ', $message['member']['posts'], '</li>';
         echo '
-								<li class="postcount">Merit: ', $message['merit'], '</li><li class="postcount">FCP: ', $message['flm'], '</li>';
+								<li class="postcount">Merit: ', $message['merit'], '</li><li class="postcount">RCP: ', $message['flm'], '</li>';
 		// Show their personal text?
 		if (!empty($modSettings['show_blurb']) && !empty($message['member']['blurb']))
 			echo '

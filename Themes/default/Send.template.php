@@ -61,7 +61,7 @@ function template_Luck()
  		 You typically cannot losethis luckC. You have <strong>', $context['sLuckC'] ?? 0, ' </strong>sendable luckC (sLuckC) which you can send to other people. 
 
  <hr/>
-        <h4>FCP Post</h4>
+        <h4> Post</h4>
         <form  action="' . $context['post_url'] . '" method="post">
         <ul>
 
