@@ -429,7 +429,7 @@ function template_flmexchange()
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">FCP Swap Center</h3>
+			<h3 class="catbg">RCP Swap Center</h3>
 		</div>
 		<p class="information">
 Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
@@ -634,7 +634,7 @@ function template_notReview()
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">FCP Swap Center</h3>
+			<h3 class="catbg">RCP Swap Center</h3>
 		</div>
 		<p class="information">
 Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
@@ -768,7 +768,7 @@ function template_reviewed()
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">FCP Swap Center</h3>
+			<h3 class="catbg">RCP Swap Center</h3>
 		</div>
 		<p class="information">
 Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
@@ -896,7 +896,7 @@ function template_complete()
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">FCP Swap Center</h3>
+			<h3 class="catbg">RCP Swap Center</h3>
 		</div>
 		<p class="information">
 Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>

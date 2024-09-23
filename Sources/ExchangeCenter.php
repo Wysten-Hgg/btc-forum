@@ -94,7 +94,7 @@ function flmExChangeCenter(){
             )
         );
         list ($count) = $smcFunc['db_fetch_row']($request);
-        $realmAmount = round($amount * $config['radio'] ?? 1,2);
+        $realmAmount = round($amount / 2  * $config['radio'] ?? 1 ,2);
         $smcFunc['db_insert']('',
             '{db_prefix}apply_withdraw',
             array(

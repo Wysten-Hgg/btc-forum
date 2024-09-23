@@ -827,11 +827,11 @@ function template_merit_menu($page){
 function template_flm_menu($page){
 	global $txt, $context, $scripturl;
 	echo '<div class="buttonlist">
-				<a class="button button_strip_view_all_members ', $page == 'flm' ? 'active' : '', '" href="', $scripturl.'?action=flm', '">Set FCP Source User</a>
-				<a class="button button_strip_mlist_search ', $page == 'sFLM' ? 'active' : '', '" href="', $scripturl.'?action=flm;sa=sflm', '">sFCP manage issue Records</a>
-				<a class="button button_strip_mlist_search ', $page == 'sFLMTransfer' ? 'active' : '', '" href="', $scripturl.'?action=flm;sa=sflmtransfer', '">sFCP Transfer Records</a>
-				<a class="button button_strip_mlist_search ', $page == 'usersFLMTransfer' ? 'active' : '', '" href="', $scripturl.'?action=flm;sa=usersflmTransfer', '">user sFCP Transfer Records</a>
-				<a class="button button_strip_mlist_search ', $page == 'flmexchange' ? 'active' : '', '" href="', $scripturl.'?action=flm;sa=flmexchange', '">FCP swap Center</a>
+				<a class="button button_strip_view_all_members ', $page == 'flm' ? 'active' : '', '" href="', $scripturl.'?action=flm', '">Set RCP Source User</a>
+				<a class="button button_strip_mlist_search ', $page == 'sFLM' ? 'active' : '', '" href="', $scripturl.'?action=flm;sa=sflm', '">sRCP manage issue Records</a>
+				<a class="button button_strip_mlist_search ', $page == 'sFLMTransfer' ? 'active' : '', '" href="', $scripturl.'?action=flm;sa=sflmtransfer', '">sRCP Transfer Records</a>
+				<a class="button button_strip_mlist_search ', $page == 'usersFLMTransfer' ? 'active' : '', '" href="', $scripturl.'?action=flm;sa=usersflmTransfer', '">user sRCP Transfer Records</a>
+				<a class="button button_strip_mlist_search ', $page == 'flmexchange' ? 'active' : '', '" href="', $scripturl.'?action=flm;sa=flmexchange', '">RCP swap Center</a>
 		</div><br/>';
 }
 function template_frp_menu($page){
