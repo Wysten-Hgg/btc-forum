@@ -888,7 +888,7 @@ function ModifyProfile($post_errors = array())
 	if (!isset($context['page_title']))
 		$context['page_title'] = $txt['profile'] . (isset($txt[$current_area]) ? ' - ' . $txt[$current_area] : '');
 	$request = $smcFunc['db_query']('', '
-			SELECT  merit,emerit,flm
+			SELECT  merit,emerit,flm,eflm
 			FROM {db_prefix}property
 			WHERE id_member = {int:id}
 			LIMIT 1',
@@ -900,6 +900,7 @@ function ModifyProfile($post_errors = array())
 	$context['merit'] = $poolAmount['merit'] ?? 0;
 	$context['emerit'] = $poolAmount['emerit'] ?? 0;
 	$context['flm'] = $poolAmount['flm'] ?? 0;
+	$context['eflm'] = $poolAmount['eflm'] ?? 0;
 //	$ret  = curlGet("https://api.zealy.io/communities/{$zealySubdomain}/users?",['ethAddress'=>$user_info['address']],["x-api-key:{$zealyUserApiKey}"]);
 //	$xpAmount = 0;
 //	$ret = json_decode($ret,1);

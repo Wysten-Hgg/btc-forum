@@ -307,8 +307,11 @@ function template_summary()
 				<dt>eMerit:</dt>
 				<dd>', $context['emerit'], '</dd>';
 	echo '
-				<dt>FCP:</dt>
+				<dt>RCP:</dt>
 				<dd>', $context['flm'], '</dd>';
+	echo '
+				<dt>eRCP:</dt>
+				<dd>', $context['eflm'], '</dd>';
 	/*echo '
 				<dt>ZealyXP:</dt>
 				<dd>', $context['xp_amount'], '</dd>';*/
