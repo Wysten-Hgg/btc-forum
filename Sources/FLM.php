@@ -759,7 +759,7 @@ function notReview(){
     list ($context['num_members']) = $smcFunc['db_fetch_row']($request);
     $smcFunc['db_free_result']($request);
     $_REQUEST['start'] =  $_REQUEST['start']  ?? 0;
-    $context['page_index'] = constructPageIndex($scripturl . '?action=flm;sa=flmexchange', $_REQUEST['start'], $context['num_members'], $modSettings['defaultMaxMembers']);
+    $context['page_index'] = constructPageIndex($scripturl . '?action=flm;sa=not', $_REQUEST['start'], $context['num_members'], $modSettings['defaultMaxMembers']);
     $limit = $_REQUEST['start'];
     $context['start'] = $_REQUEST['start'];
     // member-lists
@@ -864,7 +864,7 @@ function reviewed(){
     list ($context['num_members']) = $smcFunc['db_fetch_row']($request);
     $smcFunc['db_free_result']($request);
     $_REQUEST['start'] =  $_REQUEST['start']  ?? 0;
-    $context['page_index'] = constructPageIndex($scripturl . '?action=flm;sa=flmexchange', $_REQUEST['start'], $context['num_members'], $modSettings['defaultMaxMembers']);
+    $context['page_index'] = constructPageIndex($scripturl . '?action=flm;sa=reviewed', $_REQUEST['start'], $context['num_members'], $modSettings['defaultMaxMembers']);
     $limit = $_REQUEST['start'];
     $context['start'] = $_REQUEST['start'];
     // member-lists
@@ -934,7 +934,7 @@ function complete(){
     list ($context['num_members']) = $smcFunc['db_fetch_row']($request);
     $smcFunc['db_free_result']($request);
     $_REQUEST['start'] =  $_REQUEST['start']  ?? 0;
-    $context['page_index'] = constructPageIndex($scripturl . '?action=flm;sa=flmexchange', $_REQUEST['start'], $context['num_members'], $modSettings['defaultMaxMembers']);
+    $context['page_index'] = constructPageIndex($scripturl . '?action=flm;sa=complete', $_REQUEST['start'], $context['num_members'], $modSettings['defaultMaxMembers']);
     $limit = $_REQUEST['start'];
     $context['start'] = $_REQUEST['start'];
     // member-lists
