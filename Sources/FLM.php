@@ -671,13 +671,14 @@ function notReview(){
                         'id' => $pass
                     )
                 );
-                $request = $smcFunc['db_query']('', '
-				SELECT * FROM {db_prefix}apply_withdraw WHERE id IN ({array_int:id})',
-                    array(
-                        'id' => $pass,
-                    )
-                );
-                while ($row = $smcFunc['db_fetch_assoc']($request)) {
+                foreach ($pass as $v){
+                    $request = $smcFunc['db_query']('', '
+				SELECT * FROM {db_prefix}apply_withdraw WHERE id = ({int:id}) limit 1',
+                        array(
+                            'id' => intval($v),
+                        )
+                    );
+                    $row = $smcFunc['db_fetch_assoc']($request);
                     $request = $smcFunc['db_query']('', '
                         SELECT  eflm
                         FROM {db_prefix}property
@@ -688,17 +689,49 @@ function notReview(){
                         )
                     );
                     $userProperty = $smcFunc['db_fetch_assoc']($request);
+//                    $smcFunc['db_free_result']($request);
                     $flmAmount = $userProperty['eflm'];
                     $smcFunc['db_query']('', '
 					UPDATE {db_prefix}property
-					SET eflm = {int:flm}
+					SET eflm = {string:flm}
 					WHERE id_member = {int:id}',
                         array(
                             'flm' => $flmAmount + $row['amount'] /2,
                             'id' => $row['id_member']
                         )
                     );
+
                 }
+//                var_dump($smcFunc['db_fetch_assoc']($request));die;
+//                while ($row = $smcFunc['db_fetch_assoc']($request)) {
+//                    var_dump($row['id']);
+//                    $request = $smcFunc['db_query']('', '
+//                        SELECT  eflm
+//                        FROM {db_prefix}property
+//                        WHERE id_member = {int:id_member}
+//                        LIMIT 1',
+//                        array(
+//                            'id_member' => $row['id_member'],
+//                        )
+//                    );
+//
+//                    $userProperty = $smcFunc['db_fetch_assoc']($request);
+////                    $smcFunc['db_free_result']($request);
+////                    var_dump($userProperty);
+//                    $flmAmount = $userProperty['eflm'];
+////                    var_dump($flmAmount);
+////                    var_dump($row['amount'] /2);
+//                    $smcFunc['db_query']('', '
+//					UPDATE {db_prefix}property
+//					SET eflm = {string:flm}
+//					WHERE id_member = {int:id}',
+//                        array(
+//                            'flm' => $flmAmount + $row['amount'] /2,
+//                            'id' => $row['id_member']
+//                        )
+//                    );
+//                }
+//                echo 123;
 
             }
             if (!empty($reject)){
