@@ -832,6 +832,7 @@ function template_flm_menu($page){
 				<a class="button button_strip_mlist_search ', $page == 'sFLMTransfer' ? 'active' : '', '" href="', $scripturl.'?action=flm;sa=sflmtransfer', '">sRCP Transfer Records</a>
 				<a class="button button_strip_mlist_search ', $page == 'usersFLMTransfer' ? 'active' : '', '" href="', $scripturl.'?action=flm;sa=usersflmTransfer', '">user sRCP Transfer Records</a>
 				<a class="button button_strip_mlist_search ', $page == 'flmexchange' ? 'active' : '', '" href="', $scripturl.'?action=flm;sa=flmexchange', '">RCP swap Center</a>
+				<a class="button button_strip_mlist_search ', $page == 'sendrcp' ? 'active' : '', '" href="', $scripturl.'?action=flm;sa=sendrcp', '">Reply post send RCP</a>
 		</div><br/>';
 }
 function template_frp_menu($page){

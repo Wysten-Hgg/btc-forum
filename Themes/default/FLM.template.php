@@ -1048,3 +1048,108 @@ Function to add or remove users from the Merit Source list as distributors of sF
             </form>';
 
 }
+
+function template_sendrcp()
+{
+    global $context, $txt;
+
+    if (!empty($context['saved_successful']))
+        echo '
+					<div class="infobox">', $txt['save'], '</div>';
+    if (!empty($context['not_found_user']))
+        echo '
+					<div class="errorbox">', $txt['username_no_exist'], '</div>';
+    if (!empty($context['exists']))
+        echo '
+					<div class="errorbox">', $txt['exists_this_user'], '</div>';
+    echo '
+		<div class="cat_bar">
+			<h3 class="catbg">Reply post send RCP</h3>
+		</div>
+	
+		<div id="report_buttons">';
+
+    echo '
+		</div>';
+
+    template_flm_menu('sendrcp');
+
+    // Go through each table!
+    echo '<div class="cat_bar">
+			<h3 class="catbg">详情</h3>
+	
+		</div><br><form  method="post" action="', $context['post_url'], '" ><table class="table_grid" id="member_list">
+			<p>一级板块<select id="select1" class="wh-board">
+			';
+    foreach ($context['cats'] as $val) {
+        echo '<option value="cat-', $val['id_cat'], '">', $val['name'], '</option>
+				';
+    }
+    echo '
+		</select>
+	    </p>
+	    	<br/>
+		<p>二级板块<select id="select2" class="wh-board">
+		<option value="">--Select--</option>
+			';
+    echo '
+		</select>
+		</p>
+		<br/>
+		<p>三级板块<select id="select3" class="wh-board">
+		<option value="">--Select--</option>
+			';
+
+    echo '
+
+		</select>
+		</p>
+		<br/>
+		<p>四级板块<select id="select4" class="wh-board">
+			<option value="">--Select--</option>
+			';
+
+    echo '
+
+		</select>
+		</p>
+		<br/>
+		<p>选择作者<select id="selUser">
+			<option value="">--Select--</option>
+			';
+
+    echo '
+
+		</select>
+		</p>
+		<br/>
+		<p>选择主题<select id="topic-select" name="topic_id">
+			<option value="">--Select--</option>
+			';
+
+    echo '
+		</select>
+		</p>
+		<br/> 
+		<p>选择日期<input type="date" name="date">
+			';
+    echo '
+		</p>
+		<br/>
+		<p>开始时间<input type="time" name="start_time">
+			';
+    echo '
+结束时间<input type="time" name="end_time">
+		</p>
+		<br>
+		<p>
+			';
+    echo '
+RCP数量<input type="number" name="count">
+		</p>
+		
+       <p>	<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
+				<input type="submit" value="发送" class="button" style="float: left"></p>
+    
+            </form>';
+}

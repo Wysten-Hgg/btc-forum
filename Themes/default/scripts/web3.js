@@ -129,6 +129,79 @@
         })
     }
 
+$(document).ready(function() {
+    // let resData = {};
+    $('.wh-board').on('change', function() {
+        var selectedValue = $(this).val();
+        var currentSelectId = $(this).attr('id'); // Get the id of the current select
+        var nextSelectId = 'select' + (parseInt(currentSelectId.replace('select', '')) + 1);
 
+        if (selectedValue) {
+            // Make an AJAX request
+            $.ajax({
+                url: '/index.php?action=flm;sa=sendRcpData', // Replace with your API endpoint
+                type: 'GET',
+                data: { id: selectedValue },
+                success: function(response) {
+
+                    response = JSON.parse(response);
+                    // resData = response.users;
+                    console.log('API response:', response); // Debug: log the response
+                    // Clear the second select
+                    $('#' + nextSelectId).empty();
+
+
+                    // Add a default option
+                    $('#' + nextSelectId).append('<option value="">--Select--</option>');
+
+                    // Populate with new options
+                    $.each(response.select, function(index, item) {
+                        $('#' + nextSelectId).append('<option value="board-' + item.id_board + '">' + item.name + '</option>');
+                    });
+                    // $.each(response.users, function(index, item) {
+                    //     $('#selUser').append('<option value="user-">' + item.username + '</option>');
+                    // });
+                    const userSelect = document.getElementById('selUser');
+                    const topicSelect = document.getElementById('topic-select');
+
+                    // Populate the first select with usernames
+                    response.users.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.username;
+                        option.textContent = user.username;
+                        userSelect.appendChild(option);
+                    });
+
+                    // Event listener for user selection change
+                    userSelect.addEventListener('change', () => {
+                        const selectedUser = userSelect.value;
+
+                        // Clear the topic select
+                        topicSelect.innerHTML = '<option value="">--Select a Topic--</option>';
+
+                        if (selectedUser) {
+                            // Find the user's topics and populate the second select
+                            const user = response.users.find(u => u.username === selectedUser);
+                            if (user) {
+                                user.topics.forEach(topic => {
+                                    const option = document.createElement('option');
+                                    option.value = topic.id_topic;
+                                    option.textContent = topic.title;
+                                    topicSelect.appendChild(option);
+                                });
+                            }
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        } else {
+            // Clear the second select if no value is selected
+            $('#' + nextSelectId).empty().append('<option value="">--Select--</option>');
+        }
+    });
+});
 
 // })

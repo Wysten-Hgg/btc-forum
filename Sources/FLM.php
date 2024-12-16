@@ -238,6 +238,8 @@ function FLMMain(){
         'reviewed'=>'reviewed',
         'usersflmTransfer'=>'usersflmTransfer',
         'complete'=>'complete',
+        'sendrcp'=>'sendrcp',
+        'sendRcpData'=>'sendRcpData',
     ];
     call_helper($meritFunction[$sa]);
 }
@@ -1019,5 +1021,172 @@ function emerit(){
     while ($row = $smcFunc['db_fetch_assoc']($request)) {
         $context['users'][] = $row;
     }
+
+}
+function sendrcp()
+{
+    global  $context,$smcFunc,$scripturl;
+    // Make sure they can view the memberlist.
+    isAllowedTo(['admin_forum','flm_manage']);
+    $context['post_url'] = $scripturl . '?action=flm;sa=sendrcp;save';
+    loadTemplate('FLM');
+    $context['sub_template'] = 'sendrcp';
+    if (isset($_SESSION['adm-save']))
+    {
+        if ($_SESSION['adm-save'] === true)
+            $context['saved_successful'] = true;
+        else
+            $context['saved_failed'] = $_SESSION['adm-save'];
+
+        unset($_SESSION['adm-save']);
+    }
+    $request = $smcFunc['db_query']('', '
+		SELECT id_cat,name
+		FROM {db_prefix}categories
+		ORDER BY cat_order',
+        array(
+        )
+    );
+    while ($row = $smcFunc['db_fetch_assoc']($request)) {
+        $context['cats'][] = $row;
+    }
+
+    $smcFunc['db_free_result']($request);
+    if (isset($_GET['save']))
+    {
+        checkSession();
+        $topic_id = $_POST['topic_id'];
+        $count = $_POST['count'];
+        $start_time = strtotime($_POST['date'] . " " .$_POST['start_time']);
+        $end_time = strtotime($_POST['date'] . " " .$_POST['end_time']);
+        if ($topic_id <= 0 || $start_time <= 0 || $end_time <= 0 || $start_time > $end_time || $count < 0) {
+           fatal_error('参数不正确');
+        }
+        $_SESSION['adm-save'] = true;
+        $request = $smcFunc['db_query']('', '
+    SELECT DISTINCT m.id_member
+    FROM {db_prefix}messages AS m
+    JOIN {db_prefix}topics AS t ON m.id_topic = t.id_topic
+    WHERE m.id_topic = {int:topic_id}
+      AND m.poster_time BETWEEN {int:start_time} AND {int:end_time}
+      AND m.id_member > 0
+      AND m.id_member != t.id_member_started
+    ORDER BY m.id_member ASC',
+            array(
+                'topic_id' => $topic_id,
+                'start_time' => $start_time,
+                'end_time' => $end_time,
+            )
+        );
+
+        $user_ids = [];
+        while ($row = $smcFunc['db_fetch_assoc']($request)) {
+            $user_ids[] = $row['id_member'];
+        }
+        $user_ids = array_unique($user_ids);
+
+        $case_points = '';
+        foreach ($user_ids as $id ) {
+            $case_points .= "WHEN id_member = $id THEN $count ";
+
+        }
+        $sql = "
+    UPDATE {db_prefix}property
+    SET 
+        flm = flm + CASE $case_points END
+    WHERE id_member IN (" . implode(',', $user_ids) . ")
+";
+
+// 执行更新
+        $smcFunc['db_query']('', $sql);
+        $smcFunc['db_free_result']($request);
+        redirectexit('action=flm;sa=sendrcp');
+    }
+
+}
+function sendRcpData(){
+    global  $context,$smcFunc,$scripturl;
+    // Make sure they can view the memberlist.
+    isAllowedTo(['admin_forum','flm_manage']);
+    $id  = $_GET['id'];
+    $items = explode('-',$id);
+    $type = $items[0];
+    $data = [];
+    $topics = array();
+
+        if ($type == 'cat'){
+            $request = $smcFunc['db_query']('', '
+		SELECT id_board,name
+		FROM {db_prefix}boards
+		where id_cat = {int:id}
+		ORDER BY board_order',
+                array(
+                    'id'=>$items[1]
+                )
+            );
+
+            while ($row = $smcFunc['db_fetch_assoc']($request)) {
+                $data[] = $row;
+            }
+            $smcFunc['db_free_result']($request);
+        }else if ($type == 'board'){
+            $request = $smcFunc['db_query']('', '
+		SELECT id_board,name
+		FROM {db_prefix}boards
+		where id_parent = {int:id}
+		ORDER BY board_order',
+                array(
+                    'id'=>$items[1]
+                )
+            );
+
+            while ($row = $smcFunc['db_fetch_assoc']($request)) {
+                $data[] = $row;
+            }
+            $smcFunc['db_free_result']($request);
+            $request = $smcFunc['db_query']('', '
+    SELECT 
+        u.member_name AS username,
+        t.id_topic,
+        m.subject AS topic_title
+    FROM {db_prefix}topics AS t
+    JOIN {db_prefix}messages AS m ON t.id_first_msg = m.id_msg
+    JOIN {db_prefix}members AS u ON t.id_member_started = u.id_member
+    WHERE t.id_board = {int:board_id}
+    ORDER BY u.member_name ASC, t.id_topic ASC',
+                array(
+                    'board_id' => $items[1],
+                )
+            );
+
+            $usedata = [];
+            while ($row = $smcFunc['db_fetch_assoc']($request)) {
+                $username = $row['username'];
+
+                // 如果该用户还未出现在结果中，初始化
+                if (!isset($usedata[$username])) {
+                    $usedata[$username] = [];
+                }
+
+                // 将主题添加到该用户的主题列表中
+                $usedata[$username][] = [
+                    'id_topic' => $row['id_topic'],
+                    'title' => $row['topic_title']
+                ];
+            }
+            $smcFunc['db_free_result']($request);
+            $response = [];
+            foreach ($usedata as $username => $topics) {
+                $response[] = [
+                    'username' => $username,
+                    'topics' => $topics
+                ];
+            }
+        }
+        $response = ['select'=>$data,'users'=>$response];
+
+        echo json_encode($response);die;
+
+
 
 }
