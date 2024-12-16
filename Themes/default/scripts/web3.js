@@ -149,7 +149,8 @@ $(document).ready(function() {
                     console.log('API response:', response); // Debug: log the response
                     // Clear the second select
                     $('#' + nextSelectId).empty();
-
+                    $("#selUser").empty();
+                    $("#topic-select").empty();
 
                     // Add a default option
                     $('#' + nextSelectId).append('<option value="">--Select--</option>');
@@ -163,8 +164,8 @@ $(document).ready(function() {
                     // });
                     const userSelect = document.getElementById('selUser');
                     const topicSelect = document.getElementById('topic-select');
-                    userSelect.empty();
-                    topicSelect.empty();
+
+
                     // Populate the first select with usernames
                     response.users.forEach(user => {
                         const option = document.createElement('option');
