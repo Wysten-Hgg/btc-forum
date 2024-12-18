@@ -149,8 +149,9 @@ $(document).ready(function() {
                     console.log('API response:', response); // Debug: log the response
                     // Clear the second select
                     $('#' + nextSelectId).empty();
-                    $("#selUser").empty();
-                    $("#topic-select").empty();
+                    $("#selUser").empty().append('<option value="">--Select--</option>');
+
+                    $("#topic-select").empty().append('<option value="">--Select--</option>');
 
                     // Add a default option
                     $('#' + nextSelectId).append('<option value="">--Select--</option>');
