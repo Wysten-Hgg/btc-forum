@@ -1025,7 +1025,7 @@ function emerit(){
 }
 function sendrcp()
 {
-    global  $context,$smcFunc,$scripturl;
+    global  $user_info,$context,$smcFunc,$scripturl;
     // Make sure they can view the memberlist.
     isAllowedTo(['admin_forum','flm_manage']);
     $context['post_url'] = $scripturl . '?action=flm;sa=sendrcp;save';
@@ -1084,12 +1084,85 @@ function sendrcp()
             $user_ids[] = $row['id_member'];
         }
         $user_ids = array_unique($user_ids);
+        $request = $smcFunc['db_query']('', '
+			SELECT  id_member,sflm
+			FROM {db_prefix}property
+			WHERE id_member = {int:id}
+			LIMIT 1',
+            array(
+                'id' => $user_info['id'],
+            )
+        );
+        $ret = $smcFunc['db_fetch_assoc']($request);
+        $allAmount =  $count * count($user_ids);
+        if ($ret['sflm'] < $allAmount) {
+            $_SESSION['not-found'] = true;
+            fatal_error('Not enough quantity');
+        }
 
         $case_points = '';
-        foreach ($user_ids as $id ) {
-            $case_points .= "WHEN id_member = $id THEN $count ";
+        foreach ($user_ids as $user_id){
+            $request = $smcFunc['db_query']('', '
+    SELECT m.id_msg, m.poster_time
+    FROM {db_prefix}messages AS m
+    WHERE m.id_topic = {int:id_topic}
+      AND m.id_member = {int:id_member}
+      AND m.poster_time BETWEEN {int:start_time} AND {int:end_time}
+    ORDER BY m.poster_time ASC
+    LIMIT 1',
+                array(
+                    'id_topic' => $topic_id,
+                    'id_member' => $user_id,
+                    'start_time' => $start_time,
+                    'end_time' => $end_time,
+                )
+            );
 
+            if ($row = $smcFunc['db_fetch_assoc']($request)) {
+                // 成功找到第一条回帖
+                echo json_encode([
+                    'id_msg' => $row['id_msg'],
+                    'poster_time' => $row['poster_time'],
+                ]);
+                $smcFunc['db_insert']('',
+                    '{db_prefix}sender_property',
+                    array(
+                        'id_topic' => 'int',
+                        'id_msg' => 'int',
+                        'id_member' => 'int',
+                        'amount' => 'int',
+                        'create_at' => 'int',
+                        'property'=>'string'
+                    ),
+                    [$topic_id,$row['id_msg'],$user_info['id'],$count,time(),'sflm'],
+                    array()
+                );
+                $smcFunc['db_insert']('',
+                    '{db_prefix}property_transfer_log',
+                    array(
+                        'from' => 'int',
+                        'to' => 'int',
+                        'amount' => 'int',
+                        'create_at' => 'int',
+                        'pool' => 'int',
+                        'property' => 'string',
+                    ),
+                    [$user_info['id'],$user_id,$count,time(),1,'sflm'],
+                    array()
+                );
+
+            }
+            $case_points .= "WHEN id_member = $user_id THEN $count ";
         }
+        $smcFunc['db_query']('', '
+			UPDATE {db_prefix}property
+			SET sflm = {int:sflm}
+			WHERE id_member = {int:from}',
+            array(
+                'from' => $user_info['id'],
+                'sflm' => $ret['sflm'] - $allAmount,
+            )
+        );
         $sql = "
     UPDATE {db_prefix}property
     SET 
