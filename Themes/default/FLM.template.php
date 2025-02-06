@@ -19,17 +19,17 @@ function template_main()
 
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">Manage FCP</h3>
+			<h3 class="catbg">Manage RCP</h3>
 		</div>
 		<p class="information">
-Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sRCP.				</p>
 		<div id="report_buttons">';
 
     echo '
 		</div>';
     template_flm_menu('flm');
     echo '<div class="cat_bar">
-			<h3 class="catbg">Set FCPS Source User</h3>
+			<h3 class="catbg">Set RCPS Source User</h3>
 		</div>
 		<div class="windowbg">
 								<dl class="settings">
@@ -53,7 +53,7 @@ Function to add or remove users from the Merit Source list as distributors of sF
 		</div>';
 
     // Go through each table!
-    echo '	<strong class="">Total Amount of sFCP in Current Pool:	 ' . $context['pool_amount'] . '</strong><form  action="' . $context['delete_url'] . '" method="post"><table class="table_grid" id="member_list">
+    echo '	<strong class="">Total Amount of sRCP in Current Pool:	 ' . $context['pool_amount'] . '</strong><form  action="' . $context['delete_url'] . '" method="post"><table class="table_grid" id="member_list">
 			<thead>
 				<tr class="title_bar">
 					<th scope="col" id="header_member_list_id_member" class="id_member">
@@ -65,10 +65,10 @@ Function to add or remove users from the Merit Source list as distributors of sF
 						<th scope="col" id="header_member_list_user_name" class="user_name">
 					Address 
 					</th>	<th scope="col" id="header_member_list_user_name" class="user_name">
-					sFCP 
+					sRCP 
 					</th>
 						<th scope="col" id="header_member_list_user_name" class="user_name">
-					Transfer sFCP 
+					Transfer sRCP 
 					</th>
 					<th scope="col" id="header_member_list_check" class="check centercol">
 						<input type="checkbox" onclick="invertAll(this, this.form);">
@@ -106,7 +106,7 @@ Function to add or remove users from the Merit Source list as distributors of sF
 				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 				<input type="hidden" name="work" value="delete">
 				<input type="submit" name="delete_members" value="Remove Selected Members" style="float: right" data-confirm="Are you sure you want to delete the selected members?" class="button you_sure">
-			    <input type="submit" name="transfer" value="Transfer sFCP" style="float: right" class="button">
+			    <input type="submit" name="transfer" value="Transfer sRCP" style="float: right" class="button">
 			</div>
 		</div>
             </form>';
@@ -125,10 +125,10 @@ function template_usersFLMTransfer(){
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">Manage FCP</h3>
+			<h3 class="catbg">Manage RCP</h3>
 		</div>
 		<p class="information">
-Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sRCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -200,10 +200,10 @@ function template_sFLMTransfer(){
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">Manage FCP</h3>
+			<h3 class="catbg">Manage RCP</h3>
 		</div>
 		<p class="information">
-Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sRCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -279,10 +279,10 @@ function template_sFLM()
 					<div class="errorbox">', $txt['exceeded_maximum'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">Manage FCP</h3>
+			<h3 class="catbg">Manage RCP</h3>
 		</div>
 		<p class="information">
-Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sRCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -292,15 +292,15 @@ Function to add or remove users from the Merit Source list as distributors of sF
 		<div class="cat_bar">
 			<h3 class="catbg">
 				
-				<a href="http://forum02.firedao.online/index.php?action=groups;sa=requests" id="group_requests_link">sFCP Detail</a>
+				<a href="http://forum02.firedao.online/index.php?action=groups;sa=requests" id="group_requests_link">sRCP Detail</a>
 			</h3>
 		</div>
 		<div class="windowbg" id="group_requests_panel">
 			<ul>
 				<li>
-					<p><strong class="smalltext">Total Amount of Current sFCP Pool:', $context['pool_amount'], '</strong></p>
+					<p><strong class="smalltext">Total Amount of Current sRCP Pool:', $context['pool_amount'], '</strong></p>
 					<p><strong class="smalltext">Total Burnt:', $context['total_issue'] -  $context['user_holder'] - $context['pool_amount'], '</strong></p>
-					<p><strong class="smalltext">Total sFCP of Current sFCP Holders:', $context['user_holder'], '</strong></p>
+					<p><strong class="smalltext">Total sRCP of Current sRCP Holders:', $context['user_holder'], '</strong></p>
 					<p><strong class="smalltext">Total issued:', $context['total_issue'], '</strong></p>
 				</li>
 			</ul>
@@ -308,7 +308,7 @@ Function to add or remove users from the Merit Source list as distributors of sF
 </div><div class="half_content">
 		<div class="cat_bar">
 			<h3 class="catbg">
-				issue sFCP
+				issue sRCP
 			</h3>
 		</div>
 		<div class="windowbg" id="group_requests_panel">
@@ -327,7 +327,7 @@ Function to add or remove users from the Merit Source list as distributors of sF
 </div>';
     echo '<div class="cat_bar">
 			<h3 class="catbg">
-				Manager Total Issue sFCP 
+				Manager Total Issue sRCP 
 			</h3>
 		</div>';
 
@@ -364,7 +364,7 @@ Function to add or remove users from the Merit Source list as distributors of sF
 
     echo '<div class="cat_bar">
 			<h3 class="catbg">
-				Manager Issue sFCPS Records
+				Manager Issue sRCPS Records
 			</h3>
 		</div>';
 
@@ -432,14 +432,14 @@ function template_flmexchange()
 			<h3 class="catbg">RCP Swap Center</h3>
 		</div>
 		<p class="information">
-Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sRCP.				</p>
 		<div id="report_buttons">';
 
     echo '
 		</div>';
     template_flm_menu('flmexchange');
     echo '<div class="cat_bar">
-			<h3 class="catbg">Set FCP Exchange Limit</h3>
+			<h3 class="catbg">Set RCP Exchange Limit</h3>
 		</div>
 		<div class="windowbg">
 								<dl class="settings">
@@ -447,13 +447,15 @@ Function to add or remove users from the Merit Source list as distributors of sF
 									<h1>Single Min: <input type="number" name="min" id="recaptcha_site_key" value="', $context['min'], '"></h1>
 									<br>
 									<h1>Single Max: <input type="number" name="max" id="recaptcha_site_key" value="', $context['max'], '"></h1>
+                                    <br>
+									<h1>User invitation level: <input type="number" name="level" id="recaptcha_site_key" value="', $context['level'], '"></h1>
 									<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 				<input type="submit" value="Modify" class="button">
 				</form> 
 								</dl>	
 								</div>';
     echo '<div class="cat_bar">
-			<h3 class="catbg">Set FCP Exchange Tokens</h3>
+			<h3 class="catbg">Set RCP Exchange Tokens</h3>
 		</div>
 		<div class="windowbg">
 								<dl class="settings">
@@ -470,7 +472,7 @@ Function to add or remove users from the Merit Source list as distributors of sF
 
     // Go through each table!
     echo '<div class="cat_bar">
-			<h3 class="catbg">Exchange List(The radio is FCP:Token is ?)</h3>
+			<h3 class="catbg">Exchange List(The radio is RCP:Token is ?)</h3>
 		</div><form  method="post" action="', $context['modify_url'], '"><table class="table_grid" id="member_list">
 			<thead>
 				<tr class="title_bar">
@@ -637,7 +639,7 @@ function template_notReview()
 			<h3 class="catbg">RCP Swap Center</h3>
 		</div>
 		<p class="information">
-Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sRCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -771,7 +773,7 @@ function template_reviewed()
 			<h3 class="catbg">RCP Swap Center</h3>
 		</div>
 		<p class="information">
-Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sRCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -899,7 +901,7 @@ function template_complete()
 			<h3 class="catbg">RCP Swap Center</h3>
 		</div>
 		<p class="information">
-Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sRCP.				</p>
 		<div id="report_buttons">';
 
     echo '
@@ -992,10 +994,10 @@ function template_emerit()
 					<div class="errorbox">', $txt['exists_this_user'], '</div>';
     echo '
 		<div class="cat_bar">
-			<h3 class="catbg">Manage FCP</h3>
+			<h3 class="catbg">Manage RCP</h3>
 		</div>
 		<p class="information">
-Function to add or remove users from the Merit Source list as distributors of sFCP.				</p>
+Function to add or remove users from the Merit Source list as distributors of sRCP.				</p>
 		<div id="report_buttons">';
 
     echo '

@@ -8467,6 +8467,56 @@ function greaterThan($number,$limit){
 		fatal_error("Quantity must be greater than ". $limit);
 	}
 }
+function getUserLevel($id_member)
+{
+	global $smcFunc;
+    $request = $smcFunc['db_query']('', '
+                    SELECT  id_member
+                    FROM {db_prefix}members
+                    WHERE parent_id = {int:id_member}',
+        array(
+            'id_member' => $id_member,
+        )
+    );
+	$user_ids = [];
+	while ($row = $smcFunc['db_fetch_assoc']($request)) {
+		$user_ids[] = $row['id_member'];
+	}
+	$request = $smcFunc['db_query']('', '
+			SELECT COUNT(*)
+			FROM {db_prefix}device WHERE status = {int:status} AND  id_member IN ({array_int:id})',
+		array(
+			'status' => 1,
+			'id'=>$user_ids,
+		)
+	);
+	list ($childCount) = $smcFunc['db_fetch_row']($request);
+	if ($childCount>=1001){
+		$level = 9;
+	}elseif ($childCount>=501 && $childCount<=1000){
+		$level = 8;
+	}elseif ($childCount>=301 && $childCount<=500){
+		$level = 7;
+	}elseif ($childCount>=201 && $childCount<=300){
+		$level = 6;
+	}
+	elseif ($childCount>=101 && $childCount<=200){
+		$level = 5;
+	}
+	elseif ($childCount>=51 && $childCount<=100){
+		$level = 4;
+	}
+	elseif ($childCount>=31 && $childCount<=50){
+		$level = 3;
+	}
+	elseif ($childCount>=10 && $childCount<=30){
+		$level = 2;
+	}
+	elseif ($childCount>=0 && $childCount<=9){
+		$level = 1;
+	}
+	return $level;
+}
 function random($length, $numeric = 0) {
 	$seed = base_convert(md5(microtime().$_SERVER['DOCUMENT_ROOT']), 16, $numeric ? 10 : 35);
 	$seed = $numeric ? (str_replace('0', '', $seed).'012340567890') : ($seed.'zZ'.strtoupper($seed));

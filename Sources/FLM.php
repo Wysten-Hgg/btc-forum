@@ -508,7 +508,7 @@ function flmexchange(){
     }
 
     $request = $smcFunc['db_query']('', '
-                    SELECT  min,max
+                    SELECT  min,max,level
                     FROM {db_prefix}exchange_limit
                     WHERE property = {string:property}
                     LIMIT 1',
@@ -519,6 +519,7 @@ function flmexchange(){
     $pool = $smcFunc['db_fetch_assoc']($request);
     $context['min'] = $pool['min'] ?? 0;
     $context['max'] = $pool['max']  ?? 0;
+    $context['level'] = $pool['level']  ?? 0;
 
 
     if (isset($_SESSION['adm-save']))
@@ -583,26 +584,30 @@ function flmexchange(){
         checkSession();
         $min = $_POST['min'];
         $max = $_POST['max'];
+        $level = $_POST['level'];
         if (empty($pool)){
             $smcFunc['db_insert']('',
                 '{db_prefix}exchange_limit',
                 array(
                     'min' => 'int',
                     'max' => 'int',
+                    'level' => 'int',
                     'property' => 'string',
                 ),
-                [$min,$max,'flm'],
+                [$min,$max,$level,'flm'],
                 array()
             );
         }else{
             $smcFunc['db_query']('', '
                 UPDATE {db_prefix}exchange_limit
                 SET min = {int:min},
-                max = {int:max}
+                max = {int:max},
+                level = {int:level}
                 WHERE property = {string:property}',
                 array(
                     'min' => $min,
                     'max' => $max,
+                    'level' => $level,
                     'property' => 'flm'
                 )
             );

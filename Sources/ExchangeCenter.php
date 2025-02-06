@@ -15,7 +15,7 @@ function flmExChangeCenter(){
     $userProperty = $smcFunc['db_fetch_assoc']($request);
     $flmAmount = $userProperty['flm'];
     $request = $smcFunc['db_query']('', '
-                    SELECT  min,max
+                    SELECT  min,max,level
                     FROM {db_prefix}exchange_limit
                     WHERE property = {string:property}
                     LIMIT 1',
@@ -79,9 +79,13 @@ function flmExChangeCenter(){
         if (empty($select) || empty($config)){
             fatal_error('Please select the token that needs to be redeemed');
         }
+        $level = getUserLevel($user_info['id']);
+        if ($level<$pool['level']){
+            fatal_error('Your level is not sufficient, the required level is '.$pool['level']);
+        }
         greaterThan($amount,0);
         if ($flmAmount < $amount) {
-            fatal_error('Insufficient FCP quantity');
+            fatal_error('Insufficient RCP quantity');
         }
         if ($amount < $context['min'] || $amount > $context['max']) {
             fatal_error("The number of applications does not meet the requirements.Min:{$context['min']},Max:{$context['max']}");
