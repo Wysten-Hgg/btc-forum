@@ -22,7 +22,7 @@ function SetSourceUser() {
     $context['pool_amount'] = $pool['sflm'];
     if (isset($_POST['work']) && $_POST['work'] == 'delete') {
         checkSession();
-        if (isset($_POST['transfer']) && $_POST['transfer'] == 'Transfer sFCP') {
+        if (isset($_POST['transfer']) && $_POST['transfer'] == 'Transfer sRCP') {
             $amount = $_POST['amount'];
             foreach ($amount as $v) {
                 if (!empty($v)){
