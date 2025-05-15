@@ -82,6 +82,7 @@ $txt['username'] = '用户名';
 $txt['password'] = '密码';
 
 $txt['username_no_exist'] = '请输入正确的用户名。';
+$txt['username_banned_login'] = '你已经被禁止登录。';
 $txt['no_user_with_email'] = '没有帐号绑定本信箱。';
 
 $txt['board_moderator'] = '版主';

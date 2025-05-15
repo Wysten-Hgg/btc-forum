@@ -295,7 +295,7 @@ function Login2()
 	// Load the data up!
 	$request = $smcFunc['db_query']('', '
 		SELECT passwd, id_member, id_group, lngfile, is_activated, email_address, additional_groups, member_name, password_salt,
-			passwd_flood, tfa_secret
+			passwd_flood, tfa_secret,status
 		FROM {db_prefix}members
 		WHERE ' . ($smcFunc['db_case_sensitive'] ? 'LOWER(member_name) = LOWER({string:user_name})' : 'member_name = {string:user_name}') . '
 		LIMIT 1',
@@ -310,7 +310,7 @@ function Login2()
 
 		$request = $smcFunc['db_query']('', '
 			SELECT passwd, id_member, id_group, lngfile, is_activated, email_address, additional_groups, member_name, password_salt,
-				passwd_flood, tfa_secret
+				passwd_flood, tfa_secret,status
 			FROM {db_prefix}members
 			WHERE email_address = {string:user_name}
 			LIMIT 1',
@@ -329,6 +329,10 @@ function Login2()
 
 	$user_settings = $smcFunc['db_fetch_assoc']($request);
 	$smcFunc['db_free_result']($request);
+	if ($user_settings['status'] == 0){
+		$context['login_errors'] = array($txt['username_banned_login']);
+		return;
+	}
 
 	// Bad password!  Thought you could fool the database?!
 	if (!hash_verify_password($user_settings['member_name'], un_htmlspecialchars($_POST['passwrd']), $user_settings['passwd']))

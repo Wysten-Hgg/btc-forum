@@ -693,6 +693,7 @@ function template_group_members()
 			<input type="hidden" name="', $context['mod-mgm_token_var'], '" value="', $context['mod-mgm_token'], '">
 		</form>';
 
+
 	if (!empty($context['group']['assignable']))
 		echo '
 	<script>

@@ -82,6 +82,7 @@ $txt['username'] = 'Username';
 $txt['password'] = 'Password';
 
 $txt['username_no_exist'] = 'That username does not exist.';
+$txt['username_banned_login'] = 'You have been banned from logging in.';
 $txt['no_user_with_email'] = 'There are no usernames associated with that email.';
 
 $txt['board_moderator'] = 'Board Moderator';
