@@ -1055,12 +1055,22 @@ function sendrcp()
     while ($row = $smcFunc['db_fetch_assoc']($request)) {
         $context['cats'][] = $row;
     }
+    $request = $smcFunc['db_query']('', '
+		SELECT id_group,group_name
+		FROM {db_prefix}membergroups',
+        array(
+        )
+    );
+    while ($row = $smcFunc['db_fetch_assoc']($request)) {
+        $context['groups'][] = $row;
+    }
 
     $smcFunc['db_free_result']($request);
     if (isset($_GET['save']))
     {
         checkSession();
         $topic_id = $_POST['topic_id'];
+        $group = $_POST['group'];
         $count = $_POST['count'];
         $start_time = strtotime($_POST['date'] . " " .$_POST['start_time']);
         $end_time = strtotime($_POST['date'] . " " .$_POST['end_time']);
@@ -1072,21 +1082,27 @@ function sendrcp()
     SELECT DISTINCT m.id_member
     FROM {db_prefix}messages AS m
     JOIN {db_prefix}topics AS t ON m.id_topic = t.id_topic
+    JOIN {db_prefix}members AS mem ON m.id_member = mem.id_member
     WHERE m.id_topic = {int:topic_id}
       AND m.poster_time BETWEEN {int:start_time} AND {int:end_time}
       AND m.id_member > 0
       AND m.id_member != t.id_member_started
+      AND (mem.id_group = {int:group_id} OR FIND_IN_SET({int:group_id}, mem.additional_groups) > 0)
     ORDER BY m.id_member ASC',
             array(
                 'topic_id' => $topic_id,
                 'start_time' => $start_time,
                 'end_time' => $end_time,
+                'group_id'=>$group
             )
         );
 
         $user_ids = [];
         while ($row = $smcFunc['db_fetch_assoc']($request)) {
             $user_ids[] = $row['id_member'];
+        }
+        if (empty($user_ids)){
+            fatal_error('不存在符合条件的用户');
         }
         $user_ids = array_unique($user_ids);
         $request = $smcFunc['db_query']('', '

@@ -1147,6 +1147,13 @@ function template_sendrcp()
 		<p>
 			';
     echo '
+			<p>选择群组<select id="group" name="group" class="wh2-board">
+			';
+    foreach ($context['groups'] as $val) {
+        echo '<option value="', $val['id_group'], '">', $val['group_name'], '</option>
+				';
+    }
+    echo '</select>	<br>	<br>
 RCP数量<input type="number" name="count">
 		</p>
 		
