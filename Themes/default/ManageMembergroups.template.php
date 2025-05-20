@@ -692,7 +692,30 @@ function template_group_members()
 			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 			<input type="hidden" name="', $context['mod-mgm_token_var'], '" value="', $context['mod-mgm_token'], '">
 		</form>';
+	if (!empty($context['group']['assignable']))
+		echo '
+<form action="', $scripturl, '?action=', $context['current_action'], (isset($context['admin_area']) ? ';area=' . $context['admin_area'] : ''), ';sa=members;group=', $context['group']['id'], '" method="post" accept-charset="', $context['character_set'], '" >
+			<div class="cat_bar">
+				<h3 class="catbg">在此群组中删除用户</h3>
+			</div>
+			<div class="windowbg">
+				<dl class="settings">
+					<dt>
+						<strong><label for="toDel">要删除的会员名称:</label></strong>
+					</dt>
+					<dd>
+						<input type="text" name="toDel" id="toDel" value="">
+						<input type="hidden" name="remove" id="remove" value="remove">
+						<div id="toDelItemContainer"></div>
+					</dd>
+				</dl>
+				<input type="submit" name="del" value="删除会员" class="button">
+			</div>';
 
+	echo '
+			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
+			<input type="hidden" name="', $context['mod-mgm_token_var'], '" value="', $context['mod-mgm_token'], '">
+		</form>';
 
 	if (!empty($context['group']['assignable']))
 		echo '
@@ -710,7 +733,21 @@ function template_group_members()
 			bItemList: true,
 			sItemListContainerId: \'toAddItemContainer\'
 		});
-	</script>';
+	</script><script>
+	var oDelMemberSuggest = new smc_AutoSuggest({
+			sSelf: \'oDelMemberSuggest\',
+			sSessionId: \'', $context['session_id'], '\',
+			sSessionVar: \'', $context['session_var'], '\',
+			sSuggestId: \'to_suggest\',
+			sControlId: \'toDel\',
+			sSearchType: \'member\',
+			sPostName: \'rem\',
+			sURLMask: \'action=profile;u=%item_id%\',
+			sTextDeleteItem: \'', $txt['autosuggest_delete_item'], '\',
+			bItemList: true,
+			sItemListContainerId: \'toDelItemContainer\'
+		});
+</script>';
 }
 
 /**
