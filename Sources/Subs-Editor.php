@@ -2342,14 +2342,14 @@ function AutoSuggest_Search_Member()
 
 	// Find the member.
 	$request = $smcFunc['db_query']('', '
-		SELECT id_member, real_name
+		SELECT id_member, member_name
 		FROM {db_prefix}members
-		WHERE {raw:real_name} LIKE {string:search}' . (!empty($context['search_param']['buddies']) ? '
+		WHERE {raw:member_name} LIKE {string:search}' . (!empty($context['search_param']['buddies']) ? '
 			AND id_member IN ({array_int:buddy_list})' : '') . '
 			AND is_activated IN (1, 11)
 		LIMIT ' . ($smcFunc['strlen']($_REQUEST['search']) <= 2 ? '100' : '800'),
 		array(
-			'real_name' => $smcFunc['db_case_sensitive'] ? 'LOWER(real_name)' : 'real_name',
+			'member_name' => $smcFunc['db_case_sensitive'] ? 'LOWER(member_name)' : 'member_name',
 			'buddy_list' => $user_info['buddies'],
 			'search' => $_REQUEST['search'],
 		)
@@ -2362,13 +2362,13 @@ function AutoSuggest_Search_Member()
 	);
 	while ($row = $smcFunc['db_fetch_assoc']($request))
 	{
-		$row['real_name'] = strtr($row['real_name'], array('&amp;' => '&#038;', '&lt;' => '&#060;', '&gt;' => '&#062;', '&quot;' => '&#034;'));
+		$row['member_name'] = strtr($row['member_name'], array('&amp;' => '&#038;', '&lt;' => '&#060;', '&gt;' => '&#062;', '&quot;' => '&#034;'));
 
 		$xml_data['items']['children'][] = array(
 			'attributes' => array(
 				'id' => $row['id_member'],
 			),
-			'value' => $row['real_name'],
+			'value' => $row['member_name'],
 		);
 	}
 	$smcFunc['db_free_result']($request);
