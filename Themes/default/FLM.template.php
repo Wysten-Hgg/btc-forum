@@ -541,6 +541,9 @@ Function to add or remove users from the Merit Source list as distributors of sR
 					Username 
 					</th>		
 					<th scope="col" id="header_member_list_user_name" class="user_name">
+					Realname 
+					</th>	
+					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Address 
 					</th>		
 					<th scope="col" id="header_member_list_user_name" class="user_name">
@@ -585,6 +588,9 @@ Function to add or remove users from the Merit Source list as distributors of sR
 					
 					<td class="user_name">
 			        ' . $val['member_name'] . '
+					</td>
+					<td class="user_name">
+			        ' . $val['real_name'] . '
 					</td>
 						<td class="user_name">
 			        ' . $val['address'] . '
@@ -658,6 +664,9 @@ Function to add or remove users from the Merit Source list as distributors of sR
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Username 
 					</th>		
+						<th scope="col" id="header_member_list_user_name" class="user_name">
+					Realname 
+					</th>	
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Address 
 					</th>		
@@ -704,6 +713,9 @@ Function to add or remove users from the Merit Source list as distributors of sR
 					
 					<td class="user_name">
 			        ' . $val['member_name'] . '
+					</td>
+					<td class="user_name">
+			        ' . $val['real_name'] . '
 					</td>
 						<td class="user_name">
 			        ' . $val['address'] . '
@@ -792,6 +804,9 @@ Function to add or remove users from the Merit Source list as distributors of sR
 					</th>
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Username 
+					</th>	
+					<th scope="col" id="header_member_list_user_name" class="user_name">
+					Realname 
 					</th>		
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Address 
@@ -839,6 +854,9 @@ Function to add or remove users from the Merit Source list as distributors of sR
 				
 					<td class="user_name">
 			        ' . $val['member_name'] . '
+					</td>
+					<td class="user_name">
+			        ' . $val['real_name'] . '
 					</td>
 						<td class="user_name">
 			        ' . $val['address'] . '
@@ -921,6 +939,9 @@ Function to add or remove users from the Merit Source list as distributors of sR
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Username 
 					</th>		
+						<th scope="col" id="header_member_list_user_name" class="user_name">
+					Realname 
+					</th>	
 					<th scope="col" id="header_member_list_user_name" class="user_name">
 					Address 
 					</th>	
@@ -949,6 +970,9 @@ Function to add or remove users from the Merit Source list as distributors of sR
 			
 					<td class="user_name">
 			        ' . $val['member_name'] . '
+					</td>
+					<td class="user_name">
+			        ' . $val['real_name'] . '
 					</td>
 						<td class="user_name">
 			        ' . $val['address'] . '
