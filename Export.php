@@ -9,6 +9,7 @@ function downLoad($file,$data) {
                 'ID' => $k+1,
                 'PID' => $val['pid'],
                 'Username' => $val['member_name'],
+                'Realname' => $val['real_name'],
                 'Address' => $val['address'],
                 'Amount' => $val['amount'],
                 'state' => $val['state'],
