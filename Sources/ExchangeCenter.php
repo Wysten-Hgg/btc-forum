@@ -90,6 +90,9 @@ function flmExChangeCenter(){
         if ($amount < $context['min'] || $amount > $context['max']) {
             fatal_error("The number of applications does not meet the requirements.Min:{$context['min']},Max:{$context['max']}");
         }
+
+
+
         $request = $smcFunc['db_query']('', '
 			SELECT COUNT(*)
 			FROM {db_prefix}apply_withdraw WHERE type = {string:type}',
@@ -98,7 +101,12 @@ function flmExChangeCenter(){
             )
         );
         list ($count) = $smcFunc['db_fetch_row']($request);
-        $realmAmount = round($amount / 2  * $config['radio'] ?? 1 ,2);
+        $realmAmount = round($amount * 0.2  * $config['radio'] ?? 1 ,2);
+        $withdrawRes = getMemberCurrentMonthWithdraw($user_info['id']);
+        if (is_array($withdrawRes) && $withdrawRes['total_amount'] + $realmAmount >300){
+            $left = 300 - $withdrawRes['total_amount'];
+            fatal_error('You can withdraw up to 300 per month, and currently have '.$left . ' left');
+        }
         $smcFunc['db_insert']('',
             '{db_prefix}apply_withdraw',
             array(

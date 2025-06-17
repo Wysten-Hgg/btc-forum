@@ -703,7 +703,7 @@ function notReview(){
 					SET eflm = {string:flm}
 					WHERE id_member = {int:id}',
                         array(
-                            'flm' => $flmAmount + $row['amount'] /2,
+                            'flm' => $flmAmount + $row['amount'] * 0.8,
                             'id' => $row['id_member']
                         )
                     );

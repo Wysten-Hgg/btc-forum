@@ -8467,6 +8467,43 @@ function greaterThan($number,$limit){
 		fatal_error("Quantity must be greater than ". $limit);
 	}
 }
+function getMemberCurrentMonthWithdraw($member_id)
+{
+	global $smcFunc;
+
+	// 计算当前月的开始和结束时间戳
+	$month_start = strtotime(date('Y-m-01 00:00:00'));
+	$month_end = strtotime(date('Y-m-t 23:59:59'));
+
+	$request = $smcFunc['db_query']('', '
+        SELECT 
+            id_member,
+            SUM(real_amount) as total_withdraw_amount,
+            COUNT(*) as withdraw_count
+        FROM {db_prefix}apply_withdraw 
+        WHERE id_member = {int:member_id}
+            AND create_at BETWEEN {int:month_start} AND {int:month_end}
+        GROUP BY id_member',
+		array(
+			'member_id' => $member_id,
+			'month_start' => $month_start,
+			'month_end' => $month_end,
+		)
+	);
+
+	$result = null;
+	if ($smcFunc['db_num_rows']($request) > 0) {
+		$row = $smcFunc['db_fetch_assoc']($request);
+		$result = array(
+			'id_member' => $row['id_member'],
+			'total_amount' => $row['total_withdraw_amount'],
+			'withdraw_count' => $row['withdraw_count']
+		);
+	}
+	$smcFunc['db_free_result']($request);
+
+	return $result;
+}
 function getUserLevel($id_member)
 {
 	global $smcFunc;
