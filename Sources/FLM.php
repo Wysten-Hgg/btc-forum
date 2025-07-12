@@ -646,13 +646,14 @@ function flmexchange(){
 
 }
 function notReview(){
-    global $scripturl, $context,$smcFunc,$user_info,$modSettings;
+    global $scripturl, $context,$smcFunc,$user_info,$modSettings,$boarddir;
     // Make sure they can view the memberlist.
     isAllowedTo(['admin_forum','flm_manage']);
 
     loadTemplate('FLM');
     $context['sub_template'] = 'notReview';
     $context['modify_url'] = $scripturl . '?action=flm;sa=not;modify';
+    $context['download_url'] = $scripturl . '?action=flm;sa=not;download';
     if (isset($_SESSION['adm-save']))
     {
         if ($_SESSION['adm-save'] === true)
@@ -661,6 +662,39 @@ function notReview(){
             $context['saved_failed'] = $_SESSION['adm-save'];
 
         unset($_SESSION['adm-save']);
+    }
+    if (isset($_GET['download']))
+    {
+        $exportData = [];
+        require_once($boarddir . '/Export.php');
+        $request = $smcFunc['db_query']('', '
+				SELECT   a.*,mem.member_name,mem.real_name,fcp.token
+			FROM {db_prefix}apply_withdraw as a LEFT JOIN {db_prefix}members AS mem ON (a.id_member = mem.id_member) LEFT JOIN {db_prefix}fcp_config AS fcp ON (a.token_id = fcp.id)  WHERE type = {string:type} AND state = {int:state}  ORDER BY id DESC',
+            array(
+                'type' => 'flm',
+                'state'=>0
+            )
+        );
+        while ($row = $smcFunc['db_fetch_assoc']($request)) {
+            switch ($row['state']) {
+                case '1':
+                    $state = 'Pass';
+                    break;
+                case '2':
+                    $state = 'Reject';
+                    break;
+                default:
+                    $state = 'Unaudited';
+                    break;
+            }
+            $row['state'] = $state;
+            $row['complete'] = $row['complete'] == 0 ? 'No' : 'Yes';
+            $exportData[] = $row;
+        }
+
+        downLoad('notreview.xlsx',$exportData);
+
+
     }
     if (isset($_GET['modify']))
     {

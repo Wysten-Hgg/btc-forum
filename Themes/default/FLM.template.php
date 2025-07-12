@@ -653,7 +653,9 @@ Function to add or remove users from the Merit Source list as distributors of sR
 
     template_apply_menu('not');
     // Go through each table!
-    echo '<div class="cat_bar">
+
+    echo '<a class="button" style="float: right" href="', $context['download_url'], '" >Export Data</a> <br/><br/>
+<div class="cat_bar">
 			<h3 class="catbg">Not Reviewed List</h3>
 		</div><form  method="post" action="', $context['modify_url'], '"><table class="table_grid" id="member_list">
 			<thead>
