@@ -12,6 +12,7 @@ function downLoad($file,$data) {
                 'Realname' => $val['real_name'],
                 'Address' => $val['address'],
                 'Amount' => $val['amount'],
+                'TokenAmount' => $val['real_amount'],
                 'state' => $val['state'],
                 'complete' => $val['complete'],
                 'Time' => date('Y-m-d H:i:s',$val['create_at']),
