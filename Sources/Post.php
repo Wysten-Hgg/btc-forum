@@ -1749,11 +1749,21 @@ function Post2()
 	}
 
 	// Then try to upload any attachments.
+	$has_attachment_upload = false;
+	foreach ((array) ($_FILES['attachment']['name'] ?? array()) as $filename)
+	{
+		if (is_string($filename) && $filename !== '')
+		{
+			$has_attachment_upload = true;
+			break;
+		}
+	}
+
 	$context['can_post_attachment'] = !empty($modSettings['attachmentEnable']) && $modSettings['attachmentEnable'] == 1 && (allowedTo('post_attachment') || ($modSettings['postmod_active'] && allowedTo('post_unapproved_attachments')));
 	if ($context['can_post_attachment'] && empty($_POST['from_qr']))
 	{
 		require_once($sourcedir . '/Subs-Attachments.php');
-		processAttachments();
+		processAttachments($has_attachment_upload);
 	}
 
 	// They've already uploaded some attachments, but they don't have permission to post them
@@ -2184,8 +2194,8 @@ function Post2()
 
 		if ($user_info['is_guest'] || !empty($_REQUEST['msg']) || isset($_REQUEST['poll']) || isset($_REQUEST['calendar']) ||
 			!empty($_POST['from_qr']) || isset($_POST['lock']) || isset($_POST['sticky']) || !empty($_POST['move']) ||
-			!empty($_POST['announce_topic']) || !empty($_SESSION['already_attached']) ||
-			count(array_diff(array_keys($_SESSION['temp_attachments'] ?? array()), array('post'))) > 0)
+			!empty($_POST['announce_topic']) || $has_attachment_upload || !empty($_SESSION['already_attached']) ||
+			count(array_diff(array_keys($_SESSION['temp_attachments'] ?? array()), array('post', 'initial_error'))) > 0)
 			$post_errors[] = 'scheduled_post_options';
 	}
 

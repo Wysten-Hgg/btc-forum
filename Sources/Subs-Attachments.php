@@ -323,22 +323,26 @@ function attachments_init_dir(&$tree, &$count)
 
 /**
  * Moves an attachment to the proper directory and set the relevant data into $_SESSION['temp_attachments']
+ *
+ * @param bool $has_upload Whether the form contains a selected file
  */
-function processAttachments()
+function processAttachments($has_upload = true)
 {
 	global $context, $modSettings, $smcFunc, $txt, $user_info;
 
 	// Make sure we're uploading to the right place.
-	if (!empty($modSettings['automanage_attachments']))
+	if ($has_upload && !empty($modSettings['automanage_attachments']))
 		automanage_attachments_check_directory();
 
 	if (!is_array($modSettings['attachmentUploadDir']))
 		$modSettings['attachmentUploadDir'] = $smcFunc['json_decode']($modSettings['attachmentUploadDir'], true);
 
-	$context['attach_dir'] = $modSettings['attachmentUploadDir'][$modSettings['currentAttachmentUploadDir']];
+	$context['attach_dir'] = $modSettings['attachmentUploadDir'][$modSettings['currentAttachmentUploadDir']] ?? '';
 
-	// Is the attachments folder actualy there?
-	if (!empty($context['dir_creation_error']))
+	// Only require an upload directory when a file was selected.
+	if (!$has_upload)
+		unset($_SESSION['temp_attachments']['initial_error']);
+	elseif (!empty($context['dir_creation_error']))
 		$initial_error = $context['dir_creation_error'];
 	elseif (!is_dir($context['attach_dir']))
 	{
@@ -378,7 +382,7 @@ function processAttachments()
 		// Let's try to keep them. But...
 		$ignore_temp = true;
 		// If new files are being added. We can't ignore those
-		foreach ($_FILES['attachment']['tmp_name'] as $dummy)
+		foreach ($_FILES['attachment']['tmp_name'] ?? array() as $dummy)
 			if (!empty($dummy))
 			{
 				$ignore_temp = false;

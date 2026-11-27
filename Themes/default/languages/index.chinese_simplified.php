@@ -784,7 +784,7 @@ $txt['preview_title'] = '预览帖子';
 $txt['preview_fetch'] = '准备预览……';
 $txt['preview_new'] = '新站内短信';
 $txt['pm_error_while_submitting'] = '发送此个人消息时发生以下错误或错误：';
-$txt['error_while_submitting'] = '发送站内短信时发生以下错误：';
+$txt['error_while_submitting'] = '提交时发生以下错误：';
 $txt['error_old_topic'] = '警告: 该贴已经至少 %d 天没有更改。<br />除非你一定要回复，否则也许考虑发一个新贴会更好。';
 
 $txt['split_selected_posts'] = '已选帖子';

@@ -522,6 +522,7 @@ $txt['invalid_statistic_type'] = 'updateStats(): 无效统计类型\'%s\'';
 
 $txt['fetch_web_data_bad_url'] = 'fetch_web_data(): 错误网址';
 $txt['error_scheduled_post_time'] = '请按论坛时区选择有效的未来时间。夏令时切换时跳过或重复的时间不可用。';
+$txt['error_short_message'] = '正文至少需要 %1$d 个字符。';
 $txt['error_scheduled_post_options'] = '定时发布仅适用于已登录会员的新主题或回复，且不能包含附件、投票、日历活动或管理操作。';
 $txt['scheduled_post_queue'] = '无法安排定时发布。';
 
