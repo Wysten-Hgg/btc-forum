@@ -474,6 +474,16 @@ function template_main()
 					</div>';
 
 	// Finally, the submit buttons.
+	if (!empty($context['can_schedule_post']))
+		echo '
+					<div class="information">
+						<label for="publish_at">', $txt['scheduled_post_label'], '</label>
+						<input type="datetime-local" id="publish_at" name="publish_at" value="', htmlspecialchars($context['schedule_post_at'], ENT_QUOTES, 'UTF-8'), '" aria-describedby="publish_at_help">
+						<div id="publish_at_help" class="smalltext">',
+							sprintf($txt['scheduled_post_help'], htmlspecialchars($context['schedule_post_timezone'], ENT_QUOTES, 'UTF-8')), '
+						</div>
+					</div>';
+
 	echo '
 					<span id="post_confirm_buttons">
 						', template_control_richedit_buttons($context['post_box_name']);

@@ -1286,6 +1286,12 @@ function Post($post_errors = array())
 
 	$context['is_new_topic'] = empty($topic);
 	$context['is_new_post'] = !isset($_REQUEST['msg']);
+	$context['can_schedule_post'] = $context['is_new_post'] && !$user_info['is_guest'] && !isset($_REQUEST['poll']) && !$context['make_event'];
+	if ($context['can_schedule_post'])
+	{
+		$context['schedule_post_timezone'] = getUserTimezone();
+		$context['schedule_post_at'] = isset($_POST['publish_at']) && is_string($_POST['publish_at']) ? substr($_POST['publish_at'], 0, 16) : '';
+	}
 	$context['is_first_post'] = $context['is_new_topic'] || (isset($_REQUEST['msg']) && $_REQUEST['msg'] == $id_first_msg);
 
 	// Register this form in the session variables.
@@ -2168,6 +2174,21 @@ function Post2()
 
  	call_integration_hook('integrate_post2_pre', array(&$post_errors));
 
+	$publish_at = false;
+	if (!isset($_REQUEST['preview']) && isset($_POST['publish_at']) && $_POST['publish_at'] !== '')
+	{
+		require_once($sourcedir . '/ScheduledPosts.php');
+		$publish_at = parseScheduledPostTime($_POST['publish_at'], getUserTimezone(), time());
+		if ($publish_at === false)
+			$post_errors[] = 'scheduled_post_time';
+
+		if ($user_info['is_guest'] || !empty($_REQUEST['msg']) || isset($_REQUEST['poll']) || isset($_REQUEST['calendar']) ||
+			!empty($_POST['from_qr']) || isset($_POST['lock']) || isset($_POST['sticky']) || !empty($_POST['move']) ||
+			!empty($_POST['announce_topic']) || !empty($_SESSION['already_attached']) ||
+			count(array_diff(array_keys($_SESSION['temp_attachments'] ?? array()), array('post'))) > 0)
+			$post_errors[] = 'scheduled_post_options';
+	}
+
 	// Any mistakes?
 	if (!empty($post_errors))
 	{
@@ -2408,6 +2429,21 @@ function Post2()
 		'email' => $_POST['email'],
 		'update_post_count' => !$user_info['is_guest'] && !isset($_REQUEST['msg']) && $board_info['posts_count'],
 	);
+
+	if ($publish_at !== false)
+	{
+		$queued = queueScheduledPost($publish_at, $msgOptions, $topicOptions, $user_info, isset($_POST['notify']) ? !empty($_POST['notify']) : null);
+		if (!$queued)
+			fatal_lang_error('scheduled_post_queue', false);
+
+		unset($_SESSION['temp_attachments']);
+
+		if (!empty($modSettings['drafts_post_enabled']) && !empty($_POST['id_draft']))
+			DeleteDraft($_POST['id_draft']);
+
+		$_SESSION['scheduled_post_notice'] = array('board' => (int) $board, 'time' => $publish_at);
+		redirectexit('board=' . $board . '.0');
+	}
 
 	// This is an already existing message. Edit it.
 	if (!empty($_REQUEST['msg']))

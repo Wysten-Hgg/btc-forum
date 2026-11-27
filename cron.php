@@ -35,9 +35,6 @@ define('SMF_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m')
 // don't run this file any more frequently than indicated here. It might turn ugly if you do.
 // But on proper cron you can always increase this value provided you don't go beyond max_limit.
 define('MAX_CRON_TIME', 10);
-// If a task fails for whatever reason it will still be marked as claimed. This is the threshold
-// by which if a task has not completed in this time, the task should become available again.
-define('MAX_CLAIM_THRESHOLD', 300);
 
 // We're going to want a few globals... these are all set later.
 global $maintenance, $msubject, $mmessage, $mbname, $language;
@@ -102,6 +99,7 @@ require_once($sourcedir . '/Errors.php');
 require_once($sourcedir . '/Load.php');
 require_once($sourcedir . '/Security.php');
 require_once($sourcedir . '/Subs.php');
+require_once($sourcedir . '/ScheduledPosts.php');
 
 // Ensure we don't trip over disabled internal functions
 if (version_compare(PHP_VERSION, '8.0.0', '>='))
@@ -184,13 +182,14 @@ function fetch_task()
 	{
 		// We found one. Let's try and claim it immediately.
 		$smcFunc['db_free_result']($request);
+		$claimed_time = time();
 		$smcFunc['db_query']('', '
 			UPDATE {db_prefix}background_tasks
 			SET claimed_time = {int:new_claimed}
 			WHERE id_task = {int:task}
 				AND claimed_time = {int:old_claimed}',
 			array(
-				'new_claimed' => time(),
+				'new_claimed' => $claimed_time,
 				'task' => $row['id_task'],
 				'old_claimed' => $row['claimed_time'],
 			)
@@ -199,7 +198,7 @@ function fetch_task()
 		if ($smcFunc['db_affected_rows']() != 0)
 		{
 			// Update the time and go back.
-			$row['claimed_time'] = time();
+			$row['claimed_time'] = $claimed_time;
 			return $row;
 		}
 		else
@@ -245,6 +244,12 @@ function perform_task($task_details)
 	elseif (class_exists($task_details['task_class']) && is_subclass_of($task_details['task_class'], 'SMF_BackgroundTask'))
 	{
 		$details = empty($task_details['task_data']) ? array() : $smcFunc['json_decode']($task_details['task_data'], true);
+		if ($task_details['task_class'] === 'PublishScheduledPost_Background')
+		{
+			$details['queue_id'] = (int) $task_details['id_task'];
+			$details['claimed_time'] = (int) $task_details['claimed_time'];
+		}
+
 		$bgtask = new $task_details['task_class']($details);
 		return $bgtask->execute();
 	}

@@ -219,5 +219,8 @@ $txt['attachments_limit_per_post'] = 'You may not upload more than %1$d attachme
 $txt['approval_status'] = 'Approval status';
 $txt['approval_status_1'] = 'Approved';
 $txt['approval_status_0'] = 'Awaiting approval';
+$txt['scheduled_post_label'] = '定时发布';
+$txt['scheduled_post_help'] = '请按论坛时区（%s）选择未来时间，留空则立即发帖。定时发布支持不带附件、投票、日历活动或管理操作的新主题及回复。';
+$txt['scheduled_post_queued'] = '帖子已安排于 %1$s（%2$s）发布。需要审核的帖子将在届时进入审核队列。';
 
 ?>

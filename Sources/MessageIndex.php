@@ -44,6 +44,15 @@ function MessageIndex()
 
 	loadTemplate('MessageIndex');
 
+	if (!empty($_SESSION['scheduled_post_notice']) && $_SESSION['scheduled_post_notice']['board'] === (int) $board)
+	{
+		loadLanguage('Post');
+		$timezone = getUserTimezone();
+		$publish_time = (new DateTimeImmutable('@' . $_SESSION['scheduled_post_notice']['time']))->setTimezone(new DateTimeZone($timezone));
+		$context['scheduled_post_notice'] = sprintf($txt['scheduled_post_queued'], $publish_time->format('Y-m-d H:i'), $timezone);
+		unset($_SESSION['scheduled_post_notice']);
+	}
+
 	if (!$user_info['is_guest'])
 	{
 		// We can't know they read it if we allow prefetches.

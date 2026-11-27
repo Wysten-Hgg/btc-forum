@@ -219,5 +219,8 @@ $txt['attachments_limit_per_post'] = 'You may not upload more than %1$d attachme
 $txt['approval_status'] = 'Approval status';
 $txt['approval_status_1'] = 'Approved';
 $txt['approval_status_0'] = 'Awaiting approval';
+$txt['scheduled_post_label'] = 'Schedule publishing';
+$txt['scheduled_post_help'] = 'Choose a future time in your forum time zone (%s). Leave blank to post now. Scheduling supports new topics and replies without attachments, polls, calendar events, or moderation actions.';
+$txt['scheduled_post_queued'] = 'Post scheduled for %1$s (%2$s). Posts requiring approval will enter moderation at that time.';
 
 ?>

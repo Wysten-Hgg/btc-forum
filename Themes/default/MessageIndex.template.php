@@ -17,6 +17,9 @@ function template_main()
 {
 	global $context, $settings, $options, $scripturl, $modSettings, $txt;
 
+	if (!empty($context['scheduled_post_notice']))
+		echo '<div class="infobox" role="status">', htmlspecialchars($context['scheduled_post_notice'], ENT_QUOTES, 'UTF-8'), '</div>';
+
 	echo '<div id="display_head" class="information">
 			<h2 class="display_title">', $context['name'], '</h2>';
 

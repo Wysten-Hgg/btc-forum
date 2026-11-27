@@ -522,5 +522,8 @@ $txt['create_post_invalid_member_id'] = 'createPost(): invalid member id \'%d\''
 $txt['invalid_statistic_type'] = 'updateStats(): invalid statistic type \'%s\'';
 
 $txt['fetch_web_data_bad_url'] = 'fetch_web_data(): Bad URL';
+$txt['error_scheduled_post_time'] = 'Choose a valid future time in your forum time zone. Times skipped or repeated by daylight saving are unavailable.';
+$txt['error_scheduled_post_options'] = 'Scheduling requires a signed-in member and a new topic or reply without attachments, polls, calendar events, or moderation actions.';
+$txt['scheduled_post_queue'] = 'The post could not be scheduled.';
 
 ?>
